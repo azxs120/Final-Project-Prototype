@@ -2,17 +2,52 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/serch"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
+    <Button
+        android:id="@+id/searchApartment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:layout_marginBottom="408dp"
+        android:text="חפש דירה"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.948"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/searchByOwner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="חפש דירה לפי בעל הדירה"
+        tools:layout_editor_absoluteX="184dp"
+        tools:layout_editor_absoluteY="332dp" />
+
+    <Button
+        android:id="@+id/searchByAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="חפש דירה לפי כתובת"
+        tools:layout_editor_absoluteX="214dp"
+        tools:layout_editor_absoluteY="389dp" />
+
+    <Button
+        android:id="@+id/searchByTenant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="חפש דייר"
+        tools:layout_editor_absoluteX="298dp"
+        tools:layout_editor_absoluteY="451dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="חפש דירה על פי קריטריונים שאתה בוחר"
+        tools:layout_editor_absoluteX="161dp"
+        tools:layout_editor_absoluteY="244dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
