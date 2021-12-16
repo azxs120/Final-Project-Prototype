@@ -22,32 +22,48 @@
         android:id="@+id/searchByOwner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="16dp"
         android:text="חפש דירה לפי בעל הדירה"
-        tools:layout_editor_absoluteX="184dp"
-        tools:layout_editor_absoluteY="332dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchApartment" />
 
     <Button
         android:id="@+id/searchByAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="16dp"
         android:text="חפש דירה לפי כתובת"
-        tools:layout_editor_absoluteX="214dp"
-        tools:layout_editor_absoluteY="389dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchByOwner" />
 
     <Button
         android:id="@+id/searchByTenant"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="16dp"
         android:text="חפש דייר"
-        tools:layout_editor_absoluteX="298dp"
-        tools:layout_editor_absoluteY="451dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchByAddress" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="12dp"
         android:text="חפש דירה על פי קריטריונים שאתה בוחר"
-        tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="244dp" />
+        app:layout_constraintBottom_toTopOf="@+id/searchApartment"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteX="127dp"
+        tools:layout_editor_absoluteY="104dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
