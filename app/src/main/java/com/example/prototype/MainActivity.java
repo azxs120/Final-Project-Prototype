@@ -16,17 +16,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //wire up the button
-        Button btn = findViewById(R.id.searchApartment);//get the button
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i(TAG,"get me an apartment");
-                Toast.makeText(getApplicationContext(), "i am momo", Toast.LENGTH_SHORT).show();
-            }
 
-
-        });
 
 
 
