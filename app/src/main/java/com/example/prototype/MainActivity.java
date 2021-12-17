@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-    }
 
-    void makechange(){}
+    }
+    void make(){}
 }
