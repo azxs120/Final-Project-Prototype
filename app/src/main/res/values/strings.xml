@@ -1,4 +1,15 @@
 <resources>
 
-    <string name="app_name">תשכיר לי</string>
+    <string name="app_name" >תשכיר לי</string>
+
+    <string name="searchLandlordTenant">חפש שוכר/משכיר</string>
+    <string name="searchApartment">מצא דירה</string>
+    <string name="callHandling">טיפול בקריאות</string>
+    <string name="myHistory">ההיסטוריה שלי</string>
+    <string name="find_me_a_person">find me a person</string>
+    <string name="my_history">my_History</string>
+    <string name="find_my_an_apartment">find my an Apartment</string>
+    <string name="my_calls">my calls</string>
+
+
 </resources>
