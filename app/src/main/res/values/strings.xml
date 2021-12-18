@@ -1,8 +1,4 @@
 <resources>
 
-    <string name="app_name" >>
-
-        תשכיר לי
-    </string>
-
+    <string name="app_name">תשכיר לי</string>
 </resources>
