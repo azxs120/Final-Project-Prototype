@@ -2,7 +2,7 @@
 
     <string name="app_name">תשכיר לי</string>
 
-    <string name="searchLandlordTenant">חפש שוכר/משכיר</string>
+    <string name="searchLandlordTenant">חיפוש</string>
     <string name="searchApartment">מצא דירה</string>
     <string name="callHandling">טיפול בקריאות</string>
     <string name="myHistory">ההיסטוריה שלי</string>
