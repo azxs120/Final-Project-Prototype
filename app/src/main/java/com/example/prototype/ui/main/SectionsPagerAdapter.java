@@ -22,6 +22,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     public SectionsPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
+
         mContext = context;
     }
 

@@ -27,9 +27,6 @@ public class CallHandlingActivity extends AppCompatActivity {
         binding = ActivityCallHandlingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        this.setTitle("טיפול בקריאות");
-
-
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = binding.viewPager;
         viewPager.setAdapter(sectionsPagerAdapter);
@@ -37,12 +34,14 @@ public class CallHandlingActivity extends AppCompatActivity {
         tabs.setupWithViewPager(viewPager);
         FloatingActionButton fab = binding.fab;
 
+
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                    Snackbar.make(view, "פיצ'ר עתידי, כפתור זה יוסיף קריאה חדשה.", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
         });
     }
+
 }

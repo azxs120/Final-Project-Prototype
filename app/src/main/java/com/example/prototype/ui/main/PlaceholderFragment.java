@@ -41,11 +41,13 @@ public class PlaceholderFragment extends Fragment {
         if (getArguments() != null) {
             index = getArguments().getInt(ARG_SECTION_NUMBER);
         }
+
         pageViewModel.setIndex(index);
     }
 
     @Override
     public View onCreateView(
+
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 
