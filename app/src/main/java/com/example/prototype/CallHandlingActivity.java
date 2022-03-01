@@ -1,5 +1,6 @@
 package com.example.prototype;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -41,7 +42,9 @@ public class CallHandlingActivity extends AppCompatActivity {
                     Snackbar.make(view, "פיצ'ר עתידי, כפתור זה יוסיף קריאה חדשה.", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
 
-
+                    //open the "AddNewCall" Activity.
+                    Intent intentLoadNewActivity = new Intent(CallHandlingActivity.this, AddNewCall.class);
+                    startActivity(intentLoadNewActivity);
                 }
         });
     }
