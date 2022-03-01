@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.prototype.DBClasess.Call;
+
 
 public class AddNewCall extends AppCompatActivity {
     private EditText title;
@@ -33,7 +35,8 @@ public class AddNewCall extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Snackbar.make(view, title.getText().toString(), Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                Toast toast = Toast.makeText(getApplicationContext(), title.getText().toString(), duration);
+                Call call = new Call("123", "444", title.getText().toString(),theText.getText().toString());
+                Toast toast = Toast.makeText(getApplicationContext(), call.toString(), duration);
                 toast.show();
 
                 // how to get the text from the textBox  mEdit.getText().toString()
