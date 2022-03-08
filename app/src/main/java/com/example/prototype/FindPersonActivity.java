@@ -1,8 +1,7 @@
-package com.example.prototype.ui.main;
+package com.example.prototype;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.icu.text.Transliterator;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,13 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.prototype.MainActivity;
-import com.example.prototype.R;
-import com.example.prototype.databinding.ActivityMainBinding;
-
 import java.util.ArrayList;
-
-import kotlin.LateinitKt;
 
 public class FindPersonActivity extends AppCompatActivity {
     ListView listView;
@@ -26,7 +19,7 @@ public class FindPersonActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_person);
-        this.setTitle("מצא");
+        this.setTitle("חפש");
 
         listView = findViewById(R.id.searchView);
         //add item in array list
@@ -43,7 +36,7 @@ public class FindPersonActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,int postion, long id) {
                 //Display click item position in toast
-                Toast.makeText(getApplicationContext(), adapter.getItem(position),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), adapter.getItem(postion),Toast.LENGTH_SHORT).show();
             }
 
         });

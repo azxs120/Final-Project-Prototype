@@ -21,7 +21,7 @@
     <EditText
         android:id="@+id/editTextTextPersonName"
         android:layout_width="300dp"
-        android:layout_height="35dp"
+        android:layout_height="48dp"
         android:layout_marginTop="332dp"
         android:layout_marginEnd="36dp"
         android:background="#11000000"
@@ -37,15 +37,15 @@
     <EditText
         android:id="@+id/editTextTextPassword"
         android:layout_width="300dp"
-        android:layout_height="35dp"
-        android:textColorHint="@color/white"
-
+        android:layout_height="48dp"
         android:layout_marginTop="36dp"
+
         android:background="#11000000"
+        android:drawableLeft="@drawable/ic_action_lock"
         android:ems="10"
         android:hint="Password"
-        android:drawableLeft="@drawable/ic_action_lock"
         android:inputType="textPassword"
+        android:textColorHint="@color/white"
         android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />

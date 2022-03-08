@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Prototype">
         <activity
-            android:name=".ui.main.FindPersonActivity"
+            android:name=".FindPersonActivity"
             android:exported="false" />
         <activity
             android:name=".HomeActivity"

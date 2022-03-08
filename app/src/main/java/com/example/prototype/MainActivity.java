@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentLoadNewActivity = new Intent(MainActivity.this, HomeActivity.class);
+                Intent intentLoadNewActivity = new Intent(MainActivity.this, FindPersonActivity.class);
                 startActivity(intentLoadNewActivity);
             }
         });
