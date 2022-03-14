@@ -1,12 +1,20 @@
 package com.example.prototype;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuItemCompat;
 
 import android.os.Bundle;
 
 
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -24,13 +32,13 @@ public class FindPersonActivity extends AppCompatActivity {
 
 
         this.setTitle("חפש");
-
-        //listView = findViewById(R.id.searchView);
+        //Assign variable
+        listView = findViewById(R.id.userList);
         //add item in array list
         for (int i = 0; i <= 100; i++)
             stringArrayList.add("Item" + i);
 
-        /*
+
         //Imitialize adapter
         adapter = new ArrayAdapter<>(FindPersonActivity.this
                 , android.R.layout.simple_list_item_1, stringArrayList);
@@ -46,8 +54,30 @@ public class FindPersonActivity extends AppCompatActivity {
 
         });
 
- */
+
     }
 
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //Initialize menu inflater
+        MenuInflater menuInflater = getMenuInflater();
+        //Inflate menu
+        menuInflater.inflate(R.menu.menu_search,menu);
+        //Initialize menu item
+        MenuItem menuItem = menu.findItem(R.id.search_view);
+        //Initialize search view
+        SearchView SearchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        SearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+            public boolean onQueryTextChange(String newText){
+                //Filter array list
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
+    }
 }
