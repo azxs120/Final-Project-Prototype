@@ -15,7 +15,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        this.setTitle("Login");
+        this.setTitle("התחברות");
 
         loginBtn = (Button) findViewById(R.id.loginBtn);
         //set what happens when the user clicks "מצא דירה"
