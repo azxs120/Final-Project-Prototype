@@ -10,40 +10,39 @@
         android:id="@+id/subject"
         android:layout_width="950px"
         android:layout_height="120px"
-        android:layout_marginTop="144dp"
-        android:background="@drawable/textview_border"
+        android:layout_marginTop="136dp"
 
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/textview_border"
         android:ems="10"
         android:hint="נושא"
-
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/messageBody"
         android:layout_width="950px"
         android:layout_height="1000px"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="4dp"
-        android:padding="10dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/textview_border"
-        android:scrollbars="vertical"
-
         android:ems="10"
+        android:gravity="top"
+
         android:hint="גוף הקריאה"
-        app:layout_constraintEnd_toEndOf="@+id/subject"
+        android:padding="10dp"
+        android:scrollbars="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/subject" />
 
     <Button
         android:id="@+id/submitCall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="128dp"
+        android:layout_marginTop="44dp"
         android:text="פתח קריאה"
-        app:layout_constraintEnd_toEndOf="@+id/messageBody"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/messageBody" />
 </androidx.constraintlayout.widget.ConstraintLayout>
