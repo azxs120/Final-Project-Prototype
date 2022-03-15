@@ -9,6 +9,7 @@ import android.widget.Button;
 
 public class LoginActivity extends AppCompatActivity {
     private Button loginBtn;
+    private Button register;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +21,16 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn = (Button) findViewById(R.id.loginBtn);
         //set what happens when the user clicks "מצא דירה"
         loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentLoadNewActivity = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intentLoadNewActivity);
+            }
+        });
+
+        register = (Button) findViewById(R.id.Register);
+        //set what happens when the user clicks "מצא דירה"
+        register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intentLoadNewActivity = new Intent(LoginActivity.this, MainActivity.class);
