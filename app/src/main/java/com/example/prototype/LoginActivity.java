@@ -18,7 +18,7 @@ public class LoginActivity extends AppCompatActivity {
 
         this.setTitle("התחברות");
 
-        loginBtn = (Button) findViewById(R.id.loginBtn);
+        loginBtn =  findViewById(R.id.loginBtn);
         //set what happens when the user clicks "מצא דירה"
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -28,12 +28,12 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        register = (Button) findViewById(R.id.Register);
+        register =  findViewById(R.id.Register);
         //set what happens when the user clicks "מצא דירה"
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentLoadNewActivity = new Intent(LoginActivity.this, MainActivity.class);
+                Intent intentLoadNewActivity = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intentLoadNewActivity);
             }
         });
