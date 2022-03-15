@@ -9,6 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Prototype">
+
+        <activity
+            android:name=".FindPersonActivity"
+            android:exported="false" />
+
         <activity
             android:name=".AddNewCall"
             android:exported="false" />
