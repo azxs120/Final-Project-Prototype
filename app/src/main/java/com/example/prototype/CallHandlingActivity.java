@@ -1,5 +1,6 @@
 package com.example.prototype;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -32,14 +33,18 @@ public class CallHandlingActivity extends AppCompatActivity {
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = binding.tabs;
         tabs.setupWithViewPager(viewPager);
-        FloatingActionButton fab = binding.fab;
-
-
-            fab.setOnClickListener(new View.OnClickListener() {
+        //get the button
+        FloatingActionButton addNewCall = binding.addNewCallBtn;
+        //set a Click Listener
+        addNewCall.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Snackbar.make(view, "פיצ'ר עתידי, כפתור זה יוסיף קריאה חדשה.", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
+
+                    //open the "AddNewCall" Activity.
+                    Intent intentLoadNewActivity = new Intent(CallHandlingActivity.this, AddNewCall.class);
+                    startActivity(intentLoadNewActivity);
                 }
         });
     }

@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Prototype">
         <activity
-            android:name=".FindPersonActivity"
+            android:name=".AddNewCall"
             android:exported="false" />
         <activity
             android:name=".HomeActivity"
@@ -31,7 +31,7 @@
             android:theme="@style/Theme.Prototype.NoActionBar" />
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
+            android:exported="false"></activity>
     </application>
 
 </manifest>
