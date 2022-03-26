@@ -19,6 +19,7 @@ public class Call {
 
     public Call(){
         setId();
+
     }
 
     public Call(String landLordID, String tenantID, String title, String callText) {

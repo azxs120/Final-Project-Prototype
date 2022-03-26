@@ -17,6 +17,11 @@
     <string name="title_activity_call_handling">CallHandlingActivity</string>
 
 
+    <string name="facebook_app_id">1234</string>
+    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="facebook_client_token">56789</string>
+
+
     <string name="ongoingCallsTab">קריאות בתהליך</string>
     <string name="handlingCallsTab">קריאות בטיפול</string>
     <string name="closedCallsTab">קריאות סגורות</string>

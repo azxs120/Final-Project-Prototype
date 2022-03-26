@@ -112,6 +112,7 @@
         <ImageView
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:id="@+id/fb_btn"
             android:layout_margin="20dp"
             android:src="@drawable/facebook" />
     </LinearLayout>
