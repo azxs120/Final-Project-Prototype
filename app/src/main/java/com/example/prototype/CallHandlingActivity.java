@@ -17,6 +17,8 @@ import android.view.View;
 import com.example.prototype.ui.main.SectionsPagerAdapter;
 import com.example.prototype.databinding.ActivityCallHandlingBinding;
 
+import io.realm.Realm;
+
 public class CallHandlingActivity extends AppCompatActivity {
 
     private ActivityCallHandlingBinding binding;
@@ -47,6 +49,8 @@ public class CallHandlingActivity extends AppCompatActivity {
                     startActivity(intentLoadNewActivity);
                 }
         });
+
+
     }
 
 }
