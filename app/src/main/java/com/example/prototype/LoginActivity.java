@@ -20,16 +20,16 @@ import io.realm.mongodb.User;
 
 public class LoginActivity extends AppCompatActivity {
 
-    String appId = "application-1-sfnjp";
+    private String appId = "application-1-sfnjp";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Button loginBtn;
         Button register;
         ImageView fbBtn = findViewById(R.id.fb_btn);
-        //CallbackManager callbackManager = CallbackManager.Factory.create();
 
         //init app
         Realm.init(this);
@@ -38,16 +38,12 @@ public class LoginActivity extends AppCompatActivity {
         app.loginAsync(Credentials.anonymous(), new App.Callback<User>() {
             @Override
             public void onResult(App.Result<User> result) {
-                if(result.isSuccess()){
-                    Log.v("User","Logged In anonymously");
-                }
-                else{
-                    Log.v("User","Failed to Login");
-                }
+                if (result.isSuccess())
+                    Log.v("User", "Logged In anonymously");
+                else
+                    Log.v("User", "Failed to Login");
             }
         });
-
-
 
         this.setTitle("התחברות");
 
