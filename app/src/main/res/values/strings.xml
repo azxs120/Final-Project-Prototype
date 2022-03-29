@@ -40,6 +40,13 @@
     <string name="choose">בחרו מתוך חיפוש מתקדם</string>
     <string name="find">חפש</string>
     <string name="server_client_id">WEB CLIENT ID</string>
+    <string name="our_logo">Our Logo</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="register_here">Register Here</string>
+    <string name="login">Login</string>
+    <string name="login_Btn">LoginBtn</string>
+    <string name="fb_btn">FB_Btn</string>
 
 
 </resources>

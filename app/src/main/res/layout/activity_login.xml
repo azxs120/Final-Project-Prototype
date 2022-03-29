@@ -10,17 +10,18 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="111dp"
-        android:layout_height="122dp"
+        android:layout_width="wrap_content"
+        android:layout_height="185dp"
         android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="76dp"
-        android:layout_marginEnd="150dp"
+        android:layout_marginStart="118dp"
+        android:layout_marginTop="37dp"
+        android:layout_marginEnd="117dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
-
+        app:srcCompat="@drawable/logo"
+        android:contentDescription="@string/our_logo" />
 
     <EditText
         android:id="@+id/email"
@@ -30,72 +31,73 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="55dp"
-        android:layout_marginTop="69dp"
-        android:layout_marginEnd="55dp"
+        android:layout_marginTop="65dp"
+        android:layout_marginEnd="54dp"
         android:background="#11000000"
-        android:drawableLeft="@drawable/ic_action_user"
+        android:drawableStart="@drawable/ic_action_user"
         android:ems="10"
-        android:hint="Email"
-        android:inputType="textPersonName"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
         android:textColorHint="@color/white"
-        android:textSize="25dp"
+        android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:autofillHints="username" />
 
     <EditText
         android:id="@+id/editTextPassword"
         android:layout_width="300dp"
         android:layout_height="48dp"
         android:layout_below="@+id/email"
-
+        android:autofillHints="password"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="57dp"
-        android:layout_marginTop="31dp"
-        android:layout_marginEnd="52dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="54dp"
         android:background="#11000000"
-        android:drawableLeft="@drawable/ic_action_lock"
+        android:drawableStart="@drawable/ic_action_lock"
         android:ems="10"
-        android:hint="Password"
+        android:hint="@string/password"
         android:inputType="textPassword"
         android:textColorHint="@color/white"
-        android:textSize="25dp"
+        android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="@+id/email"
         app:layout_constraintTop_toBottomOf="@+id/email" />
 
     <Button
         android:id="@+id/Register"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_below="@+id/loginBtn"
         android:layout_alignParentStart="true"
+
         android:layout_alignParentEnd="true"
-
         android:layout_marginStart="55dp"
-        android:layout_marginTop="37dp"
-        android:layout_marginEnd="56dp"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:text="Register Here"
+        android:layout_marginTop="116dp"
+        android:layout_marginEnd="54dp"
+        android:text="@string/register_here"
 
-        android:textSize="18dp"
+        android:textSize="18sp"
 
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
 
     <Button
         android:id="@+id/loginBtn"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_below="@+id/editTextTextPassword"
+        android:layout_below="@+id/editTextPassword"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="53dp"
-        android:layout_marginTop="46dp"
-        android:layout_marginEnd="56dp"
-        android:text="Login"
-        android:textSize="20dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="54dp"
+        android:text="@string/login"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -108,13 +110,15 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_margin="20dp"
-            android:src="@drawable/google" />
+            android:src="@drawable/google"
+            android:contentDescription="@string/login_Btn" />
         <ImageView
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:id="@+id/fb_btn"
             android:layout_margin="20dp"
-            android:src="@drawable/facebook" />
+            android:src="@drawable/facebook"
+            android:contentDescription="@string/fb_btn" />
     </LinearLayout>
 
 

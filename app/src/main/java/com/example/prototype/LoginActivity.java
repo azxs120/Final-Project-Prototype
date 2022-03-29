@@ -1,9 +1,6 @@
 package com.example.prototype;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,22 +28,18 @@ import io.realm.mongodb.mongo.MongoDatabase;
 
 
 public class LoginActivity extends AppCompatActivity {
-
     //this is the connection string;
     private String appId = "application-1-sfnjp";
-
-    //this belongs to google connection
-    //private GoogleSignInClient mGSIC;
 
     //DB instance
     MongoDatabase mongoDatabase;
     MongoClient mongoClient;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        this.setTitle("Login");
 
         Button loginBtn;
         Button register;
@@ -60,15 +53,6 @@ public class LoginActivity extends AppCompatActivity {
         //this will build a new app object
         App app = new App(new AppConfiguration.Builder(appId).build());
 
-/*
-
-//google part
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
-                requestIdToken(getString(R.string.server_client_id)).requestEmail().build();
-        mGSIC = GoogleSignIn.getClient(this, gso);
-*/
-
-        this.setTitle("התחברות");
 
 
         loginBtn =  findViewById(R.id.loginBtn);
@@ -80,33 +64,20 @@ public class LoginActivity extends AppCompatActivity {
                 User user = app.currentUser();
                 mongoClient = user.getMongoClient("mongodb-atlas");
                 mongoDatabase = mongoClient.getDatabase("RentMe");//the cluster(project)
-                MongoCollection <Document> mongoCollection = mongoDatabase.getCollection("Person");//the table
 
-                //a code that creates a
-                mongoCollection.insertOne(new Document("Email", user.getId()).append("Email",
-                        emailEditText.getText().toString()) ).getAsync(result -> {
-                            if(result.isSuccess()) {
-                                Log.v("Data", "Data Inserted Successfully");
-                                Snackbar.make(view, "Data Inserted Successfully", Snackbar.LENGTH_LONG)
-                                        .setAction("Action", null).show();
-                            }
-                            else
-                                Log.v("Data","our Error " + result.getError().toString());
+                Document doc = new Document() ;
+                doc.append("Email", emailEditText.getText().toString());
+                doc.append("Password", passwordEditText.getText().toString());
+
+                mongoDatabase.getCollection("Person").insertOne(doc).getAsync(result -> {
+                    if(result.isSuccess()) {
+                        Log.v("Data", "Data Inserted Successfully");
+                        Snackbar.make(view, "Data Inserted Successfully", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    }
+                    else
+                        Log.v("Data","our Error " + result.getError().toString());
                 });
-                //a code that creates a
-                mongoCollection.insertOne(new Document("Password", user.getId()).append("Password",
-                        passwordEditText.getText().toString()) ).getAsync(result -> {
-                            if(result.isSuccess()) {
-                                Log.v("Data", "Data Inserted Successfully");
-                                Snackbar.make(view, "Data Inserted Successfully", Snackbar.LENGTH_LONG)
-                                        .setAction("Action", null).show();
-                            }
-                            else
-                                Log.v("Data","our Error " + result.getError().toString());
-                });
-
-
-
 
                 //create a new activity
                 Intent intentLoadNewActivity = new Intent(LoginActivity.this, MainActivity.class);
