@@ -39,6 +39,7 @@
     <string name="bars">סורגים</string>
     <string name="choose">בחרו מתוך חיפוש מתקדם</string>
     <string name="find">חפש</string>
+    <string name="server_client_id">WEB CLIENT ID</string>
 
 
 </resources>

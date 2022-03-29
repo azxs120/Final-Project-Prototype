@@ -9,53 +9,110 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.material.snackbar.Snackbar;
+
+import org.bson.Document;
 
 import io.realm.Realm;
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
 import io.realm.mongodb.Credentials;
 import io.realm.mongodb.User;
+import io.realm.mongodb.mongo.MongoClient;
+import io.realm.mongodb.mongo.MongoCollection;
+import io.realm.mongodb.mongo.MongoDatabase;
 
 
 public class LoginActivity extends AppCompatActivity {
 
+    //this is the connection string;
     private String appId = "application-1-sfnjp";
+
+    //this belongs to google connection
+    //private GoogleSignInClient mGSIC;
+
+    //DB instance
+    MongoDatabase mongoDatabase;
+    MongoClient mongoClient;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         Button loginBtn;
         Button register;
         ImageView fbBtn = findViewById(R.id.fb_btn);
 
+        //will contain the data that we want to add
+        EditText emailEditText = (EditText) findViewById(R.id.email);
+        EditText passwordEditText = (EditText) findViewById(R.id.editTextPassword);
         //init app
         Realm.init(this);
+        //this will build a new app object
         App app = new App(new AppConfiguration.Builder(appId).build());
 
-        app.loginAsync(Credentials.anonymous(), new App.Callback<User>() {
-            @Override
-            public void onResult(App.Result<User> result) {
-                if (result.isSuccess())
-                    Log.v("User", "Logged In anonymously");
-                else
-                    Log.v("User", "Failed to Login");
-            }
-        });
+/*
+
+//google part
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
+                requestIdToken(getString(R.string.server_client_id)).requestEmail().build();
+        mGSIC = GoogleSignIn.getClient(this, gso);
+*/
 
         this.setTitle("התחברות");
 
 
-
         loginBtn =  findViewById(R.id.loginBtn);
-        //set what happens when the user clicks "מצא דירה"
+        //set what happens when the user clicks "Login"
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //DB code
+                User user = app.currentUser();
+                mongoClient = user.getMongoClient("mongodb-atlas");
+                mongoDatabase = mongoClient.getDatabase("RentMe");//the cluster(project)
+                MongoCollection <Document> mongoCollection = mongoDatabase.getCollection("Person");//the table
+
+                //a code that creates a
+                mongoCollection.insertOne(new Document("Email", user.getId()).append("Email",
+                        emailEditText.getText().toString()) ).getAsync(result -> {
+                            if(result.isSuccess()) {
+                                Log.v("Data", "Data Inserted Successfully");
+                                Snackbar.make(view, "Data Inserted Successfully", Snackbar.LENGTH_LONG)
+                                        .setAction("Action", null).show();
+                            }
+                            else
+                                Log.v("Data","our Error " + result.getError().toString());
+                });
+                //a code that creates a
+                mongoCollection.insertOne(new Document("Password", user.getId()).append("Password",
+                        passwordEditText.getText().toString()) ).getAsync(result -> {
+                            if(result.isSuccess()) {
+                                Log.v("Data", "Data Inserted Successfully");
+                                Snackbar.make(view, "Data Inserted Successfully", Snackbar.LENGTH_LONG)
+                                        .setAction("Action", null).show();
+                            }
+                            else
+                                Log.v("Data","our Error " + result.getError().toString());
+                });
+
+
+
+
+                //create a new activity
                 Intent intentLoadNewActivity = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intentLoadNewActivity);
+                startActivity(intentLoadNewActivity);//start the new activity.
+
+
             }
         });
 

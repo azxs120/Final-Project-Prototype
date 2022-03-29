@@ -8,18 +8,23 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
+import io.realm.mongodb.mongo.MongoClient;
+import io.realm.mongodb.mongo.MongoDatabase;
+
 public class MainActivity extends AppCompatActivity {
     private ImageButton homeBtn;
     private ImageButton callHandlingBtn;
     private ImageButton myHistoryBtn;
     private ImageButton searchBtn;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //wire yp the button to do stuff
+        //wire up the button to do stuff
         //get the btn
         homeBtn = (ImageButton) findViewById(R.id.homeBtn);
         callHandlingBtn = (ImageButton) findViewById(R.id.callBtn);
