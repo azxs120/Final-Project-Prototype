@@ -61,6 +61,20 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //DB code
+                app.loginAsync(Credentials.anonymous(), new App.Callback<User>() {
+                    @Override
+                    public void onResult(App.Result<User> result) {
+
+                    }
+                });
+
+
+
+
+
+
+
+
                 User user = app.currentUser();
                 mongoClient = user.getMongoClient("mongodb-atlas");
                 mongoDatabase = mongoClient.getDatabase("RentMe");//the cluster(project)
@@ -78,6 +92,7 @@ public class LoginActivity extends AppCompatActivity {
                     else
                         Log.v("Data","our Error " + result.getError().toString());
                 });
+
 
                 //create a new activity
                 Intent intentLoadNewActivity = new Intent(LoginActivity.this, MainActivity.class);
