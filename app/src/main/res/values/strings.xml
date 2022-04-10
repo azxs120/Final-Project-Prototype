@@ -2,7 +2,7 @@
 
     <string name="app_name">תשכיר לי</string>
 
-    <string name="searchLandlordTenant">חפש</string>
+    <string name="searchLandlordTenant"> Search for a tenant/landlord by ID </string>
     <string name="searchApartment">מצא דירה</string>
     <string name="callHandling">טיפול בקריאות</string>
     <string name="myHistory">ההיסטוריה שלי</string>
@@ -47,6 +47,7 @@
     <string name="login">Login</string>
     <string name="login_Btn">LoginBtn</string>
     <string name="fb_btn">FB_Btn</string>
+    <string name="search_for_a_tenant_landlord_by_id">Search for a tenant/landlord by ID</string>
 
 
 </resources>
