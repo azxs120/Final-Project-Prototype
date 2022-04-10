@@ -3,6 +3,7 @@ package com.example.prototype;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MenuItemCompat;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 
@@ -50,6 +51,15 @@ public class FindPersonActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Display click item position in toast
                 Toast.makeText(getApplicationContext(), adapter.getItem(position), Toast.LENGTH_SHORT).show();
+                String IdNumber = getApplicationContext().toString();
+                //take the id number to PersonInfoActivity
+                Intent intent = new Intent(FindPersonActivity.this,PersonInfoActivity.class);
+                intent.putExtra("keyId",IdNumber);
+                startActivity(intent);
+                //set what happens when the user clicks on the item
+                Intent intentLoadNewActivity = new Intent(FindPersonActivity.this, PersonInfoActivity.class);
+                startActivity(intentLoadNewActivity);
+
             }
 
         });
