@@ -58,22 +58,17 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn =  findViewById(R.id.loginBtn);
         //set what happens when the user clicks "Login"
         loginBtn.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 //DB code
-                app.loginAsync(Credentials.anonymous(), new App.Callback<User>() {
+                Credentials credentials = Credentials.emailPassword(emailEditText.getText().toString(), passwordEditText.getText().toString());
+                app.loginAsync(credentials, new App.Callback<User>() {
                     @Override
                     public void onResult(App.Result<User> result) {
 
                     }
                 });
-
-
-
-
-
-
-
 
                 User user = app.currentUser();
                 mongoClient = user.getMongoClient("mongodb-atlas");
