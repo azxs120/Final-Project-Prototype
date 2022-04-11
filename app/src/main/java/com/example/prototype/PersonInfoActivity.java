@@ -13,6 +13,7 @@ public class PersonInfoActivity extends AppCompatActivity {
     private TextView idNumber;
     private Button HistoryButton;
     private Button ConnectionButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,8 +24,10 @@ public class PersonInfoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String id = intent.getStringExtra("keyId");
         idNumber.setText(id);
+        ConnectionButton=(Button) findViewById(R.id.ConnectionButton);
+        HistoryButton=(Button) findViewById(R.id.HistoryButton);
         //set what happens when the user clicks view history
-     /*  HistoryButton.setOnClickListener(new View.OnClickListener() {
+        ConnectionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intentLoadNewActivity = new Intent(PersonInfoActivity.this, ViewHistoryActivity.class);
@@ -32,12 +35,12 @@ public class PersonInfoActivity extends AppCompatActivity {
             }
         });
 
-        ConnectionButton.setOnClickListener(new View.OnClickListener() {
+        HistoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intentLoadNewActivity = new Intent(PersonInfoActivity.this, ViewHistoryActivity.class);
                 startActivity(intentLoadNewActivity);
             }
-        });*/
+        });
     }
 }
