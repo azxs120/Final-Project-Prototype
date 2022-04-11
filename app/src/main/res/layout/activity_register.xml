@@ -8,25 +8,6 @@
     tools:context=".RegisterActivity">
 
 
-    <EditText
-        android:id="@+id/enterEmail"
-        android:layout_width="300dp"
-        android:layout_height="48dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="65dp"
-        android:layout_marginEnd="54dp"
-        android:autofillHints="email"
-        android:background="#11000000"
-        android:drawableStart="@drawable/ic_action_user"
-        android:ems="10"
-        android:hint="@string/email"
-        android:inputType="textEmailAddress"
-        android:textColorHint="@color/white"
-        android:textSize="25sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/enterFirstName"
@@ -34,8 +15,7 @@
         android:layout_height="48dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="52dp"
+        android:layout_marginTop="20dp"
         android:autofillHints="First Name"
         android:background="#11000000"
         android:drawableStart="@drawable/ic_action_user"
@@ -45,7 +25,9 @@
         android:textColorHint="@color/white"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enterEmail" />
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/enterLastName"
@@ -54,7 +36,6 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="15dp"
-        android:layout_marginEnd="52dp"
         android:autofillHints="last name"
         android:background="#11000000"
         android:drawableStart="@drawable/ic_action_user"
@@ -64,8 +45,28 @@
         android:textColorHint="@color/white"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/enterFirstName" />
 
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="15dp"
+        android:autofillHints="email"
+        android:background="#11000000"
+        android:drawableStart="@drawable/ic_action_lock"
+        android:ems="10"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        android:textColorHint="@color/white"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enterLastName" />
 
     <EditText
         android:id="@+id/id"
@@ -74,7 +75,6 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="15dp"
-        android:layout_marginEnd="52dp"
         android:autofillHints="id"
         android:background="#11000000"
         android:drawableStart="@drawable/ic_action_user"
@@ -84,7 +84,9 @@
         android:textColorHint="@color/white"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enterLastName" />
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email" />
 
     <EditText
         android:id="@+id/password"
@@ -92,17 +94,112 @@
         android:layout_height="48dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="52dp"
-        android:autofillHints="id"
+        android:layout_marginTop="12dp"
+        android:autofillHints="password"
         android:background="#11000000"
-        android:drawableStart="@drawable/ic_action_user"
+        android:drawableStart="@drawable/ic_action_lock"
         android:ems="10"
-        android:hint="ID"
-        android:inputType="number"
+        android:hint="Password"
+        android:inputType="textPassword"
         android:textColorHint="@color/white"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/id" />
+
+    <EditText
+        android:id="@+id/renterPassword"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="15dp"
+        android:autofillHints="renterPassword"
+        android:background="#11000000"
+        android:drawableStart="@drawable/ic_action_lock"
+        android:ems="10"
+        android:hint="Renter Password"
+        android:inputType="textPassword"
+        android:textColorHint="@color/white"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="409dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/renterPassword" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider">
+
+        <RadioButton
+            android:id="@+id/tenant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="checkBtn"
+            android:textColor="@color/white"
+            android:layout_marginEnd="5dp"
+            android:text="Tenant"
+            android:checked="true"/>
+
+        <RadioButton
+            android:id="@+id/homeOwner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="checkBtn"
+            android:layout_marginEnd="5dp"
+            android:textColor="@color/white"
+            android:text="Home Owner" />
+
+        <RadioButton
+            android:id="@+id/tenantAndHomeOwner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="checkBtn"
+            android:layout_marginEnd="5dp"
+            android:textColor="@color/white"
+            android:text="Tenant + Home Owner" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/permission"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+    <Button
+        android:id="@+id/signUp"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:text="Sign Up"
+        android:textSize="20sp"
+        android:layout_marginTop="65dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.531"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="647dp"
+        app:layout_constraintTop_toBottomOf="@+id/permission"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
