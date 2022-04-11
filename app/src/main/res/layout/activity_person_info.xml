@@ -21,7 +21,6 @@
         android:textSize="20sp" />
 
 
-
     <Button
         android:id="@+id/ConnectionButton"
         android:layout_width="250dp"

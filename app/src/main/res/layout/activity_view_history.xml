@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ViewHistoryActivity"
+    android:orientation="vertical"
+    android:background="#66B9F9">
+
+
+    <EditText
+        android:id="@+id/ToDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fromDate"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="115dp"
+        android:layout_marginTop="37dp"
+        android:layout_marginEnd="115dp"
+        android:hint="select To date"
+        android:inputType="date"
+        android:minHeight="48dp"
+        android:textColor="@color/white" />
+
+    <EditText
+        android:id="@+id/fromDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="115dp"
+        android:layout_marginTop="182dp"
+        android:layout_marginEnd="115dp"
+        android:hint="select from date"
+        android:inputType="date"
+        android:minHeight="48dp"
+        android:textColor="@color/white" />
+
+    <EditText
+        android:id="@+id/messageBox"
+        android:layout_width="wrap_content"
+        android:layout_height="247dp"
+        android:layout_below="@+id/ToDate"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="49dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginEnd="49dp"
+        android:hint="Enter notes about the agreement"
+        android:inputType="textMultiLine"
+        />
+
+    <Button
+        android:id="@+id/sendButton"
+        android:layout_width="236dp"
+        android:layout_height="65dp"
+        android:layout_below="@+id/messageBox"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/custom_button"
+        android:text="Send" />
+
+
+</RelativeLayout>

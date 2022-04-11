@@ -18,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Prototype">
         <activity
+            android:name=".ViewHistoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".PersonInfoActivity"
             android:exported="false" />
         <activity
