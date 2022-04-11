@@ -26,6 +26,8 @@ public class FindPersonActivity extends AppCompatActivity {
     ArrayAdapter<String> adapter;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,14 +53,12 @@ public class FindPersonActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Display click item position in toast
                 Toast.makeText(getApplicationContext(), adapter.getItem(position), Toast.LENGTH_SHORT).show();
-                String IdNumber = getApplicationContext().toString();
+                String ID = adapter.getItem(position).toString();
                 //take the id number to PersonInfoActivity
                 Intent intent = new Intent(FindPersonActivity.this,PersonInfoActivity.class);
-                intent.putExtra("keyId",IdNumber);
+                intent.putExtra("keyId",ID);
                 startActivity(intent);
-                //set what happens when the user clicks on the item
-                Intent intentLoadNewActivity = new Intent(FindPersonActivity.this, PersonInfoActivity.class);
-                startActivity(intentLoadNewActivity);
+
 
             }
 

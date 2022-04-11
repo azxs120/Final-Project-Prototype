@@ -9,7 +9,7 @@
 
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/HistoryButton"
@@ -20,19 +20,7 @@
         android:textColor="@color/white"
         android:textSize="20sp" />
 
-    <TextView
-        android:id="@+id/UserID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textView9"
-        android:layout_alignBottom="@+id/textView11"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="186dp"
-        android:layout_marginEnd="115dp"
-        android:layout_marginBottom="52dp"
-        android:text="UserID"
-        android:textColor="@color/white"
-        android:textSize="20sp" />
+
 
     <Button
         android:id="@+id/ConnectionButton"
@@ -62,8 +50,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="72dp"
-        android:layout_marginEnd="48dp"
+        android:layout_marginStart="67dp"
+        android:layout_marginEnd="53dp"
         android:layout_marginBottom="299dp"
         android:background="@drawable/custom_button"
         android:text="View history"
@@ -101,20 +89,34 @@
         android:layout_marginStart="51dp"
         android:layout_marginEnd="31dp"
         android:layout_marginBottom="75dp"
-        android:layout_toStartOf="@+id/textView11"
+        android:layout_toStartOf="@+id/UserID"
         android:text="Selected Name:"
         android:textColor="@color/white"
         android:textSize="20sp" />
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/textView8"
         android:layout_alignParentStart="true"
         android:layout_marginStart="51dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginBottom="34dp"
+        android:layout_toStartOf="@+id/UserID"
         android:text="Selected ID:"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/UserID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/name"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="117dp"
+        android:layout_marginBottom="37dp"
+        android:text="IdNum"
         android:textColor="@color/white"
         android:textSize="20sp" />
 
