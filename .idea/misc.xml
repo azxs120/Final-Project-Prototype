@@ -3,12 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/debug/res/layout/activity_restore_password.xml" value="0.5541666666666667" />
+        <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.5165" />
+        <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/drawable/ic_launcher_background.xml" value="0.5165" />
+        <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/drawable/ic_search.xml" value="0.5165" />
+        <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/drawable/searchview_background.xml" value="0.5165" />
         <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/drawable/textview_border.xml" value="0.387" />
+        <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout-w1240dp/activity_restore_password.xml" value="0.584375" />
         <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/activity_add_new_call.xml" value="0.33" />
         <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/activity_call_handling.xml" value="0.2" />
         <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/activity_home.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/activity_login.xml" value="0.5" />
-        <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/activity_login.xml" value="0.33" />
+        <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/activity_main.xml" value="0.5" />
         <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/activity_main2.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/activity_new.xml" value="0.253125" />
         <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/activity_register.xml" value="0.33" />
