@@ -43,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
 
         Button loginBtn;
         Button register;
+        Button restorePassword;
         ImageView fbBtn = findViewById(R.id.fb_btn);
 
         //will contain the data that we want to add
@@ -94,6 +95,16 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intentLoadNewActivity);//start the new activity.
 
 
+            }
+        });
+
+        restorePassword =  findViewById(R.id.restorePassword);
+        //set what happens when the user clicks "מצא דירה"
+        restorePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentLoadNewActivity = new Intent(LoginActivity.this, RestorePasswordActivity.class);
+                startActivity(intentLoadNewActivity);
             }
         });
 
