@@ -15,7 +15,7 @@ import java.util.Calendar;
 
 public class ViewHistoryActivity extends AppCompatActivity {
     EditText fromDate;
-    EditText ToDate;
+    EditText toDate;
     DatePickerDialog.OnDateSetListener onDateSetListener;
     DatePickerDialog.OnDateSetListener onDateSetListener2;
     @Override
@@ -24,7 +24,7 @@ public class ViewHistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_history);
 
         fromDate = findViewById(R.id.fromDate);
-        ToDate = findViewById(R.id.ToDate);
+        toDate = findViewById(R.id.toDate);
 
         final Calendar calendarFrom = Calendar.getInstance();
         final int yearFrom = calendarFrom.get(Calendar.YEAR);
@@ -44,7 +44,7 @@ public class ViewHistoryActivity extends AppCompatActivity {
                 datePickerDialog.show();
                 }
             });
-        ToDate.setOnClickListener(new View.OnClickListener() {
+        toDate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
                         ViewHistoryActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth,
@@ -67,7 +67,7 @@ public class ViewHistoryActivity extends AppCompatActivity {
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month = month + 1;
                 String date = dayOfMonth+"/"+month+"/"+year;
-                ToDate.setText(date);
+                toDate.setText(date);
             }
         };
 
