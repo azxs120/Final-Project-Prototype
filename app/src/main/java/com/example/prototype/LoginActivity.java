@@ -59,43 +59,29 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn =  findViewById(R.id.loginBtn);
         //set what happens when the user clicks "Login"
         loginBtn.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 //DB code
+                //is the textBoxes empty
                 if(!(emailEditText.getText().toString().isEmpty() ) && (!(passwordEditText.getText().toString()).isEmpty()))
                 {
                     Credentials credentials = Credentials.emailPassword(emailEditText.getText().toString(), passwordEditText.getText().toString());
                     app.loginAsync(credentials, new App.Callback<User>() {
                         @Override
                         public void onResult(App.Result<User> result) {
-
+                            if (result.isSuccess()){
+                                //create a new activity
+                                Intent intentLoadNewActivity = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intentLoadNewActivity);//start the new activity.
+                            }
+                            else{
+                                Snackbar.make(view, "Incorrect user or password", Snackbar.LENGTH_LONG)
+                                        .setAction("Action", null).show();
+                            }
                         }
                     });
 
-                    User user = app.currentUser();
-                    mongoClient = user.getMongoClient("mongodb-atlas");
-                    mongoDatabase = mongoClient.getDatabase("RentMe");//the cluster(project)
-
-                    Document doc = new Document();
-                    doc.append("Email", emailEditText.getText().toString());
-                    doc.append("Password", passwordEditText.getText().toString());
-
-                    mongoDatabase.getCollection("Person").insertOne(doc).getAsync(result -> {
-                        if (result.isSuccess()) {
-                            Log.v("Data", "Data Inserted Successfully");
-                            Snackbar.make(view, "Data Inserted Successfully", Snackbar.LENGTH_LONG)
-                                    .setAction("Action", null).show();
-                        } else
-                            Log.v("Data", "our Error " + result.getError().toString());
-                    });
                 }
-
-                //create a new activity
-                Intent intentLoadNewActivity = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intentLoadNewActivity);//start the new activity.
-
-
             }
         });
 

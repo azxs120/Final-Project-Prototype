@@ -15,6 +15,12 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+
+import org.bson.Document;
+
+import io.realm.mongodb.User;
+
 public class RegisterActivity extends AppCompatActivity {
     final int PASSWORD_LEN = 6;
     final int ID = 9;
@@ -48,6 +54,31 @@ public class RegisterActivity extends AppCompatActivity {
                 int radioId = radioGroup.getCheckedRadioButtonId();
                 //get the btn
                 radioButton = findViewById(radioId);
+
+                /*
+
+                                    User user = app.currentUser();
+                    mongoClient = user.getMongoClient("mongodb-atlas");
+                    mongoDatabase = mongoClient.getDatabase("RentMe");//the cluster(project)
+
+                User user = app.currentUser();
+                mongoClient = user.getMongoClient("mongodb-atlas");
+                mongoDatabase = mongoClient.getDatabase("RentMe");//the cluster(project)
+
+                Document doc = new Document();
+                doc.append("Email", emailEditText.getText().toString());
+                doc.append("Password", passwordEditText.getText().toString());
+
+                mongoDatabase.getCollection("Person").insertOne(doc).getAsync(result -> {
+                    if (result.isSuccess()) {
+                        Log.v("Data", "Data Inserted Successfully");
+                        Snackbar.make(view, "Data Inserted Successfully", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    } else
+                        Log.v("Data", "our Error " + result.getError().toString());
+                });
+                */
+
 
                 //input validation
                 if (validateFirstName(view))
