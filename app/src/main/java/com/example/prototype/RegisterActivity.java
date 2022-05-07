@@ -19,7 +19,13 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.bson.Document;
 
+import io.realm.Realm;
+import io.realm.mongodb.App;
+import io.realm.mongodb.AppConfiguration;
+import io.realm.mongodb.Credentials;
 import io.realm.mongodb.User;
+import io.realm.mongodb.mongo.MongoClient;
+import io.realm.mongodb.mongo.MongoDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
     final int PASSWORD_LEN = 6;
@@ -34,14 +40,21 @@ public class RegisterActivity extends AppCompatActivity {
     EditText id;
     EditText firstName;
     EditText lastName;
-    boolean toastFlag = false;
+
+    MongoDatabase mongoDatabase;
+    MongoClient mongoClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
+        final String appId = "application-1-sfnjp";
         this.setTitle("Register A New User");
+
+        //init app
+        Realm.init(this);
+        //this will build a new app object
+        App app = new App(new AppConfiguration.Builder(appId).build());
 
         radioGroup = findViewById(R.id.radioGroup);
         textView = findViewById(R.id.permission);
@@ -55,30 +68,6 @@ public class RegisterActivity extends AppCompatActivity {
                 //get the btn
                 radioButton = findViewById(radioId);
 
-                /*
-
-                                    User user = app.currentUser();
-                    mongoClient = user.getMongoClient("mongodb-atlas");
-                    mongoDatabase = mongoClient.getDatabase("RentMe");//the cluster(project)
-
-                User user = app.currentUser();
-                mongoClient = user.getMongoClient("mongodb-atlas");
-                mongoDatabase = mongoClient.getDatabase("RentMe");//the cluster(project)
-
-                Document doc = new Document();
-                doc.append("Email", emailEditText.getText().toString());
-                doc.append("Password", passwordEditText.getText().toString());
-
-                mongoDatabase.getCollection("Person").insertOne(doc).getAsync(result -> {
-                    if (result.isSuccess()) {
-                        Log.v("Data", "Data Inserted Successfully");
-                        Snackbar.make(view, "Data Inserted Successfully", Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show();
-                    } else
-                        Log.v("Data", "our Error " + result.getError().toString());
-                });
-                */
-
 
                 //input validation
                 if (validateFirstName(view))
@@ -86,8 +75,39 @@ public class RegisterActivity extends AppCompatActivity {
                         if (validateEmail(view))
                             if (validateId(view))
                                 if (validatePassword(view)) {
-                                    //create a new activity
-                                    textView.setText("User was created successfully.");
+
+
+                                    //login to table
+                                    app.loginAsync(Credentials.anonymous(), new App.Callback<User>() {
+                                        @Override
+                                        public void onResult(App.Result<User> result) {
+                                            if(result.isSuccess()){
+                                                Log.v("User", "Logged In anonymously");
+                                            }else
+                                                Log.v("User", "Failed to Login");
+                                        }
+                                    });
+
+                                    User user = app.currentUser();
+                                    mongoClient = user.getMongoClient("mongodb-atlas");
+                                    mongoDatabase = mongoClient.getDatabase("RentMe");//the cluster(project)
+
+                                    Document doc = new Document();
+                                    doc.append("Email", email.getText().toString());
+                                    doc.append("Password", password.getText().toString());
+                                    doc.append("ID", id.getText().toString());
+
+                                    //write to table.
+                                    mongoDatabase.getCollection("Person").insertOne(doc).getAsync(result -> {
+                                        if (result.isSuccess()) {
+                                            Log.v("Data", "Data Inserted Successfully");
+                                            Snackbar.make(view, "Data Inserted Successfully", Snackbar.LENGTH_LONG)
+                                                    .setAction("Action", null).show();
+                                            //create a new activity
+                                            textView.setText("User was created successfully.");
+                                        } else
+                                            Log.v("Data", "our Error " + result.getError().toString());
+                                    });
 
                                     Runnable r = new Runnable() {
                                         @Override
@@ -98,8 +118,6 @@ public class RegisterActivity extends AppCompatActivity {
                                     };
                                     Handler h =  new Handler();
                                     h.postDelayed(r, 5000);
-
-
                                 }
                     else
                         textView.setText("User was NOT created successfully.");
@@ -116,7 +134,7 @@ public class RegisterActivity extends AppCompatActivity {
      * @return true if the name have only letters.
      */
     public boolean validateFirstName(View view) {
-        firstName = findViewById(R.id.enterFirstName);
+        this.firstName = findViewById(R.id.enterFirstName);
 
         //cent be empty
         if (firstName.getText().toString().isEmpty()) {
@@ -141,7 +159,6 @@ public class RegisterActivity extends AppCompatActivity {
      * @return true if the name have only letters.
      */
     public boolean validateLastName(View view) {
-        firstName = findViewById(R.id.enterFirstName);
         lastName = findViewById(R.id.enterLastName);
 
         //cent be empty
@@ -177,7 +194,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     /**
-     * a method that chacks if the password is valid
+     * a method that checks if the password is valid
      *
      * @param view
      * @return true is the password is at least 6 characters long and the passwords match

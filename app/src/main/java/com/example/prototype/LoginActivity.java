@@ -61,7 +61,6 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //DB code
                 //is the textBoxes empty
                 if(!(emailEditText.getText().toString().isEmpty() ) && (!(passwordEditText.getText().toString()).isEmpty()))
                 {
@@ -80,7 +79,6 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         }
                     });
-
                 }
             }
         });
