@@ -8,6 +8,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+
 import io.realm.mongodb.mongo.MongoClient;
 import io.realm.mongodb.mongo.MongoDatabase;
 
@@ -19,11 +24,11 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         //wire up the button to do stuff
         //get the btn
         homeBtn = (ImageButton) findViewById(R.id.homeBtn);
@@ -31,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         myHistoryBtn = (ImageButton) findViewById(R.id.myHistoryBtn);
         searchBtn = (ImageButton) findViewById(R.id.searchBtn);
 
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         //set what happens when the user clicks "מצא דירה"
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override

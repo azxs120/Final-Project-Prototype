@@ -127,7 +127,8 @@
             android:layout_height="48dp"
             android:layout_margin="20dp"
             android:src="@drawable/google"
-            android:contentDescription="@string/login_Btn" />
+            android:contentDescription="@string/login_Btn"
+            android:id="@+id/google_btn"/>
         <ImageView
             android:layout_width="48dp"
             android:layout_height="48dp"

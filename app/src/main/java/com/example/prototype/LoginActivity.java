@@ -1,5 +1,6 @@
 package com.example.prototype;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,8 +12,11 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.bson.Document;
@@ -34,7 +38,10 @@ public class LoginActivity extends AppCompatActivity {
     //DB instance
     MongoDatabase mongoDatabase;
     MongoClient mongoClient;
-
+    //sign in with google
+    GoogleSignInOptions gso;
+    GoogleSignInClient gsc;
+    ImageView googleBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,8 +62,23 @@ public class LoginActivity extends AppCompatActivity {
         App app = new App(new AppConfiguration.Builder(appId).build());
 
 
+        loginBtn = findViewById(R.id.loginBtn);
 
-        loginBtn =  findViewById(R.id.loginBtn);
+        //login google
+        googleBtn = findViewById(R.id.google_btn);
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        gsc = GoogleSignIn.getClient(this, gso);
+
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+        if(acct!=null){
+            navigateToSecondActivity();
+        }
+        googleBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                signIn();
+            }
+        });
+
         //set what happens when the user clicks "Login"
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,5 +134,32 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+    }
+   //sign in with google
+    void signIn(){
+        Intent signInIntent = gsc.getSignInIntent();
+        startActivityForResult(signInIntent,1000);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1000){
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+
+            try {
+                task.getResult(ApiException.class);
+                navigateToSecondActivity();
+            } catch (ApiException e) {
+                e.printStackTrace();
+                Toast.makeText(getApplicationContext(),"Something went wrong",Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+    void navigateToSecondActivity(){
+        finish();
+        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+        startActivity(intent);
     }
 }
