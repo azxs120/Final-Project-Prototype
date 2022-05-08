@@ -14,7 +14,7 @@ import com.example.prototype.R;
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-public class SectionsPagerAdapter extends FragmentPagerAdapter {
+public class SectionsPagerAdapter extends FragmentPagerAdapter  {
 
     @StringRes
     private static final int[] TAB_TITLES = new int[]{R.string.closedCallsTab, R.string.handlingCallsTab, R.string.ongoingCallsTab};

@@ -22,9 +22,9 @@
     <string name="facebook_client_token">56789</string>
 
 
-    <string name="ongoingCallsTab">קריאות בתהליך</string>
-    <string name="handlingCallsTab">קריאות בטיפול</string>
-    <string name="closedCallsTab">קריאות סגורות</string>
+    <string name="ongoingCallsTab">Ongoing Calls</string>
+    <string name="handlingCallsTab">Handling Calls</string>
+    <string name="closedCallsTab">Closed Calls</string>
     <string name="city">City</string>
     <string name="street">Street</string>
     <string name="mamad">ממד</string>

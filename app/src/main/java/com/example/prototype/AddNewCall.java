@@ -2,7 +2,13 @@ package com.example.prototype;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +17,9 @@ import android.widget.Toast;
 
 
 import com.example.prototype.DBClasess.Call;
+
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class AddNewCall extends AppCompatActivity {
@@ -24,8 +33,8 @@ public class AddNewCall extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_call);
         this.setTitle("פתח קריאה חדשה");
-        title   = (EditText)findViewById(R.id.subject);
-        theText = (EditText)findViewById(R.id.messageBody);
+        title = (EditText) findViewById(R.id.subject);
+        theText = (EditText) findViewById(R.id.messageBody);
 
         int duration = Toast.LENGTH_SHORT;
 
@@ -35,15 +44,60 @@ public class AddNewCall extends AppCompatActivity {
         newCallBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //for the snooze
+                createNotificationChannel();
+
+                Toast.makeText(AddNewCall.this, "Snooze Set!", Toast.LENGTH_LONG).show();
+
+                Intent intent = new Intent(AddNewCall.this, Snooze.class);
+
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(AddNewCall.this, 0, intent, 0);
+                AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+
+                long timeS = System.currentTimeMillis();
+                long fiveSec = 1000 * 5;
+
+                Date date = new Date();
+
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(System.currentTimeMillis());
+                calendar.set(Calendar.HOUR_OF_DAY, date.getHours());
+                calendar.set(Calendar.MINUTE, date.getMinutes());
+                calendar.set(Calendar.SECOND, 0);
+
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 5000, pendingIntent);
+                //alarmManager.set(AlarmManager.RTC_WAKEUP, timeS + fiveSec, pendingIntent);
+
+                //FOR THE REST
                 //Snackbar.make(view, title.getText().toString(), Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                Call call = new Call("123", "444", title.getText().toString(),theText.getText().toString());
+                Call call = new Call("123", "444", title.getText().toString(), theText.getText().toString());
                 Toast toast = Toast.makeText(getApplicationContext(), call.toString(), duration);
                 toast.show();
 
                 // how to get the text from the textBox  mEdit.getText().toString()
-                Intent intentLoadNewActivity = new Intent(AddNewCall.this, CallHandlingActivity.class);
-                startActivity(intentLoadNewActivity);
+                //Intent intentLoadNewActivity = new Intent(AddNewCall.this, CallHandlingActivity.class);
+                //startActivity(intentLoadNewActivity);
             }
         });
+    }
+
+    /**
+     * a method for the snooze
+     */
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "name";
+            String description = "channel";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("notifyLemubit", name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService((NotificationManager.class));
+            notificationManager.createNotificationChannel(channel);
+
+
+        }
     }
 }
