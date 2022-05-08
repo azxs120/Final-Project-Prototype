@@ -96,6 +96,9 @@ public class RegisterActivity extends AppCompatActivity {
                                     doc.append("Email", email.getText().toString());
                                     doc.append("Password", password.getText().toString());
                                     doc.append("ID", id.getText().toString());
+                                    doc.append("Password", password.getText().toString());
+                                    doc.append("First Name", firstName.getText().toString());
+                                    doc.append("Last Name", lastName.getText().toString());
 
                                     //write to table.
                                     mongoDatabase.getCollection("Person").insertOne(doc).getAsync(result -> {
