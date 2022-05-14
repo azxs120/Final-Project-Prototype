@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         myHistoryBtn = (ImageButton) findViewById(R.id.myHistoryBtn);
         searchBtn = (ImageButton) findViewById(R.id.searchBtn);
 
-        //set what happens when the user clicks "מצא דירה"
+        //set what happens when the user clicks "Find Apartment"
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //set what happens when the user clicks "טיפול בקריאות"
+        //set what happens when the user clicks "Call Handling"
         callHandlingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //set what happens when the user clicks"ההיסטוריה שלי"
+        //set what happens when the user clicks"My History"
         myHistoryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //set what happens when the user clicks"חפש שוכר/משכיר"
+        //set what happens when the user clicks"Find Person"
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

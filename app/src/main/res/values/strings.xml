@@ -1,11 +1,11 @@
 <resources>
 
-    <string name="app_name">תשכיר לי</string>
+    <string name="app_name">RentMe</string>
 
     <string name="searchLandlordTenant"> Search for a tenant/landlord by ID </string>
-    <string name="searchApartment">מצא דירה</string>
-    <string name="callHandling">טיפול בקריאות</string>
-    <string name="myHistory">ההיסטוריה שלי</string>
+    <string name="searchApartment">Search Apartment</string>
+    <string name="callHandling">Call Handling</string>
+    <string name="myHistory">My History</string>
     <string name="find_me_a_person">find me a person</string>
     <string name="my_history">my_History</string>
     <string name="find_my_an_apartment">find my an Apartment</string>
@@ -27,18 +27,18 @@
     <string name="closedCallsTab">Closed Calls</string>
     <string name="city">City</string>
     <string name="street">Street</string>
-    <string name="mamad">ממד</string>
-    <string name="furnished">מרוהטת</string>
-    <string name="pets">חיות מחמד</string>
-    <string name="renovated">משופצת</string>
-    <string name="disabledAcess">גישה לנכים</string>
-    <string name="elevator">מעלית</string>
-    <string name="parking">חניה</string>
-    <string name="balcony">מרפסת</string>
-    <string name="airConditioning">מיזוג</string>
-    <string name="bars">סורגים</string>
-    <string name="choose">בחרו מתוך חיפוש מתקדם</string>
-    <string name="find">חפש</string>
+    <string name="mamad">Panic Room</string>
+    <string name="furnished">Furnished</string>
+    <string name="pets">Pets</string>
+    <string name="renovated">Renovated</string>
+    <string name="disabledAcess">Disabled Acess</string>
+    <string name="elevator">Elevator</string>
+    <string name="parking">Parking</string>
+    <string name="balcony">Balcony</string>
+    <string name="airConditioning">Air Conditioning</string>
+    <string name="bars">Bars</string>
+    <string name="choose">Choose Advanced Search</string>
+    <string name="find">Find</string>
     <string name="server_client_id">WEB CLIENT ID</string>
     <string name="our_logo">Our Logo</string>
     <string name="email">Email</string>
@@ -47,7 +47,7 @@
     <string name="login">Login</string>
     <string name="login_Btn">LoginBtn</string>
     <string name="fb_btn">FB_Btn</string>
-    <string name="search_for_a_tenant_landlord_by_id">Search for a tenant/landlord by ID</string>
+    <string name="search_for_a_tenant_landlord_by_id">Search Person</string>
 
 
 </resources>

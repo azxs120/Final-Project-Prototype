@@ -34,7 +34,7 @@ public class FindPersonActivity extends AppCompatActivity {
         setContentView(R.layout.activity_find_person);
 
 
-        this.setTitle("חפש");
+        this.setTitle("Search Person");
         //Assign variable
         listView = findViewById(R.id.userList);
         //add item in array list
@@ -42,7 +42,7 @@ public class FindPersonActivity extends AppCompatActivity {
             stringArrayList.add("Item" + i);
 
 
-        //Imitialize adapter
+        //Initialize adapter
         adapter = new ArrayAdapter<>(FindPersonActivity.this
                 , android.R.layout.simple_list_item_1, stringArrayList);
         //Set adapter on list view

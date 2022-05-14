@@ -97,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         register =  findViewById(R.id.Register);
-        //set what happens when the user clicks "מצא דירה"
+        //set what happens when the user clicks "Find Apartment"
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

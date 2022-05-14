@@ -20,6 +20,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        this.setTitle("מצא דירה");
+        this.setTitle("Search Apartment");
     }
 }

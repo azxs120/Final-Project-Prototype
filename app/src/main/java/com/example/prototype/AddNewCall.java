@@ -32,7 +32,7 @@ public class AddNewCall extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_call);
-        this.setTitle("פתח קריאה חדשה");
+        this.setTitle("Open New Call");
         title = (EditText) findViewById(R.id.subject);
         theText = (EditText) findViewById(R.id.messageBody);
 
