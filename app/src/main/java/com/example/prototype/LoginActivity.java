@@ -61,20 +61,28 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //is the textBoxes empty
 
-                Intent intentLoadNewActivity = new Intent(LoginActivity.this, MainActivity.class);
+
+
+
+                //THIS IS JUST FOR TESTING!!!
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 //add the user email to the intent so we will be able to use it in the next intent
-                intentLoadNewActivity.putExtra("userEmail", emailEditText.getText().toString());
-                startActivity(intentLoadNewActivity);//start the new activity.
-                if(!(emailEditText.getText().toString().isEmpty() ) && (!(passwordEditText.getText().toString()).isEmpty()))
-                {
+                intent.putExtra("userEmail", emailEditText.getText().toString());
+                startActivity(intent);//start the new activity.
+
+
+
+
+                if(!(emailEditText.getText().toString().isEmpty() ) && (!(passwordEditText.getText().toString()).isEmpty())) {
                     Credentials credentials = Credentials.emailPassword(emailEditText.getText().toString(), passwordEditText.getText().toString());
                     app.loginAsync(credentials, new App.Callback<User>() {
                         @Override
                         public void onResult(App.Result<User> result) {
                             if (result.isSuccess()){
                                 //create a new activity
-                                Intent intentLoadNewActivity = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(intentLoadNewActivity);//start the new activity.
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                intent.putExtra("userEmail", emailEditText.getText().toString());
+                                startActivity(intent);//start the new activity.
                             }
                             else{
                                 Snackbar.make(view, "Incorrect user or password", Snackbar.LENGTH_LONG)

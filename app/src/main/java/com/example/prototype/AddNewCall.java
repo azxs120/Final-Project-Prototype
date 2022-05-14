@@ -82,6 +82,9 @@ public class AddNewCall extends AppCompatActivity {
                 //create the relevant Call obj
                 if(checkBtn(view) == 0) {//im a Tenant
                     //get the person using the "userEmail" we will get the landlord email(and chack that its not a null)
+                    //create a connection to the db
+
+
                     newCall = new Call("123", userEmail, title.getText().toString(), theText.getText().toString());
 
                 }

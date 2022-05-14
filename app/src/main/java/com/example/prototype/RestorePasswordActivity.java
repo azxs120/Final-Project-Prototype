@@ -52,26 +52,6 @@ public class RestorePasswordActivity extends AppCompatActivity {
                     //create a new activity
                     textView.setText("password was sent to the email successfully");
 
-/*
-                    Credentials credentials = Credentials.emailPassword(email.getText().toString(), passwordEditText.getText().toString());
-
-                    app.
-                    app.loginAsync(credentials, new App.Callback<User>() {
-                        @Override
-                        public void onResult(App.Result<User> result) {
-                            if (result.isSuccess()){
-                                //create a new activity
-                                Intent intentLoadNewActivity = new Intent(RestorePasswordActivity.this, MainActivity.class);
-                                startActivity(intentLoadNewActivity);//start the new activity.
-                            }
-                            else{
-                                Snackbar.make(view, "Incorrect user or password", Snackbar.LENGTH_LONG)
-                                        .setAction("Action", null).show();
-                            }
-                        }
-                    });
-*/
-
                     Intent mail = new Intent(Intent.ACTION_SEND);
                     mail.putExtra(Intent.EXTRA_EMAIL, new String[]{email.getText().toString()});
                     mail.putExtra(Intent.EXTRA_SUBJECT, "your password By RentMe");

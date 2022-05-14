@@ -15,6 +15,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.prototype.DBConnections.MongoConnection;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.bson.Document;
@@ -77,7 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 if (validatePassword(view)) {
 
 
-                                    //login to table
+                                 /*   //login to table
                                     app.loginAsync(Credentials.anonymous(), new App.Callback<User>() {
                                         @Override
                                         public void onResult(App.Result<User> result) {
@@ -91,6 +92,10 @@ public class RegisterActivity extends AppCompatActivity {
                                     User user = app.currentUser();
                                     mongoClient = user.getMongoClient("mongodb-atlas");
                                     mongoDatabase = mongoClient.getDatabase("RentMe");//the cluster(project)
+*/
+
+                                    MongoConnection mc = new MongoConnection();
+                                    MongoDatabase mongoDatabase = mc.getConnection();
 
                                     Document doc = new Document();
                                     doc.append("Email", email.getText().toString());
