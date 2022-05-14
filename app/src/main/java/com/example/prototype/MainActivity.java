@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         myHistoryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentLoadNewActivity = new Intent(MainActivity.this, HomeActivity.class);
+                Intent intentLoadNewActivity = new Intent(MainActivity.this, MyHistory.class);
                 startActivity(intentLoadNewActivity);
             }
         });

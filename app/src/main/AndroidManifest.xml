@@ -18,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Prototype">
         <activity
+            android:name=".MyHistory"
+            android:exported="false" />
+        <activity
             android:name=".ViewHistoryActivity"
             android:exported="false" />
         <activity
@@ -57,8 +60,7 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <receiver android:name=".Snooze"/>
-
+        <receiver android:name=".Snooze" />
     </application>
 
 </manifest>
