@@ -54,8 +54,6 @@ public class LoginActivity extends AppCompatActivity {
         //this will build a new app object
         App app = new App(new AppConfiguration.Builder(appId).build());
 
-
-
         loginBtn =  findViewById(R.id.loginBtn);
         //set what happens when the user clicks "Login"
         loginBtn.setOnClickListener(new View.OnClickListener() {
@@ -64,6 +62,8 @@ public class LoginActivity extends AppCompatActivity {
                 //is the textBoxes empty
 
                 Intent intentLoadNewActivity = new Intent(LoginActivity.this, MainActivity.class);
+                //add the user email to the intent so we will be able to use it in the next intent
+                intentLoadNewActivity.putExtra("userEmail", emailEditText.getText().toString());
                 startActivity(intentLoadNewActivity);//start the new activity.
                 if(!(emailEditText.getText().toString().isEmpty() ) && (!(passwordEditText.getText().toString()).isEmpty()))
                 {

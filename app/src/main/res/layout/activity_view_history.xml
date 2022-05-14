@@ -59,8 +59,8 @@
         android:hint="Enter notes about the agreement"
         android:inputType="textMultiLine"
         android:textAlignment="center"
-        android:textColorHint="@color/white"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
 
     <Button
         android:id="@+id/sendButton"

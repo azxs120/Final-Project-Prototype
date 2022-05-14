@@ -26,9 +26,16 @@ public class CallHandlingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityCallHandlingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        String userEmail = null;
+
+        //get the user Email from the previous activity
+        Bundle extras = getIntent().getExtras();//get all of the extra data
+        if(extras != null)
+            userEmail = extras.getString("userEmail");//extract the specific data we need
+        String finalUserEmail = userEmail;//put it in a final variable
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = binding.viewPager;
@@ -43,6 +50,7 @@ public class CallHandlingActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     //open the "AddNewCall" Activity.
                     Intent intentLoadNewActivity = new Intent(CallHandlingActivity.this, AddNewCall.class);
+                    intentLoadNewActivity.putExtra("userEmail", finalUserEmail);
                     startActivity(intentLoadNewActivity);
                 }
         });

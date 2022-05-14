@@ -4,17 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#66B9F9"
     tools:context=".AddNewCall">
 
     <EditText
         android:id="@+id/subject"
         android:layout_width="950px"
         android:layout_height="120px"
-        android:layout_marginTop="136dp"
-
+        android:layout_marginTop="40dp"
+        android:textColorHint="@color/white"
         android:layout_marginEnd="20dp"
-        android:background="@drawable/textview_border"
         android:ems="10"
+        android:background="@drawable/bg_round"
         android:hint="Subject"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,8 +26,9 @@
         android:layout_width="950px"
         android:layout_height="1000px"
         android:layout_marginTop="40dp"
+        android:background="@drawable/bg_round"
+        android:textColorHint="@color/white"
         android:layout_marginEnd="20dp"
-        android:background="@drawable/textview_border"
         android:ems="10"
         android:gravity="top"
 
@@ -36,13 +38,46 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/subject" />
 
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/messageBody">
+
+        <RadioButton
+            android:id="@+id/tenant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="checkBtn"
+            android:textColor="@color/white"
+            android:layout_marginEnd="5dp"
+            android:text="Tenant"
+            android:checked="true"/>
+
+        <RadioButton
+            android:id="@+id/homeOwner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="checkBtn"
+            android:layout_marginEnd="5dp"
+            android:textColor="@color/white"
+            android:text="Home Owner" />
+
+    </RadioGroup>
+
     <Button
         android:id="@+id/submitCall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="28dp"
         android:text="Open Call"
+        android:background="@drawable/custom_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/messageBody" />
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
