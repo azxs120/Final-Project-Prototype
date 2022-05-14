@@ -62,6 +62,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //is the textBoxes empty
+
+                Intent intentLoadNewActivity = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intentLoadNewActivity);//start the new activity.
                 if(!(emailEditText.getText().toString().isEmpty() ) && (!(passwordEditText.getText().toString()).isEmpty()))
                 {
                     Credentials credentials = Credentials.emailPassword(emailEditText.getText().toString(), passwordEditText.getText().toString());
