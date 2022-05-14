@@ -76,26 +76,8 @@ public class RegisterActivity extends AppCompatActivity {
                         if (validateEmail(view))
                             if (validateId(view))
                                 if (validatePassword(view)) {
-
-
-                                 /*   //login to table
-                                    app.loginAsync(Credentials.anonymous(), new App.Callback<User>() {
-                                        @Override
-                                        public void onResult(App.Result<User> result) {
-                                            if(result.isSuccess()){
-                                                Log.v("User", "Logged In anonymously");
-                                            }else
-                                                Log.v("User", "Failed to Login");
-                                        }
-                                    });
-
-                                    User user = app.currentUser();
-                                    mongoClient = user.getMongoClient("mongodb-atlas");
-                                    mongoDatabase = mongoClient.getDatabase("RentMe");//the cluster(project)
-*/
-
-                                    MongoConnection mc = new MongoConnection();
-                                    MongoDatabase mongoDatabase = mc.getConnection();
+                                    //get a connection for the DB
+                                    MongoDatabase mongoDatabase = MongoConnection.getConnection();
 
                                     Document doc = new Document();
                                     doc.append("Email", email.getText().toString());
