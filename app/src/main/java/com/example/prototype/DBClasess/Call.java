@@ -7,8 +7,8 @@ public class Call {
     static int counterForID = 0;
 
     private String id;
-    private String landLordID;
-    private String tenantID;
+    private String landLordEmail;
+    private String tenantEmail;
     private String landLordMode;
     private String tenantMode;
     private Date commitDate;
@@ -57,19 +57,19 @@ public class Call {
     }
 
     public String getLandLordID() {
-        return landLordID;
+        return landLordEmail;
     }
 
     public void setLandLordID(String landLordID) {
-        this.landLordID = landLordID;
+        this.landLordEmail = landLordID;
     }
 
     public String getTenantID() {
-        return tenantID;
+        return tenantEmail;
     }
 
     public void setTenantID(String tenantID) {
-        this.tenantID = tenantID;
+        this.tenantEmail = tenantID;
     }
 
     public String getLandLordMode() {
@@ -124,8 +124,8 @@ public class Call {
     public String toString() {
         return "Call{" +
                 "id='" + id + '\'' +
-                ", landLordID='" + landLordID + '\'' +
-                ", tenantID='" + tenantID + '\'' +
+                ", landLordEmail='" + landLordEmail + '\'' +
+                ", tenantEmail='" + tenantEmail + '\'' +
                 ", landLordMode='" + landLordMode + '\'' +
                 ", tenantMode='" + tenantMode + '\'' +
                 ", commitDate=" + commitDate +

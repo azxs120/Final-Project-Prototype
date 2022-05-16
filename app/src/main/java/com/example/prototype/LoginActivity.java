@@ -59,27 +59,31 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //is the textBoxes empty
+                //is the textBoxes empty?
 
-
-
-
+/* TODO:
                 //THIS IS JUST FOR TESTING!!!
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 //add the user email to the intent so we will be able to use it in the next intent
                 intent.putExtra("userEmail", emailEditText.getText().toString());
                 startActivity(intent);//start the new activity.
-
-
-
+*/
 
                 if(!(emailEditText.getText().toString().isEmpty() ) && (!(passwordEditText.getText().toString()).isEmpty())) {
+
                     Credentials credentials = Credentials.emailPassword(emailEditText.getText().toString(), passwordEditText.getText().toString());
+                    Snackbar.make(view, "Myo " + emailEditText.getText().toString() +" "+ passwordEditText.getText().toString(), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+
+
+
                     app.loginAsync(credentials, new App.Callback<User>() {
                         @Override
                         public void onResult(App.Result<User> result) {
                             if (result.isSuccess()){
                                 //create a new activity
+                                Snackbar.make(view, "im in", Snackbar.LENGTH_LONG)
+                                        .setAction("Action", null).show();
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 intent.putExtra("userEmail", emailEditText.getText().toString());
                                 startActivity(intent);//start the new activity.

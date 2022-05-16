@@ -10,14 +10,14 @@
     <EditText
         android:id="@+id/subject"
         android:layout_width="950px"
-        android:layout_height="120px"
+        android:layout_height="48dp"
         android:layout_marginTop="40dp"
-        android:textColorHint="@color/white"
         android:layout_marginEnd="20dp"
-        android:ems="10"
         android:background="@drawable/bg_round"
+        android:ems="10"
         android:hint="Subject"
         android:padding="10dp"
+        android:textColorHint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,7 +39,7 @@
         app:layout_constraintTop_toBottomOf="@+id/subject" />
 
     <RadioGroup
-        android:id="@+id/radioGroup"
+        android:id="@+id/radioGroupForAddCall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
@@ -49,7 +49,7 @@
         app:layout_constraintTop_toBottomOf="@+id/messageBody">
 
         <RadioButton
-            android:id="@+id/tenant"
+            android:id="@+id/tenantForAddCall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="checkBtn"
@@ -59,7 +59,7 @@
             android:checked="true"/>
 
         <RadioButton
-            android:id="@+id/homeOwner"
+            android:id="@+id/homeOwnerForAddCall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="checkBtn"
@@ -78,6 +78,6 @@
         android:background="@drawable/custom_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupForAddCall" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

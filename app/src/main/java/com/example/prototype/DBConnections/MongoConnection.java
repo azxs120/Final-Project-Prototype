@@ -16,7 +16,7 @@ import io.realm.mongodb.mongo.MongoDatabase;
 public class MongoConnection extends AppCompatActivity {
     private static MongoDatabase mongoDatabase;
     private static MongoConnection mongoConnection = null;
-
+    private static App app;
     /**
      * a private constructor for the singleton design pattern
      */
@@ -28,13 +28,15 @@ public class MongoConnection extends AppCompatActivity {
      * if the connection exists the method will return it
      * else the method will create one and return it
      *
+     * uses  mongoClient.getDatabase("RentMe")
+     *
      * @return a connection to the database
      */
     public static MongoDatabase getConnection() {
         if(mongoConnection == null) {
             final String appId = "application-1-sfnjp";
             MongoClient mongoClient;
-            App app = new App(new AppConfiguration.Builder(appId).build());
+            app = new App(new AppConfiguration.Builder(appId).build());
 
             mongoConnection = new MongoConnection();
 
@@ -55,5 +57,12 @@ public class MongoConnection extends AppCompatActivity {
             return mongoDatabase;
         }
         return mongoDatabase;
+    }
+
+    public static App getApp(){
+        return app;
+    }
+    public static User getUser(){
+        return app.currentUser();
     }
 }
