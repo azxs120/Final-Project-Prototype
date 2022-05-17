@@ -29,6 +29,7 @@ import org.bson.codecs.configuration.CodecRegistry;
 import com.example.prototype.DBClasess.Call;
 import com.example.prototype.DBClasess.Person;
 import com.example.prototype.DBConnections.MongoConnection;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -37,12 +38,19 @@ import java.util.Date;
 public class AddNewCall extends AppCompatActivity {
     private EditText title;
     private final int TIME_INTERVAL_FOR_SNOOZE = 5000;
+    private final int GO_TO_HOME_OWNER_EMAIL = 14;
+    private final int GO_TO_END_OF_HOME_OWNER_EMAIL = 14;
+
+
     RadioGroup radioGroup;
     RadioButton radioButton = null;
     private Call newCall;
 
+
     MongoClient mongoClient;
     MongoCollection mongoCollection;
+    MongoDatabase mongoDatabase;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +110,7 @@ public class AddNewCall extends AppCompatActivity {
                 if (checkBtn(view) == 0) {//im a Tenant
                     //get the person using the "userEmail" we will get the landlord email(and chack that its not a null)
                     //create a connection to the db
-                    MongoDatabase mongoDatabase = MongoConnection.getConnection();
+                    mongoDatabase = MongoConnection.getConnection();
 
                     MongoCollection<Document> mongoCollection = mongoDatabase.getCollection("Person");
 
@@ -123,13 +131,13 @@ LandlordEmail
                              */
 
                             //getting the home owner email.
-                            int start = task.get().toString().indexOf("LandlordEmail") + 1 + 13;
-                            int end = task.get().toString().indexOf("identity") - 2;
+                            int start = task.get().toString().indexOf("LandlordEmail") + GO_TO_HOME_OWNER_EMAIL;
+                            int end = task.get().toString().indexOf("identity") - GO_TO_END_OF_HOME_OWNER_EMAIL;
                             task.get().toString().substring(start, end);
 
                             Toast.makeText(getApplicationContext(), task.get().toString().substring(start, end) , Toast.LENGTH_LONG).show();
 
-                            newCall = new Call("123", finalUserEmail, title.getText().toString(), theText.getText().toString());
+                            newCall = new Call(task.get().toString().substring(start, end), finalUserEmail, title.getText().toString(), theText.getText().toString());
 
                         } else {
                             Toast.makeText(getApplicationContext(), "NOT NOT NOT found", Toast.LENGTH_LONG).show();
@@ -142,7 +150,42 @@ LandlordEmail
                     newCall = new Call(userEmail, "", title.getText().toString(), theText.getText().toString());
                 }
 
+                MongoConnection.killConnection();
+                mongoDatabase = MongoConnection.getConnection();
+
                 //create the call in the DB
+
+                Document doc = new Document();
+                doc.append("ID", newCall.getId());
+                doc.append("LandLordEmail", newCall.getLandLordEmail());
+                doc.append("tenantEmail", newCall.getTenantEmail());
+                doc.append("landLordMode", newCall.getLandLordMode());
+                doc.append("tenantMode", newCall.getTenantMode());
+                doc.append("commitDate", newCall.getCommiteDate());
+                doc.append("endDate", newCall.getEndDate());
+                doc.append("title", newCall.getTitle());
+                doc.append("callText", newCall.getCallText());
+                doc.append("file", newCall.getFile());
+
+
+
+
+                mongoDatabase.getCollection("Calls").insertOne(doc);
+
+                //write to table.
+                mongoDatabase.getCollection("Calls").insertOne(doc).getAsync(result -> {
+                    if (result.isSuccess()) {
+                        Log.v("Data", "Data Inserted Successfully");
+                        Snackbar.make(view, "Data Inserted Successfully", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                        //create a new activity
+                    } else
+                        Log.v("Data", "our Error " + result.getError().toString());
+                });
+
+
+
+
 
 
                 //put the call in the dataBase

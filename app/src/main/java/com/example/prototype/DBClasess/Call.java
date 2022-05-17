@@ -24,8 +24,8 @@ public class Call {
 
     public Call(String landLordID, String tenantID, String title, String callText) {
         setId();
-        setLandLordID(landLordID);
-        setTenantID(tenantID);
+        setLandLordEmail(landLordID);
+        setTenantEmail(tenantID);
 
         setLandLordMode("open");
         setTenantMode("open");
@@ -56,19 +56,19 @@ public class Call {
         this.id = String.valueOf(counterForID);
     }
 
-    public String getLandLordID() {
+    public String getLandLordEmail() {
         return landLordEmail;
     }
 
-    public void setLandLordID(String landLordID) {
+    public void setLandLordEmail(String landLordID) {
         this.landLordEmail = landLordID;
     }
 
-    public String getTenantID() {
+    public String getTenantEmail() {
         return tenantEmail;
     }
 
-    public void setTenantID(String tenantID) {
+    public void setTenantEmail(String tenantID) {
         this.tenantEmail = tenantID;
     }
 

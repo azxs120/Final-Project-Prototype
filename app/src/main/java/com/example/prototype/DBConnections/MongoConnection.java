@@ -59,6 +59,10 @@ public class MongoConnection extends AppCompatActivity {
         return mongoDatabase;
     }
 
+    public static void killConnection(){
+        mongoDatabase = null;
+    }
+
     public static App getApp(){
         return app;
     }
