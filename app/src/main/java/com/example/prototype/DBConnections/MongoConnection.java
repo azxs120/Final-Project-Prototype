@@ -60,7 +60,8 @@ public class MongoConnection extends AppCompatActivity {
     }
 
     public static void killConnection(){
-        mongoDatabase = null;
+        mongoConnection = null;
+
     }
 
     public static App getApp(){
