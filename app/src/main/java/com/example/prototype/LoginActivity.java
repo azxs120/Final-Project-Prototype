@@ -1,120 +1,91 @@
 package com.example.prototype;
-
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
-import org.bson.Document;
+import javax.annotation.Nullable;
 
-import io.realm.Realm;
-import io.realm.mongodb.App;
-import io.realm.mongodb.AppConfiguration;
-import io.realm.mongodb.Credentials;
-import io.realm.mongodb.User;
-import io.realm.mongodb.mongo.MongoClient;
-import io.realm.mongodb.mongo.MongoCollection;
-import io.realm.mongodb.mongo.MongoDatabase;
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
+    Button login;
+    Button register;
+    EditText pwd;
+    TextView email;
+    ProgressBar progress;
 
-public class LoginActivity extends AppCompatActivity {
-    //this is the connection string;
-    private String appId = "application-1-sfnjp";
-
-    MongoDatabase mongoDatabase;
-    MongoClient mongoClient;
-
+    FirebaseFirestore db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        this.setTitle("Login");
-        Button loginBtn;
-        Button register;
-        Button restorePassword;
-        ImageView fbBtn = findViewById(R.id.fb_btn);
-        loginBtn =  findViewById(R.id.loginBtn);
 
-        //will contain the data that we want to add
-        EditText emailEditText = (EditText) findViewById(R.id.email);
-        EditText passwordEditText = (EditText) findViewById(R.id.editTextPassword);
+        email=findViewById(R.id.email);
+        pwd=findViewById(R.id.password);
+        progress=findViewById(R.id.progress_bar);
+        login = findViewById(R.id.loginBtn);
+        register = findViewById(R.id.registerNowBtn);
 
-        //init app
-        Realm.init(this);
-        //this will build a new app object
-        App app = new App(new AppConfiguration.Builder(appId).build());
+        db= FirebaseFirestore.getInstance();
+        login.setOnClickListener(this);
+        register.setOnClickListener(this);
 
-
-
-
-        //set what happens when the user clicks "Login"
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //is the textBoxes empty
-
-                Intent intentLoadNewActivity = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intentLoadNewActivity);//start the new activity.
-                if(!(emailEditText.getText().toString().isEmpty() ) && (!(passwordEditText.getText().toString()).isEmpty()))
-                {
-                    Credentials credentials = Credentials.emailPassword(emailEditText.getText().toString(), passwordEditText.getText().toString());
-                    app.loginAsync(credentials, new App.Callback<User>() {
-                        @Override
-                        public void onResult(App.Result<User> result) {
-                            if (result.isSuccess()){
-                                //create a new activity
-                                Intent intentLoadNewActivity = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(intentLoadNewActivity);//start the new activity.
-                            }
-                            else{
-                                Snackbar.make(view, "Incorrect user or password", Snackbar.LENGTH_LONG)
-                                        .setAction("Action", null).show();
-                            }
-                        }
-                    });
-                }
-            }
-        });
-
-        restorePassword =  findViewById(R.id.restorePassword);
-        //set what happens when the user clicks "Restore Password"
-        restorePassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentLoadNewActivity = new Intent(LoginActivity.this, RestorePasswordActivity.class);
-                startActivity(intentLoadNewActivity);
-            }
-        });
-
-        register =  findViewById(R.id.Register);
-        //set what happens when the user clicks " Register"
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentLoadNewActivity = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(intentLoadNewActivity);
-            }
-        });
-
-        fbBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                //login to facebook
-
-            }
-        });
     }
 
+    public void onClick(View v){
+        switch(v.getId()){
+            case R.id.loginBtn:
+                if(email.getText().toString().equals("")){
+                    Toast.makeText(LoginActivity.this, "Please enter valid email", Toast.LENGTH_SHORT).show();
+                }else if( pwd.getText().toString().equals("")){
+                    Toast.makeText(LoginActivity.this, "Please enter valid password", Toast.LENGTH_SHORT).show();
+                }
+                db.collection("users")
+                        .get()
+                        .addOnCompleteListener( new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if(task.isSuccessful()){
+                                    for(QueryDocumentSnapshot doc : task.getResult()){
+                                        String a=doc.getString("Email");
+                                        String b=doc.getString("Password");
+                                        String a1=email.getText().toString().trim();
+                                        String b1=pwd.getText().toString().trim();
+
+                                        if(a.equals(a1) && b.equals(b1)) {
+                                            Intent home = new Intent(LoginActivity.this, MainActivity.class);
+                                            startActivity(home);
+                                            Toast.makeText(LoginActivity.this, "Logged In", Toast.LENGTH_SHORT).show();
+                                            break;
+                                        }else
+                                            Toast.makeText(LoginActivity.this, "Cannot login,incorrect Email and Password", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }
+                        });
+                break;
+            case R.id.registerNowBtn:
+                Intent register_view=new Intent(LoginActivity.this,RegisterActivity.class);
+                startActivity(register_view);
+                break;
+        }
+    }
 }
