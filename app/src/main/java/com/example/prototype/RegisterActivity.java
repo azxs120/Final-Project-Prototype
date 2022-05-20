@@ -31,9 +31,10 @@ public class RegisterActivity extends AppCompatActivity {
     EditText edtFullName, edtEmail, edtMobile, edtPassword, edtConfirmPassword;
     ProgressBar progressBar;
     Button btnSignUp;
-    String txtFullName, txtEmail, txtMobile, txtPassword, txtConfirmPassword;
+    String txtFullName, txtEmail, txtMobile, txtPassword, txtConfirmPassword,txtIdentity;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     RadioGroup radioGroup;
+    RadioButton tenant, homeOwner,tenantAndHomeOwner;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
@@ -51,22 +52,28 @@ public class RegisterActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.signUpProgressBar);
         btnSignUp = findViewById(R.id.signUp);
         radioGroup = findViewById(R.id.radioGroup);
-       /*radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        tenant = findViewById(R.id.tenant);
+        homeOwner = findViewById(R.id.homeOwner);
+        tenantAndHomeOwner = findViewById(R.id.tenantAndHomeOwner);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
            @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId){
                     case R.id.tenant:
                         Toast.makeText(RegisterActivity.this, "U will sign up as a tenant", Toast.LENGTH_SHORT).show();
+                        txtIdentity ="tenant";
                         break;
                     case R.id.homeOwner:
                         Toast.makeText(RegisterActivity.this, "U will sign up as a home owner", Toast.LENGTH_SHORT).show();
+                        txtIdentity ="homeOwner";
                         break;
                     case R.id.tenantAndHomeOwner:
                         Toast.makeText(RegisterActivity.this, "U will sign up as a home owner and a tenant", Toast.LENGTH_SHORT).show();
+                        txtIdentity ="tenantAndHomeOwner";
                         break;
                 }
             }
-        });    */
+        });
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -85,6 +92,7 @@ public class RegisterActivity extends AppCompatActivity {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //txtIdentity = edtIdentity.getText().toString;
                 txtFullName = edtFullName.getText().toString();
                 txtEmail = edtEmail.getText().toString().trim();
                 txtMobile = edtMobile.getText().toString().trim();
@@ -141,6 +149,8 @@ public class RegisterActivity extends AppCompatActivity {
                 user.put("Email", txtEmail);
                 user.put("MobileNumber", txtMobile);
                 user.put("Password",txtPassword);
+                user.put("identity",txtIdentity);
+
                 db.collection("users")
                         .add(user)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
