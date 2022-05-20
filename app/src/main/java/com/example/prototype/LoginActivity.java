@@ -14,6 +14,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.bson.Document;
 
@@ -31,7 +33,6 @@ public class LoginActivity extends AppCompatActivity {
     //this is the connection string;
     private String appId = "application-1-sfnjp";
 
-    //DB instance
     MongoDatabase mongoDatabase;
     MongoClient mongoClient;
 
@@ -40,15 +41,16 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         this.setTitle("Login");
-
         Button loginBtn;
         Button register;
         Button restorePassword;
         ImageView fbBtn = findViewById(R.id.fb_btn);
+        loginBtn =  findViewById(R.id.loginBtn);
 
         //will contain the data that we want to add
         EditText emailEditText = (EditText) findViewById(R.id.email);
         EditText passwordEditText = (EditText) findViewById(R.id.editTextPassword);
+
         //init app
         Realm.init(this);
         //this will build a new app object
@@ -56,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-        loginBtn =  findViewById(R.id.loginBtn);
+
         //set what happens when the user clicks "Login"
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         restorePassword =  findViewById(R.id.restorePassword);
-        //set what happens when the user clicks "מצא דירה"
+        //set what happens when the user clicks "Restore Password"
         restorePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         register =  findViewById(R.id.Register);
-        //set what happens when the user clicks "Find Apartment"
+        //set what happens when the user clicks " Register"
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,4 +116,5 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
 }

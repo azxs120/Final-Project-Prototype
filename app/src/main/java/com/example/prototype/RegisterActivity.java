@@ -1,262 +1,173 @@
 package com.example.prototype;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
-import android.util.Patterns;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
-import org.bson.Document;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-import io.realm.Realm;
-import io.realm.mongodb.App;
-import io.realm.mongodb.AppConfiguration;
-import io.realm.mongodb.Credentials;
-import io.realm.mongodb.User;
-import io.realm.mongodb.mongo.MongoClient;
-import io.realm.mongodb.mongo.MongoDatabase;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
-    final int PASSWORD_LEN = 6;
-    final int ID = 9;
 
+    TextView txtSignIn;
+    EditText edtFullName, edtEmail, edtMobile, edtPassword, edtConfirmPassword;
+    ProgressBar progressBar;
+    Button btnSignUp;
+    String txtFullName, txtEmail, txtMobile, txtPassword, txtConfirmPassword;
+    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     RadioGroup radioGroup;
-    RadioButton radioButton;
-    TextView textView;
-    EditText password;
-    EditText renterPassword;
-    EditText email;
-    EditText id;
-    EditText firstName;
-    EditText lastName;
-
-    MongoDatabase mongoDatabase;
-    MongoClient mongoClient;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        final String appId = "application-1-sfnjp";
-        this.setTitle("Register A New User");
 
-        //init app
-        Realm.init(this);
-        //this will build a new app object
-        App app = new App(new AppConfiguration.Builder(appId).build());
-
+        txtSignIn = findViewById(R.id.txtSignIn);
+        edtFullName = findViewById(R.id.edtSignUpFullName);
+        edtEmail = findViewById(R.id.email);
+        edtMobile = findViewById(R.id.edtSignUpMobile);
+        edtPassword = findViewById(R.id.password);
+        edtConfirmPassword = findViewById(R.id.renterPassword);
+        progressBar = findViewById(R.id.signUpProgressBar);
+        btnSignUp = findViewById(R.id.signUp);
         radioGroup = findViewById(R.id.radioGroup);
-        textView = findViewById(R.id.permission);
-        Button signUpBtn = findViewById(R.id.signUp);
+       /*radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+           @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.tenant:
+                        Toast.makeText(RegisterActivity.this, "U will sign up as a tenant", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.homeOwner:
+                        Toast.makeText(RegisterActivity.this, "U will sign up as a home owner", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.tenantAndHomeOwner:
+                        Toast.makeText(RegisterActivity.this, "U will sign up as a home owner and a tenant", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        });    */
 
-        signUpBtn.setOnClickListener(new View.OnClickListener() {
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
+        // Initialize Firebase Firestore
+        db = FirebaseFirestore.getInstance();
+
+        txtSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //get the id of the specific radio btn
-                int radioId = radioGroup.getCheckedRadioButtonId();
-                //get the btn
-                radioButton = findViewById(radioId);
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                txtFullName = edtFullName.getText().toString();
+                txtEmail = edtEmail.getText().toString().trim();
+                txtMobile = edtMobile.getText().toString().trim();
+                txtPassword = edtPassword.getText().toString().trim();
+                txtConfirmPassword = edtConfirmPassword.getText().toString().trim();
 
-                //input validation
-                if (validateFirstName(view))
-                    if (validateLastName(view))
-                        if (validateEmail(view))
-                            if (validateId(view))
-                                if (validatePassword(view)) {
-
-
-                                    //login to table
-                                    app.loginAsync(Credentials.anonymous(), new App.Callback<User>() {
-                                        @Override
-                                        public void onResult(App.Result<User> result) {
-                                            if(result.isSuccess()){
-                                                Log.v("User", "Logged In anonymously");
-                                            }else
-                                                Log.v("User", "Failed to Login");
+                if (!TextUtils.isEmpty(txtFullName)) {
+                    if (!TextUtils.isEmpty(txtEmail)) {
+                        if (txtEmail.matches(emailPattern)) {
+                            if (!TextUtils.isEmpty(txtMobile)) {
+                                if (txtMobile.length() == 10) {
+                                    if (!TextUtils.isEmpty(txtPassword)) {
+                                        if (!TextUtils.isEmpty(txtConfirmPassword)) {
+                                            if (txtConfirmPassword.equals(txtPassword)) {
+                                                SignUpUser();
+                                            } else {
+                                                edtConfirmPassword.setError("Confirm Password and Password should be same.");
+                                            }
+                                        } else {
+                                            edtConfirmPassword.setError("Confirm Password Field can't be empty");
                                         }
-                                    });
-
-                                    User user = app.currentUser();
-                                    mongoClient = user.getMongoClient("mongodb-atlas");
-                                    mongoDatabase = mongoClient.getDatabase("RentMe");//the cluster(project)
-
-                                    Document doc = new Document();
-                                    doc.append("Email", email.getText().toString());
-                                    doc.append("Password", password.getText().toString());
-                                    doc.append("ID", id.getText().toString());
-                                    doc.append("Password", password.getText().toString());
-                                    doc.append("First Name", firstName.getText().toString());
-                                    doc.append("Last Name", lastName.getText().toString());
-
-                                    //write to table.
-                                    mongoDatabase.getCollection("Person").insertOne(doc).getAsync(result -> {
-                                        if (result.isSuccess()) {
-                                            Log.v("Data", "Data Inserted Successfully");
-                                            Snackbar.make(view, "Data Inserted Successfully", Snackbar.LENGTH_LONG)
-                                                    .setAction("Action", null).show();
-                                            //create a new activity
-                                            textView.setText("User was created successfully.");
-                                        } else
-                                            Log.v("Data", "our Error " + result.getError().toString());
-                                    });
-
-                                    Runnable r = new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Intent intentLoadNewActivity = new Intent(RegisterActivity.this, LoginActivity.class);
-                                            startActivity(intentLoadNewActivity);//start the new activity.
-                                        }
-                                    };
-                                    Handler h =  new Handler();
-                                    h.postDelayed(r, 5000);
+                                    } else {
+                                        edtPassword.setError("Password Field can't be empty");
+                                    }
+                                } else {
+                                    edtMobile.setError("Enter a valid Mobile");
                                 }
-                    else
-                        textView.setText("User was NOT created successfully.");
-
+                            } else {
+                                edtMobile.setError("Mobile Number Field can't be empty");
+                            }
+                        } else {
+                            edtEmail.setError("Enter a valid Email Address");
+                        }
+                    } else {
+                        edtEmail.setError("Email Field can't be empty");
+                    }
+                } else {
+                    edtFullName.setError("Full Name Field can't be empty");
+                }
             }
         });
 
     }
 
-    /**
-     * a method that checks if the first name have a character that is not a letter.
-     *
-     * @param view
-     * @return true if the name have only letters.
-     */
-    public boolean validateFirstName(View view) {
-        this.firstName = findViewById(R.id.enterFirstName);
+    private void SignUpUser() {
+        progressBar.setVisibility(View.VISIBLE);
+        btnSignUp.setVisibility(View.INVISIBLE);
 
-        //cent be empty
-        if (firstName.getText().toString().isEmpty()) {
-            firstName.setError("first name cent be empty");
-            return false;
-        }
+        mAuth.createUserWithEmailAndPassword(txtEmail, txtPassword).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+            @Override
+            public void onSuccess(AuthResult authResult) {
+                Map<String, Object> user = new HashMap<>();
+                user.put("FullName", txtFullName);
+                user.put("Email", txtEmail);
+                user.put("MobileNumber", txtMobile);
+                user.put("Password",txtPassword);
+                db.collection("users")
+                        .add(user)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Toast.makeText(RegisterActivity.this, "Data Stored Successfully !", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(RegisterActivity.this, "Error - " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(RegisterActivity.this, "Error " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.INVISIBLE);
+                btnSignUp.setVisibility(View.VISIBLE);
+            }
+        });
 
-        //contains only letters.
-        if (!firstName.getText().toString().matches("[a-zA-Z]+")) {
-            firstName.setError("first name is invalid");
-            return false;
-        }
-
-        //else
-        return true;
-    }
-
-    /**
-     * a method that checks if the last name have a character that is not a letter.
-     *
-     * @param view
-     * @return true if the name have only letters.
-     */
-    public boolean validateLastName(View view) {
-        lastName = findViewById(R.id.enterLastName);
-
-        //cent be empty
-        if (lastName.getText().toString().isEmpty()) {
-            lastName.setError("last name cent be empty");
-            return false;
-        }
-
-        //contains only letters.
-        if (!lastName.getText().toString().matches("[a-zA-Z]+")) {
-            lastName.setError("last name is invalid");
-            return false;
-        }
-
-        //else
-        return true;
-    }
-
-    /**
-     * a method that checks if the id is long enough.
-     *
-     * @param view
-     * @return returns true if id contains 9 numbers
-     */
-    public boolean validateId(View view) {
-        id = findViewById(R.id.id);
-        //is it long enough?
-        if (this.id.getText().toString().length() != ID) {
-            id.setError("id needs to be 9 characters long.");
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * a method that checks if the password is valid
-     *
-     * @param view
-     * @return true is the password is at least 6 characters long and the passwords match
-     */
-    public boolean validatePassword(View view) {
-        //get the input.
-        password = findViewById(R.id.password);
-        renterPassword = findViewById(R.id.renterPassword);
-
-        //if the password is empty
-        if (password.getText().toString().isEmpty()) {
-            password.setError("password can not be empty.");
-            return false;
-        }
-        //is the password long enough?
-        else if (password.getText().toString().length() >= PASSWORD_LEN) {
-            //das the passwords match?
-            if (password.getText().toString().matches(renterPassword.getText().toString()))
-                return true;
-            else
-                renterPassword.setError("passwords das not match");
-        }
-        else if(password.getText().toString().length() < PASSWORD_LEN)
-            password.setError("password needs to be at least 6 characters long.");
-
-        return false;
-    }
-
-    /**
-     * a method that will validate the that the mail is valid.
-     * a mail address is valid if it contains @ and . is a curtain order
-     *
-     * @param view
-     * @return true if the mail is valid
-     */
-    public boolean validateEmail(View view) {
-        email = findViewById(R.id.email);
-        String emailInput = email.getText().toString();
-        if (emailInput.isEmpty()) {
-            email.setError("email can not be empty.");
-            return false;
-        }
-        //checks if the email in valid->has @ and a .
-        else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
-            email.setError("email is invalid.");
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * will get the radio value and make a toast.
-     *
-     * @param view
-     */
-    public void checkBtn(View view) {
-        int radioId = radioGroup.getCheckedRadioButtonId();
-
-        radioButton = findViewById(radioId);
-        Toast.makeText(this, "You Are A " + radioButton.getText() + ", Only the Relevant Options Will Be Available.", Toast.LENGTH_SHORT).show();
     }
 }
+

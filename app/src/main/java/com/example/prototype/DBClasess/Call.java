@@ -17,7 +17,7 @@ public class Call {
     private String callText;
     private File file = null;
 
-    public Call(){
+    public Call() {
         setId();
 
     }
@@ -135,4 +135,5 @@ public class Call {
                 ", file=" + file +
                 '}';
     }
+
 }
