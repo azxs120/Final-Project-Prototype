@@ -40,6 +40,7 @@ public class AddNewCall extends AppCompatActivity {
     EditText message;
     String txtTitle, txtMessage, txtCurrentDate;
     Calendar calendar = Calendar.getInstance();
+    String email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -57,6 +58,9 @@ public class AddNewCall extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         // Initialize Firebase Firestore
         db = FirebaseFirestore.getInstance();
+        //getting data from login
+        Intent intent = getIntent();
+        email = intent.getStringExtra("key");
         SignUpCall();
         /*int duration = Toast.LENGTH_SHORT;
 
@@ -133,13 +137,15 @@ public class AddNewCall extends AppCompatActivity {
                 txtTitle = title.getText().toString().trim();
                 txtMessage= message.getText().toString().trim();
                 txtCurrentDate = DateFormat.getDateInstance().format(calendar.getTime());
+
                 Map<String, Object> call = new HashMap<>();
                 call.put("Subject", txtTitle);
                 call.put("CallBody", txtMessage);
                 call.put("Date", txtCurrentDate);
+                call.put("Email", email);
 
 
-                db.collection("calles")
+                db.collection("calls")
                         .add(call)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override

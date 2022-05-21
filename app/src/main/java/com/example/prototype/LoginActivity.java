@@ -31,6 +31,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     EditText pwd;
     TextView email;
     ProgressBar progress;
+    boolean isConnect;
 
     FirebaseFirestore db;
     @Override
@@ -74,10 +75,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             Intent home = new Intent(LoginActivity.this, MainActivity.class);
                                             startActivity(home);
                                             Toast.makeText(LoginActivity.this, "Logged In", Toast.LENGTH_SHORT).show();
+
+                                            //take the email to AddNewActivity
+                                            Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                                            intent.putExtra("key",a);
+                                            startActivity(intent);
+                                            isConnect = true;
                                             break;
-                                        }else
-                                            Toast.makeText(LoginActivity.this, "Cannot login,incorrect Email and Password", Toast.LENGTH_SHORT).show();
-                                    }
+                                        }
+
+                                    }if (!isConnect)
+                                        Toast.makeText(LoginActivity.this, "Cannot login,incorrect Email and Password", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
