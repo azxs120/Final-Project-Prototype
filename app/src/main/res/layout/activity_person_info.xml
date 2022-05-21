@@ -89,7 +89,7 @@
         android:layout_marginEnd="31dp"
         android:layout_marginBottom="75dp"
         android:layout_toStartOf="@+id/UserID"
-        android:text="Selected Name:"
+        android:text="Selected Name :"
         android:textColor="@color/white"
         android:textSize="20sp" />
 
@@ -103,7 +103,7 @@
         android:layout_marginEnd="26dp"
         android:layout_marginBottom="34dp"
         android:layout_toStartOf="@+id/UserID"
-        android:text="Selected ID:"
+        android:text="Email :"
         android:textColor="@color/white"
         android:textSize="20sp" />
 
@@ -115,7 +115,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="117dp"
         android:layout_marginBottom="37dp"
-        android:text="IdNum"
+        android:text="email"
         android:textColor="@color/white"
         android:textSize="20sp" />
 
