@@ -1,9 +1,12 @@
 package com.example.prototype;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import android.text.TextUtils;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,73 +28,74 @@ import com.google.firebase.firestore.QuerySnapshot;
 import javax.annotation.Nullable;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-
     Button login;
     Button register;
     EditText pwd;
     TextView email;
     ProgressBar progress;
     boolean isConnect;
-
     FirebaseFirestore db;
+    private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        email=findViewById(R.id.email);
-        pwd=findViewById(R.id.password);
-        progress=findViewById(R.id.progress_bar);
+        email = findViewById(R.id.email);
+        pwd = findViewById(R.id.password);
+        progress = findViewById(R.id.progress_bar);
         login = findViewById(R.id.loginBtn);
         register = findViewById(R.id.registerNowBtn);
 
-        db= FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
         login.setOnClickListener(this);
         register.setOnClickListener(this);
 
     }
 
-    public void onClick(View v){
-        switch(v.getId()){
+    public void onClick(View v) {
+        switch (v.getId()) {
+
             case R.id.loginBtn:
-                if(email.getText().toString().equals("")){
-                    Toast.makeText(LoginActivity.this, "Please enter valid email", Toast.LENGTH_SHORT).show();
-                }else if( pwd.getText().toString().equals("")){
+                String typedEmail = email.getText().toString().trim();
+                if (!TextUtils.isEmpty(typedEmail))
+                    if (typedEmail.matches(emailPattern))
+                        Toast.makeText(LoginActivity.this, "Please enter valid email", Toast.LENGTH_SHORT).show();
+                else if (pwd.getText().toString().equals(""))
                     Toast.makeText(LoginActivity.this, "Please enter valid password", Toast.LENGTH_SHORT).show();
-                }
+
                 db.collection("users")
                         .get()
-                        .addOnCompleteListener( new OnCompleteListener<QuerySnapshot>() {
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if(task.isSuccessful()){
-                                    for(QueryDocumentSnapshot doc : task.getResult()){
-                                        String a=doc.getString("Email");
-                                        String b=doc.getString("Password");
-                                        String a1=email.getText().toString().trim();
-                                        String b1=pwd.getText().toString().trim();
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot doc : task.getResult()) {
+                                        String emailFromDB = doc.getString("Email");
+                                        String passwordFromDB = doc.getString("Password");
+                                        String typedEmail = email.getText().toString().trim();
+                                        String typedPassword = pwd.getText().toString().trim();
 
-                                        if(a.equals(a1) && b.equals(b1)) {
-                                            Intent home = new Intent(LoginActivity.this, MainActivity.class);
-                                            startActivity(home);
-                                            Toast.makeText(LoginActivity.this, "Logged In", Toast.LENGTH_SHORT).show();
-
-                                            //take the email to AddNewActivity
-                                            Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                                            intent.putExtra("key",a);
+                                        //the data match
+                                        if (emailFromDB.equals(typedEmail) && passwordFromDB.equals(typedPassword)) {
+                                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                            intent.putExtra("key", emailFromDB);//take the email to AddNewActivity
                                             startActivity(intent);
                                             isConnect = true;
                                             break;
                                         }
 
-                                    }if (!isConnect)
+                                    }
+                                    if (!isConnect)
                                         Toast.makeText(LoginActivity.this, "Cannot login,incorrect Email and Password", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
                 break;
             case R.id.registerNowBtn:
-                Intent register_view=new Intent(LoginActivity.this,RegisterActivity.class);
+                Intent register_view = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(register_view);
                 break;
         }

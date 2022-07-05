@@ -26,7 +26,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
-
     TextView txtSignIn;
     EditText edtFullName, edtEmail, edtMobile, edtPassword, edtConfirmPassword;
     ProgressBar progressBar;
