@@ -26,14 +26,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
-    TextView txtSignIn;
-    EditText edtFullName, edtEmail, edtMobile, edtPassword, edtConfirmPassword;
-    ProgressBar progressBar;
-    Button btnSignUp;
-    String txtFullName, txtEmail, txtMobile, txtPassword, txtConfirmPassword,txtIdentity;
-    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-    RadioGroup radioGroup;
-    RadioButton tenant, homeOwner,tenantAndHomeOwner;
+    private TextView txtSignIn;
+    private EditText edtFullName, edtEmail, edtMobile, edtPassword, edtConfirmPassword;
+    private ProgressBar progressBar;
+    private Button btnSignUp;
+    private String txtFullName, txtEmail, txtMobile, txtPassword, txtConfirmPassword,txtIdentity;
+    private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    private RadioGroup radioGroup;
+    private RadioButton tenant, homeOwner,tenantAndHomeOwner;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
@@ -82,8 +82,9 @@ public class RegisterActivity extends AppCompatActivity {
         txtSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(intent);
+                //TODO: add the fiture
+                //Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                //startActivity(intent);
                 finish();
             }
         });

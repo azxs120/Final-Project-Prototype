@@ -28,13 +28,13 @@ import com.google.firebase.firestore.QuerySnapshot;
 import javax.annotation.Nullable;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-    Button login;
-    Button register;
-    EditText pwd;
-    TextView email;
-    ProgressBar progress;
-    boolean isConnect;
-    FirebaseFirestore db;
+    private Button login;
+    private Button register;
+    private EditText pwd;
+    private TextView email;
+    private ProgressBar progress;
+    private boolean isConnect;
+    private FirebaseFirestore db;
     private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
 
@@ -58,6 +58,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
 
+            //we pressed login
             case R.id.loginBtn:
                 String typedEmail = email.getText().toString().trim();
                 if (!TextUtils.isEmpty(typedEmail))
@@ -78,7 +79,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         String typedEmail = email.getText().toString().trim();
                                         String typedPassword = pwd.getText().toString().trim();
 
-                                        //the data match
+                                        //the data(Email And password) match
                                         if (emailFromDB.equals(typedEmail) && passwordFromDB.equals(typedPassword)) {
                                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                             intent.putExtra("key", emailFromDB);//take the email to AddNewActivity
@@ -93,7 +94,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 }
                             }
                         });
-                break;
+                break;//this belongs to the switch case
+
+            //we pressed register
             case R.id.registerNowBtn:
                 Intent register_view = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(register_view);
