@@ -153,7 +153,7 @@ public class RegisterActivity extends AppCompatActivity {
                 user.put("Email", txtEmail);
                 user.put("MobileNumber", txtMobile);
                 user.put("Password",txtPassword);
-                user.put("identity",txtIdentity);
+                user.put("Identity",txtIdentity);
 
                 db.collection("users")
                         .add(user)
