@@ -30,18 +30,18 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText edtFullName, edtEmail, edtMobile, edtPassword, edtConfirmPassword;
     private ProgressBar progressBar;
     private Button btnSignUp;
-    private String txtFullName, txtEmail, txtMobile, txtPassword, txtConfirmPassword,txtIdentity;
+    private String txtFullName, txtEmail, txtMobile, txtPassword, txtConfirmPassword,txtIdentity = "tenant";
     private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     private RadioGroup radioGroup;
     private RadioButton tenant, homeOwner,tenantAndHomeOwner;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
         txtSignIn = findViewById(R.id.txtSignIn);
         edtFullName = findViewById(R.id.edtSignUpFullName);
         edtEmail = findViewById(R.id.email);
@@ -55,7 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
         homeOwner = findViewById(R.id.homeOwner);
         tenantAndHomeOwner = findViewById(R.id.tenantAndHomeOwner);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-           @Override
+           @Override//change the radioGroup
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId){
                     case R.id.tenant:
@@ -80,19 +80,17 @@ public class RegisterActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         txtSignIn.setOnClickListener(new View.OnClickListener() {
+            //on click take us to login screen
             @Override
             public void onClick(View view) {
-                //TODO: add the fiture
-                //Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                //startActivity(intent);
                 finish();
             }
         });
 
+        //check input
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //txtIdentity = edtIdentity.getText().toString;
                 txtFullName = edtFullName.getText().toString();
                 txtEmail = edtEmail.getText().toString().trim();
                 txtMobile = edtMobile.getText().toString().trim();
@@ -137,13 +135,19 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * add the user to the database
+     */
     private void SignUpUser() {
+        //add the progressBar
         progressBar.setVisibility(View.VISIBLE);
+        //make the BTN disappear
         btnSignUp.setVisibility(View.INVISIBLE);
 
         mAuth.createUserWithEmailAndPassword(txtEmail, txtPassword).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
+                //create an map object for the DB
                 Map<String, Object> user = new HashMap<>();
                 user.put("FullName", txtFullName);
                 user.put("Email", txtEmail);
@@ -157,15 +161,13 @@ public class RegisterActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
                                 Toast.makeText(RegisterActivity.this, "Data Stored Successfully !", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                                startActivity(intent);
-                                finish();
+                                finish();//get back to login screen
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(RegisterActivity.this, "Error - " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, "-----Error ----- user was not added " + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
             }
