@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import io.realm.mongodb.mongo.MongoClient;
 import io.realm.mongodb.mongo.MongoDatabase;
@@ -16,11 +17,17 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton callHandlingBtn;
     private ImageButton myHistoryBtn;
     private ImageButton searchBtn;
-    
+    private String userEmail = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //get the user email
+        Bundle bundle = getIntent().getExtras();
+        if(bundle.getString("key") != null)
+            userEmail = bundle.getString("key");
 
         //wire up the button to do stuff
         //get the btn
@@ -43,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intentLoadNewActivity = new Intent(MainActivity.this, CallHandlingActivity.class);
+                intentLoadNewActivity.putExtra("key", userEmail);//take the email to CallHandlingActivity
                 startActivity(intentLoadNewActivity);
             }
         });

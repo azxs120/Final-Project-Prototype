@@ -76,13 +76,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        /*
-        // Initialize Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
-        // Initialize Firebase Firestore
-        db = FirebaseFirestore.getInstance();
-        */
-
         mAuth = FirebaseConnection.getFirebaseAuth();
         db = FirebaseConnection.getFirebaseFirestore();
 

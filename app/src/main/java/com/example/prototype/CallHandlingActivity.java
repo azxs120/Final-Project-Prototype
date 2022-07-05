@@ -20,7 +20,7 @@ import com.example.prototype.databinding.ActivityCallHandlingBinding;
 import io.realm.Realm;
 
 public class CallHandlingActivity extends AppCompatActivity {
-
+    private String userEmail = null;
     private ActivityCallHandlingBinding binding;
 
     @Override
@@ -29,6 +29,11 @@ public class CallHandlingActivity extends AppCompatActivity {
 
         binding = ActivityCallHandlingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        //get the user email
+        Bundle bundle = getIntent().getExtras();
+        if(bundle.getString("key") != null)
+            userEmail = bundle.getString("key");
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = binding.viewPager;
@@ -43,6 +48,7 @@ public class CallHandlingActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     //open the "AddNewCall" Activity.
                     Intent intentLoadNewActivity = new Intent(CallHandlingActivity.this, AddNewCall.class);
+                    intentLoadNewActivity.putExtra("key", userEmail);//take the email to AddNewCall
                     startActivity(intentLoadNewActivity);
                 }
         });

@@ -14,16 +14,23 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 
 import com.example.prototype.DBClasess.Call;
+import com.example.prototype.DBConnections.FirebaseConnection;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -40,27 +47,36 @@ public class AddNewCall extends AppCompatActivity {
     EditText message;
     String txtTitle, txtMessage, txtCurrentDate;
     Calendar calendar = Calendar.getInstance();
-    String email;
+    private String userEmail = null;
+    private String mobileNumber = null;
+    private String identity = null;
+    private String otherIdentity = null;
+    private RadioButton tenant, homeOwner;
+    private RadioGroup radioGroup;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_call);
         this.setTitle("Open New Call");
         title = (EditText) findViewById(R.id.subject);
         message = (EditText) findViewById(R.id.messageBody);
         newCallBtn = (Button) findViewById(R.id.submitCall);
+        radioGroup = findViewById(R.id.radioGroup);
+        tenant = findViewById(R.id.tenant);
+        homeOwner = findViewById(R.id.homeOwner);
 
-
+        //get the user email
+        Bundle bundle = getIntent().getExtras();
+        if (bundle.getString("key") != null)
+            userEmail = bundle.getString("key");
 
         // Initialize Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseConnection.getFirebaseAuth();
         // Initialize Firebase Firestore
-        db = FirebaseFirestore.getInstance();
-        //getting data from login
-        Intent intent = getIntent();
-        email = intent.getStringExtra("key");
+        db = FirebaseConnection.getFirebaseFirestore();
+
         SignUpCall();
         /*int duration = Toast.LENGTH_SHORT;
 
@@ -127,45 +143,101 @@ public class AddNewCall extends AppCompatActivity {
         }*/
 
     }
-    private void SignUpCall() {
-        //progressBar.setVisibility(View.VISIBLE);
-        //btnSignUp.setVisibility(View.INVISIBLE);
 
+
+    private void SignUpCall() {
         newCallBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 txtTitle = title.getText().toString().trim();
-                txtMessage= message.getText().toString().trim();
+                txtMessage = message.getText().toString().trim();
                 txtCurrentDate = DateFormat.getDateInstance().format(calendar.getTime());
+                //get the MobileNumber of the user
+                db.collection("users")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    //run on the rows of the table
+                                    for (QueryDocumentSnapshot doc : task.getResult()) {
+                                        String emailFromDB = doc.getString("Email");//get the email of every user
+                                        //the emails match
+                                        if (emailFromDB.equals(userEmail)) {
+                                            mobileNumber = doc.getString("MobileNumber");//get the MobileNumber.
+                                            identity = doc.getString("identity");//get the identity
+                                            if (identity.equals("tenantAndHomeOwner"))
+                                                radioGroup.setVisibility(View.VISIBLE);//show me my options
+                                            break;//done searching
+                                        }
+                                    }
+                                }
+                            }
+                        });
 
                 Map<String, Object> call = new HashMap<>();
                 call.put("Subject", txtTitle);
                 call.put("CallBody", txtMessage);
                 call.put("Date", txtCurrentDate);
-                call.put("Email", email);
+                call.put("Email", userEmail);
+                call.put("Tenant Call Status", "open");
+                call.put("Home owner Call Status", "open");
+                //my identity
+                if(identity.equals("tenant"))
+                    call.put("tenant MobileNumber", mobileNumber);
+                else if (identity.equals("homeOwner"))
+                    call.put("homeOwner MobileNumber", mobileNumber);
+                else {//tenantAndHomeOwner
+                    getOtherIdentity();
+                    call.put(identity + " MobileNumber", mobileNumber);
+                }
 
+                //other side identity
+                if(identity.equals("tenant"))
+                    call.put("homeOwner MobileNumber", null);
+                else if (identity.equals("homeOwner"))
+                    call.put("tenant MobileNumber", null);
+
+                //TODO check if the connection is made?
+                //TODO get the other side phone number after wi will create the connection table
+                call.put(otherIdentity + " MobileNumber", null);
 
                 db.collection("calls")
                         .add(call)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
-                                Toast.makeText(AddNewCall.this, "Data Stored Successfully !", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AddNewCall.this, "Call Created Successfully!", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(AddNewCall.this, CallHandlingActivity.class);
                                 startActivity(intent);
-                                finish();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(AddNewCall.this, "Error - " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AddNewCall.this, "----- Error ----- the call was not created" + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
             }
         });
 
 
+    }
+
+    private void getOtherIdentity() {
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override//change the radioGroup
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.tenant:
+                        identity ="tenant";
+                        break;
+                    case R.id.homeOwner:
+                        identity ="homeOwner";
+                        break;
+                }
+            }
+        });
     }
 
 }

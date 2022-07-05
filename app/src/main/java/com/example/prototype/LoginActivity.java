@@ -43,7 +43,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         email = findViewById(R.id.email);
         pwd = findViewById(R.id.password);
         progress = findViewById(R.id.progress_bar);

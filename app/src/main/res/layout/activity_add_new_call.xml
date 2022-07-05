@@ -10,13 +10,14 @@
         android:id="@+id/subject"
         android:layout_width="950px"
         android:layout_height="120px"
-        android:layout_marginTop="136dp"
+        android:layout_marginTop="56dp"
 
         android:background="@drawable/textview_border"
         android:ems="10"
         android:hint="Subject"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.591"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,7 +29,6 @@
         android:background="@drawable/textview_border"
         android:ems="10"
         android:gravity="top"
-
         android:hint="Body"
         android:padding="10dp"
         android:scrollbars="vertical"
@@ -36,13 +36,47 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/subject" />
 
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@+id/messageBody">
+
+
+        <RadioButton
+            android:id="@+id/tenant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:checked="true"
+            android:text="Tenant"
+            android:textColor="@color/black" />
+
+        <RadioButton
+            android:id="@+id/homeOwner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:text="Home Owner"
+            android:textColor="@color/black" />
+
+    </RadioGroup>
+
+
     <Button
         android:id="@+id/submitCall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="76dp"
         android:text="Open Call"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/messageBody" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
