@@ -80,6 +80,34 @@ public class AddNewCall extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
+        //get the MobileNumber of the user
+        db.collection("users")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            //run on the rows of the table
+                            for (QueryDocumentSnapshot doc : task.getResult()) {
+                                String emailFromDB = doc.getString("Email").trim();//get the email of every user
+
+                                //the emails match
+                                if (userEmail.equals(emailFromDB)) {
+                                    mobileNumber = doc.getString("MobileNumber");//get the MobileNumber.
+                                    identity = doc.getString("Identity");//get the identity
+                                    Toast.makeText(AddNewCall.this, mobileNumber +"  " + identity , Toast.LENGTH_SHORT).show();
+
+                                    if (identity.equals("tenantAndHomeOwner"))
+                                        radioGroup.setVisibility(View.VISIBLE);//show me my options
+                                    break;//done searching
+                                }
+                            }
+                        }
+                    }
+                });
+
+
+
         SignUpCall();
         /*int duration = Toast.LENGTH_SHORT;
 
@@ -155,31 +183,6 @@ public class AddNewCall extends AppCompatActivity {
                 txtTitle = title.getText().toString().trim();
                 txtMessage = message.getText().toString().trim();
                 txtCurrentDate = DateFormat.getDateInstance().format(calendar.getTime());
-
-                //get the MobileNumber of the user
-                db.collection("users")
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    //run on the rows of the table
-                                    for (QueryDocumentSnapshot doc : task.getResult()) {
-                                        String emailFromDB = doc.getString("Email");//get the email of every user
-                                        //the emails match
-                                        if (userEmail.equals(emailFromDB)) {
-                                            mobileNumber = doc.getString("MobileNumber");//get the MobileNumber.
-                                            identity = doc.getString("Identity");//get the identity
-                                            Toast.makeText(AddNewCall.this, mobileNumber +"  " + identity , Toast.LENGTH_SHORT).show();
-
-                                            if (identity.equals("tenantAndHomeOwner"))
-                                                radioGroup.setVisibility(View.VISIBLE);//show me my options
-                                            break;//done searching
-                                        }
-                                    }
-                                }
-                            }
-                        });
 
                 Map<String, Object> call = new HashMap<>();
                 call.put("Subject", txtTitle);
