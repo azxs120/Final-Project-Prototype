@@ -40,6 +40,7 @@ public class CallHandlingActivity extends AppCompatActivity {
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = binding.tabs;
         tabs.setupWithViewPager(viewPager);
+
         //get the button
         FloatingActionButton addNewCall = binding.addNewCallBtn;
         //set a Click Listener
@@ -52,8 +53,6 @@ public class CallHandlingActivity extends AppCompatActivity {
                     startActivity(intentLoadNewActivity);
                 }
         });
-
-
     }
 
 }

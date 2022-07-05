@@ -186,8 +186,8 @@ public class AddNewCall extends AppCompatActivity {
 
                 Map<String, Object> call = new HashMap<>();
                 call.put("Subject", txtTitle);
-                call.put("CallBody", txtMessage);
-                call.put("Date", txtCurrentDate);
+                call.put("Call Body", txtMessage);
+                call.put("Start Date", txtCurrentDate);
                 call.put("Email", userEmail);
                 call.put("Tenant Call Status", "open");
                 call.put("Home owner Call Status", "open");
@@ -208,8 +208,7 @@ public class AddNewCall extends AppCompatActivity {
                     call.put("tenant MobileNumber", null);
 
                 //TODO check if the connection is made?
-                //TODO get the other side phone number after wi will create the connection table
-                call.put(otherIdentity + " MobileNumber", null);
+                //TODO get the other side phone number after we will create the connection table
 
                 db.collection("calls")
                         .add(call)
