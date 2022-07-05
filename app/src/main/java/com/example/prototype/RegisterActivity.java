@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.prototype.DBConnections.FirebaseConnection;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
@@ -34,6 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
     private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     private RadioGroup radioGroup;
     private RadioButton tenant, homeOwner,tenantAndHomeOwner;
+
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
@@ -74,10 +76,15 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        /*
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
         // Initialize Firebase Firestore
         db = FirebaseFirestore.getInstance();
+        */
+
+        mAuth = FirebaseConnection.getFirebaseAuth();
+        db = FirebaseConnection.getFirebaseFirestore();
 
         txtSignIn.setOnClickListener(new View.OnClickListener() {
             //on click take us to login screen

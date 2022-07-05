@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.prototype.DBConnections.FirebaseConnection;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -49,7 +50,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         login = findViewById(R.id.loginBtn);
         register = findViewById(R.id.registerNowBtn);
 
-        db = FirebaseFirestore.getInstance();
+        db = FirebaseConnection.getFirebaseFirestore();
         login.setOnClickListener(this);
         register.setOnClickListener(this);
 
