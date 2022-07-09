@@ -67,19 +67,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 else if (pwd.getText().toString().equals(""))
                     Toast.makeText(LoginActivity.this, "Please enter valid password", Toast.LENGTH_SHORT).show();
 
-                db.collection("users")
+                db.collection("users")//גש לטבלת המשתמשים
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {//אם הגישה לטבלה הצליחה
                                 if (task.isSuccessful()) {
-                                    for (QueryDocumentSnapshot doc : task.getResult()) {
+                                    for (QueryDocumentSnapshot doc : task.getResult()) {//תביא את כל הרשומות
                                         String emailFromDB = doc.getString("Email");
                                         String passwordFromDB = doc.getString("Password");
                                         String typedEmail = email.getText().toString().trim();
                                         String typedPassword = pwd.getText().toString().trim();
 
                                         //the data(Email And password) match
+      //במידה והסיסמא והמייל של הרשומה שווים למה שהמשתמש הכניס אז תאפשר לנו התחברות למשתמש ותשלח איתך את שם המשתמש
                                         if (emailFromDB.equals(typedEmail) && passwordFromDB.equals(typedPassword)) {
                                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                             intent.putExtra("key", emailFromDB);//take the email to AddNewActivity
@@ -90,7 +91,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                                     }
                                     if (!isConnect)
-                                        Toast.makeText(LoginActivity.this, "Cannot login,incorrect Email and Password", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(LoginActivity.this,
+                                                "Cannot login,incorrect Email and Password",
+                                                Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });

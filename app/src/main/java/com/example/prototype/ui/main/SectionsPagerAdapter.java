@@ -17,7 +17,7 @@ import com.example.prototype.R;
 public class SectionsPagerAdapter extends FragmentPagerAdapter  {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.closedCallsTab, R.string.handlingCallsTab, R.string.ongoingCallsTab};
+    private static final int[] TAB_TITLES = new int[]{R.string.ongoingCallsTab, R.string.handlingCallsTab, R.string.closedCallsTab};
     private final Context mContext;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm) {
