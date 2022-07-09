@@ -131,23 +131,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:gravity="center"
-        >
-
-        <ImageView
-            android:layout_width="54dp"
-            android:layout_height="56dp"
-            android:layout_margin="20dp"
-            android:contentDescription="@string/login_Btn"
-            android:src="@drawable/google" />
-        <ImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:id="@+id/fb_btn"
-            android:layout_margin="20dp"
-            android:src="@drawable/facebook"
-            android:contentDescription="@string/fb_btn" />
-
-    </LinearLayout>
+        />
 
 
 

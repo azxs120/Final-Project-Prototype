@@ -20,7 +20,7 @@
         android:background="#11000000"
         android:drawableStart="@drawable/ic_action_user"
         android:ems="10"
-        android:hint="first name"
+        android:hint="Full Name"
         android:inputType="text"
         android:textColorHint="@color/white"
         android:textSize="25sp"

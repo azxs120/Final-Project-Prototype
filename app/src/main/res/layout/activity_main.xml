@@ -6,6 +6,8 @@
     android:id="@+id/search"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:scaleX="1"
+    android:scaleY="1"
     tools:context=".MainActivity"
     tools:ignore="ExtraText">
 
@@ -57,8 +59,8 @@
         android:id="@+id/homeBtn"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_marginTop="164dp"
-        android:layout_marginEnd="44dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="52dp"
         android:background="#00FFFFFF"
         android:contentDescription="@string/btn_to_find_home"
         app:layout_constraintEnd_toEndOf="parent"
@@ -70,9 +72,9 @@
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginTop="208dp"
-        android:contentDescription="@string/search_home_btn"
         android:layout_marginEnd="52dp"
         android:background="#FFFFFF"
+        android:contentDescription="@string/search_home_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/homeBtn"
         app:srcCompat="@mipmap/men_foreground" />
@@ -82,9 +84,9 @@
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginStart="44dp"
-        android:contentDescription="@string/call_handling_btn"
-        android:layout_marginTop="164dp"
+        android:layout_marginTop="40dp"
         android:background="#FFFFFF"
+        android:contentDescription="@string/call_handling_btn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/service_foreground" />
@@ -101,6 +103,31 @@
         app:layout_constraintTop_toTopOf="@+id/callBtn"
         app:srcCompat="@mipmap/clock_foreground" />
 
+    <ImageButton
+        android:id="@+id/review"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="380dp"
+        android:background="#FFFFFF"
+        android:contentDescription="@string/my_history_btn"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/callBtn"
+        app:srcCompat="@drawable/review"
+        tools:srcCompat="@drawable/review" />
+
+    <TextView
+        android:id="@+id/reviewText"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-black"
+        android:text="Apartment / Person Review"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/review"
+        app:layout_constraintTop_toBottomOf="@+id/review" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -31,6 +31,7 @@ import javax.annotation.Nullable;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private Button login;
     private Button register;
+    private Button restore;
     private EditText pwd;
     private TextView email;
     private ProgressBar progress;
@@ -48,11 +49,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         progress = findViewById(R.id.progress_bar);
         login = findViewById(R.id.loginBtn);
         register = findViewById(R.id.registerNowBtn);
+        restore = findViewById(R.id.restorePassword);
 
         db = FirebaseConnection.getFirebaseFirestore();
         login.setOnClickListener(this);
         register.setOnClickListener(this);
-
+        restore.setOnClickListener(this);
     }
 
     public void onClick(View v) {
@@ -103,6 +105,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.registerNowBtn:
                 Intent register_view = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(register_view);
+                break;
+            case R.id.restorePassword:
+                Intent restore_view = new Intent(LoginActivity.this, RestorePasswordActivity.class);
+                startActivity(restore_view);
                 break;
         }
     }
