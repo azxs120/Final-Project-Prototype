@@ -24,6 +24,7 @@ public class FindPersonActivity extends AppCompatActivity {
     ListView listView;
     ArrayList<String> stringArrayList = new ArrayList<>();
     ArrayAdapter<String> adapter;
+    private String userEmail = null;
 
 
 
@@ -33,6 +34,10 @@ public class FindPersonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_person);
 
+        //get the user email
+        Bundle bundle = getIntent().getExtras();
+        if(bundle.getString("key") != null)
+            userEmail = bundle.getString("key");
 
         this.setTitle("Search Person");
         //Assign variable
@@ -57,9 +62,8 @@ public class FindPersonActivity extends AppCompatActivity {
                 //take the id number to PersonInfoActivity
                 Intent intent = new Intent(FindPersonActivity.this,PersonInfoActivity.class);
                 intent.putExtra("keyId",ID);
+                intent.putExtra("key", userEmail);//take the email to CallHandlingActivity
                 startActivity(intent);
-
-
             }
 
         });

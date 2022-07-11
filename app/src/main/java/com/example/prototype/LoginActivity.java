@@ -2,6 +2,7 @@ package com.example.prototype;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.text.TextUtils;
 
 import android.content.Intent;
@@ -29,14 +30,15 @@ import com.google.firebase.firestore.QuerySnapshot;
 import javax.annotation.Nullable;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-    private Button login;
-    private Button register;
-    private Button restore;
+    private Button loginBtn;
+    private Button registerBtn;
+    private Button restoreBtn;
     private EditText pwd;
     private TextView email;
-    private ProgressBar progress;
+    private ProgressBar progressBar;
     private boolean isConnect;
     private FirebaseFirestore db;
+    //a pattern that will help us check if the email input is valid.
     private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
 
@@ -46,15 +48,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         email = findViewById(R.id.email);
         pwd = findViewById(R.id.password);
-        progress = findViewById(R.id.progress_bar);
-        login = findViewById(R.id.loginBtn);
-        register = findViewById(R.id.registerNowBtn);
-        restore = findViewById(R.id.restorePassword);
+        progressBar = findViewById(R.id.progress_bar);
+        loginBtn = findViewById(R.id.loginBtn);
+        registerBtn = findViewById(R.id.registerNowBtn);
+        restoreBtn = findViewById(R.id.restorePassword);
 
         db = FirebaseConnection.getFirebaseFirestore();
-        login.setOnClickListener(this);
-        register.setOnClickListener(this);
-        restore.setOnClickListener(this);
+        loginBtn.setOnClickListener(this);
+        registerBtn.setOnClickListener(this);
+        restoreBtn.setOnClickListener(this);
     }
 
     public void onClick(View v) {
@@ -63,13 +65,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             //we pressed login
             case R.id.loginBtn:
                 String typedEmail = email.getText().toString().trim();
+                //email is not empty but not valid
                 if (!TextUtils.isEmpty(typedEmail))
-                    if (typedEmail.matches(emailPattern))
+                    if (!typedEmail.matches(emailPattern))
                         Toast.makeText(LoginActivity.this, "Please enter valid email", Toast.LENGTH_SHORT).show();
-                else if (pwd.getText().toString().equals(""))
-                    Toast.makeText(LoginActivity.this, "Please enter valid password", Toast.LENGTH_SHORT).show();
+                if (pwd.getText().toString().equals(""))
+                    Toast.makeText(LoginActivity.this, "Something went wrong\n" +
+                            "The password field is empty", Toast.LENGTH_SHORT).show();
 
-                db.collection("users")//גש לטבלת המשתמשים
+                db.collection("users")//go to users table
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
@@ -82,7 +86,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         String typedPassword = pwd.getText().toString().trim();
 
                                         //the data(Email And password) match
-      //במידה והסיסמא והמייל של הרשומה שווים למה שהמשתמש הכניס אז תאפשר לנו התחברות למשתמש ותשלח איתך את שם המשתמש
+                                        //במידה והסיסמא והמייל של הרשומה שווים למה שהמשתמש הכניס אז תאפשר לנו התחברות למשתמש ותשלח איתך את שם המשתמש
                                         if (emailFromDB.equals(typedEmail) && passwordFromDB.equals(typedPassword)) {
                                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                             intent.putExtra("key", emailFromDB);//take the email to AddNewActivity

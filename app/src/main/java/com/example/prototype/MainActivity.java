@@ -7,10 +7,6 @@ import android.os.Bundle;
 
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.Toast;
-
-import io.realm.mongodb.mongo.MongoClient;
-import io.realm.mongodb.mongo.MongoDatabase;
 
 public class MainActivity extends AppCompatActivity {
     private ImageButton homeBtn;
@@ -40,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentLoadNewActivity = new Intent(MainActivity.this, HomeActivity.class);
+                Intent intentLoadNewActivity = new Intent(MainActivity.this, ApartmentSearchActivity.class);
                 startActivity(intentLoadNewActivity);
             }
         });
@@ -69,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intentLoadNewActivity = new Intent(MainActivity.this, FindPersonActivity.class);
+                intentLoadNewActivity.putExtra("key", userEmail);//take the email to CallHandlingActivity
                 startActivity(intentLoadNewActivity);
             }
         });

@@ -40,7 +40,7 @@ import java.util.Map;
 
 
 public class AddNewCall extends AppCompatActivity {
-    private EditText title;
+    private EditText callTitle;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     Button newCallBtn;
@@ -60,7 +60,7 @@ public class AddNewCall extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_call);
         this.setTitle("Open New Call");
-        title = (EditText) findViewById(R.id.subject);
+        callTitle = (EditText) findViewById(R.id.subject);
         message = (EditText) findViewById(R.id.messageBody);
         newCallBtn = (Button) findViewById(R.id.submitCall);
         radioGroup = findViewById(R.id.radioGroup);
@@ -73,12 +73,10 @@ public class AddNewCall extends AppCompatActivity {
             userEmail = bundle.getString("key");
 
         // Initialize Firebase Auth
-        //mAuth = FirebaseConnection.getFirebaseAuth();
-        mAuth =FirebaseAuth.getInstance();
-        // Initialize Firebase Firestore
-        //db = FirebaseConnection.getFirebaseFirestore();
+        mAuth = FirebaseConnection.getFirebaseAuth();
 
-        db = FirebaseFirestore.getInstance();
+        // Initialize Firebase Firestore
+        db = FirebaseConnection.getFirebaseFirestore();
 
         //get the MobileNumber of the user
         db.collection("users")
@@ -93,7 +91,7 @@ public class AddNewCall extends AppCompatActivity {
 
                                 //the emails match
                                 if (userEmail.equals(emailFromDB)) {
-                                    mobileNumber = doc.getString("MobileNumber");//get the MobileNumber.
+                                    mobileNumber = doc.getString("Mobile Number");//get the MobileNumber.
                                     identity = doc.getString("Identity");//get the identity
                                     Toast.makeText(AddNewCall.this, mobileNumber +"  " + identity , Toast.LENGTH_SHORT).show();
 
@@ -180,7 +178,7 @@ public class AddNewCall extends AppCompatActivity {
         newCallBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                txtTitle = title.getText().toString().trim();
+                txtTitle = callTitle.getText().toString().trim();
                 txtMessage = message.getText().toString().trim();
                 txtCurrentDate = DateFormat.getDateInstance().format(calendar.getTime());
 
@@ -193,19 +191,19 @@ public class AddNewCall extends AppCompatActivity {
                 call.put("Home owner Call Status", "open");
                 //my identity
                 if(identity.equals("tenant"))
-                    call.put("tenant MobileNumber", mobileNumber);
+                    call.put("tenant Mobile Number", mobileNumber);
                 else if (identity.equals("homeOwner"))
-                    call.put("homeOwner MobileNumber", mobileNumber);
+                    call.put("homeOwner Mobile Number", mobileNumber);
                 else {//tenantAndHomeOwner
                     getOtherIdentity();
-                    call.put(identity + " MobileNumber", mobileNumber);
+                    call.put(identity + " Mobile Number", mobileNumber);
                 }
 
                 //other side identity
                 if(identity.equals("tenant"))
-                    call.put("homeOwner MobileNumber", null);
+                    call.put("homeOwner Mobile Number", null);
                 else if (identity.equals("homeOwner"))
-                    call.put("tenant MobileNumber", null);
+                    call.put("tenant Mobile Number", null);
 
                 //TODO check if the connection is made?
                 //TODO get the other side phone number after we will create the connection table
@@ -232,16 +230,19 @@ public class AddNewCall extends AppCompatActivity {
 
     }
 
+    /**
+     * a method that returns the identity of the other side
+     */
     private void getOtherIdentity() {
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override//change the radioGroup
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId){
                     case R.id.tenant:
-                        identity ="tenant";
+                        identity = "tenant";
                         break;
                     case R.id.homeOwner:
-                        identity ="homeOwner";
+                        identity = "homeOwner";
                         break;
                 }
             }

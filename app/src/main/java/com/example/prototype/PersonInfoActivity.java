@@ -6,13 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class PersonInfoActivity extends AppCompatActivity {
     private TextView idNumber;
-    private Button HistoryButton;
-    private Button ConnectionButton;
+    private Button HistoryBtn;
+    private Button ConnectionBtn;
+    private String userEmail = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,24 +22,33 @@ public class PersonInfoActivity extends AppCompatActivity {
         //save the id from FindPersonActivity
         idNumber = findViewById(R.id.UserID);
 
+        //get the user email
+        Bundle bundle = getIntent().getExtras();
+        if(bundle.getString("key") != null)
+            userEmail = bundle.getString("key");
+
         Intent intent = getIntent();
         String id = intent.getStringExtra("keyId");
         idNumber.setText(id);
-        ConnectionButton=(Button) findViewById(R.id.ConnectionButton);
-        HistoryButton=(Button) findViewById(R.id.HistoryButton);
-        //set what happens when the user clicks view history
-        ConnectionButton.setOnClickListener(new View.OnClickListener() {
+        ConnectionBtn = (Button) findViewById(R.id.ConnectionButton);
+        HistoryBtn = (Button) findViewById(R.id.HistoryButton);
+
+        //set what happens when the user clicks Make Connection
+        ConnectionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentLoadNewActivity = new Intent(PersonInfoActivity.this, ViewHistoryActivity.class);
+                Intent intentLoadNewActivity = new Intent(PersonInfoActivity.this, MakeConnectionActivity.class);
+                intent.putExtra("key", userEmail);//take the email to CallHandlingActivity
                 startActivity(intentLoadNewActivity);
             }
         });
 
-        HistoryButton.setOnClickListener(new View.OnClickListener() {
+        //set what happens when the user clicks view history
+        HistoryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intentLoadNewActivity = new Intent(PersonInfoActivity.this, ViewHistoryActivity.class);
+                intent.putExtra("key", userEmail);//take the email to CallHandlingActivity
                 startActivity(intentLoadNewActivity);
             }
         });
