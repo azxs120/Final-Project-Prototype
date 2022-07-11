@@ -7,7 +7,6 @@
     android:background="#66B9F9"
     tools:context=".MakeConnectionActivity">
 
-
     <EditText
         android:id="@+id/fromDate"
         android:layout_width="117dp"

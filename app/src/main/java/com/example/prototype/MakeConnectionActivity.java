@@ -14,6 +14,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.prototype.DBConnections.FirebaseConnection;
@@ -21,6 +22,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -31,23 +33,23 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MakeConnectionActivity extends AppCompatActivity {
+public class MakeConnectionActivity extends AppCompatActivity  {
     EditText fromDate;
     EditText toDate;
     DatePickerDialog.OnDateSetListener onDateSetListener;
     DatePickerDialog.OnDateSetListener onDateSetListener2;
     private RadioGroup identityGroup;
     private RadioButton tenant, homeOwner;
-    private String identity = "tenant", note = "", userEmail = "" ,mobileNumber ="";
-    private Button submitBtn;
+    private String identity = "tenant", note = "", userEmail = "", mobileNumber = " mobileNumber is empty for now";
+    private Button sendButton;
     private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_connection);
-
-        submitBtn = (Button) findViewById(R.id.sendButton);
+        this.setTitle("Make Connection");
 
         //get the user email
         Bundle bundle = getIntent().getExtras();
@@ -66,10 +68,15 @@ public class MakeConnectionActivity extends AppCompatActivity {
         final int monthTo = calendarTo.get(Calendar.MONTH);
         final int dayTo = calendarTo.get(Calendar.DAY_OF_MONTH);
 
+        sendButton = (Button) findViewById(R.id.sendButton);
         identityGroup = findViewById(R.id.identityGroup);
         tenant = findViewById(R.id.tenant);
         homeOwner = findViewById(R.id.homeOwner);
 
+        // Initialize Firebase Auth
+        mAuth = FirebaseConnection.getFirebaseAuth();
+
+        // Initialize Firebase Firestore
         db = FirebaseConnection.getFirebaseFirestore();
 
         fromDate.setOnClickListener(new View.OnClickListener() {
@@ -111,65 +118,93 @@ public class MakeConnectionActivity extends AppCompatActivity {
             }
         };
 
-        getMobileNumber();
 
         identityGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override//change the radioGroup
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId){
+                switch (checkedId) {
                     case R.id.tenant:
-                        identity ="tenant";
-                        //Toast.makeText(MakeConnectionActivity.this, identity, Toast.LENGTH_SHORT).show();
+                        identity = "tenant";
                         break;
                     case R.id.homeOwner:
-                        identity ="home owner";
-                        //Toast.makeText(MakeConnectionActivity.this, identity, Toast.LENGTH_SHORT).show();
+                        identity = "homeOwner";
                         break;
                 }
             }
         });
 
+        getMobileNumber();
+        Toast.makeText(MakeConnectionActivity.this, mobileNumber, Toast.LENGTH_SHORT).show();
         submitConnection();
     }
+
 
     /**
      * a method that puts the new connection in a table named "Connections"
      */
     private void submitConnection() {
-        submitBtn.setOnClickListener(new View.OnClickListener() {
+        sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-
-
+                db = FirebaseConnection.getFirebaseFirestore();
 
                 //create an map object for the DB
                 Map<String, Object> connection = new HashMap<>();
                 connection.put("Start Date", fromDate);
                 connection.put("End Date", toDate);
                 connection.put("Notes", note);
-                connection.put("Identity",identity);
-                connection.put("User Email", userEmail);
+                connection.put("Identity", identity);
+                connection.put(identity + " Mobile Number", mobileNumber);//the user mobileNumber
 
-                db.collection("users")
+                if (identity.equals("tenant"))
+                    connection.put("homeOwner Mobile Number", mobileNumber);//the user mobileNumber
+                else
+                    connection.put("tenant Mobile Number", mobileNumber);//the user mobileNumber
+
+                db.collection("links")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(MakeConnectionActivity.this, "OK", Toast.LENGTH_SHORT).show();
+
+                                }
+                                else
+                                    Toast.makeText(MakeConnectionActivity.this, "Fuck", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+
+                //it falls here
+                /*
+                db.collection("links")
                         .add(connection)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
-                                Toast.makeText(MakeConnectionActivity.this, "Data Stored Successfully !", Toast.LENGTH_SHORT).show();
-                                finish();//get back to login screen
+                                Toast.makeText(MakeConnectionActivity.this, "Data Created Successfully!", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(MakeConnectionActivity.this, CallHandlingActivity.class);
+                                startActivity(intent);
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(MakeConnectionActivity.this, "-----Error ----- user was not added " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MakeConnectionActivity.this, "----- Error ----- the call was not created" + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
+                */
+                //for the dev
+                Toast.makeText(MakeConnectionActivity.this, "s " + mobileNumber, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    /**
+     * a method that will go to the DataBase and get the user mobileNumber using the user email
+     */
     private void getMobileNumber() {
         //get the MobileNumber of the user
         db.collection("users")
@@ -197,5 +232,7 @@ public class MakeConnectionActivity extends AppCompatActivity {
                     }
                 });
     }
+
+
 }
 

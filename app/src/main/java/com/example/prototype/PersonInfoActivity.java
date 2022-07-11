@@ -27,8 +27,8 @@ public class PersonInfoActivity extends AppCompatActivity {
         if(bundle.getString("key") != null)
             userEmail = bundle.getString("key");
 
-        Intent intent = getIntent();
-        String id = intent.getStringExtra("keyId");
+        Intent intentForId = getIntent();
+        String id = intentForId.getStringExtra("keyId");
         idNumber.setText(id);
         ConnectionBtn = (Button) findViewById(R.id.ConnectionButton);
         HistoryBtn = (Button) findViewById(R.id.HistoryButton);
@@ -37,9 +37,9 @@ public class PersonInfoActivity extends AppCompatActivity {
         ConnectionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentLoadNewActivity = new Intent(PersonInfoActivity.this, MakeConnectionActivity.class);
-                intent.putExtra("key", userEmail);//take the email to CallHandlingActivity
-                startActivity(intentLoadNewActivity);
+                Intent newIntent = new Intent(PersonInfoActivity.this, MakeConnectionActivity.class);
+                newIntent.putExtra("key", userEmail);//take the email to CallHandlingActivity
+                startActivity(newIntent);
             }
         });
 
@@ -47,9 +47,9 @@ public class PersonInfoActivity extends AppCompatActivity {
         HistoryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentLoadNewActivity = new Intent(PersonInfoActivity.this, ViewHistoryActivity.class);
-                intent.putExtra("key", userEmail);//take the email to CallHandlingActivity
-                startActivity(intentLoadNewActivity);
+                Intent newIntent = new Intent(PersonInfoActivity.this, ViewHistoryActivity.class);
+                newIntent.putExtra("key", userEmail);//take the email to CallHandlingActivity
+                startActivity(newIntent);
             }
         });
     }

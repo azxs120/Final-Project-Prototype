@@ -155,6 +155,7 @@ public class RegisterActivity extends AppCompatActivity {
                 user.put("Password",txtPassword);
                 user.put("Identity",txtIdentity);
 
+
                 db.collection("users")
                         .add(user)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

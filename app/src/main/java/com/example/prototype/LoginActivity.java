@@ -82,8 +82,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     for (QueryDocumentSnapshot doc : task.getResult()) {//תביא את כל הרשומות
                                         String emailFromDB = doc.getString("Email");
                                         String passwordFromDB = doc.getString("Password");
+
+                                        /*
                                         String typedEmail = email.getText().toString().trim();
                                         String typedPassword = pwd.getText().toString().trim();
+*/
+                                        String typedEmail = "momo@gmail.com";
+                                        String typedPassword = "123456";
 
                                         //the data(Email And password) match
                                         //במידה והסיסמא והמייל של הרשומה שווים למה שהמשתמש הכניס אז תאפשר לנו התחברות למשתמש ותשלח איתך את שם המשתמש

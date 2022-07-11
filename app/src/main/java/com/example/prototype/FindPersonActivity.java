@@ -61,8 +61,8 @@ public class FindPersonActivity extends AppCompatActivity {
                 String ID = adapter.getItem(position).toString();
                 //take the id number to PersonInfoActivity
                 Intent intent = new Intent(FindPersonActivity.this,PersonInfoActivity.class);
-                intent.putExtra("keyId",ID);
                 intent.putExtra("key", userEmail);//take the email to CallHandlingActivity
+                intent.putExtra("keyId",ID);
                 startActivity(intent);
             }
 
