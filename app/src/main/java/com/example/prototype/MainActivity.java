@@ -6,7 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
+
+import com.example.prototype.DBConnections.FirebaseConnection;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
     private ImageButton homeBtn;
@@ -14,7 +20,9 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton myHistoryBtn;
     private ImageButton searchBtn;
     private String userEmail = null;
-
+    private Button btnLogout;
+    private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +39,20 @@ public class MainActivity extends AppCompatActivity {
         callHandlingBtn = (ImageButton) findViewById(R.id.callBtn);
         myHistoryBtn = (ImageButton) findViewById(R.id.myHistoryBtn);
         searchBtn = (ImageButton) findViewById(R.id.searchBtn);
+        btnLogout = findViewById(R.id.logout);
+        db = FirebaseConnection.getFirebaseFirestore();
+        mAuth= FirebaseAuth.getInstance();
+        //set what happens when the user clicks "Logout"
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAuth.signOut();
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                finish();
+                Toast.makeText(MainActivity.this, "Logout Successful", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         //set what happens when the user clicks "Find Apartment"
         homeBtn.setOnClickListener(new View.OnClickListener() {
@@ -38,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intentLoadNewActivity = new Intent(MainActivity.this, ApartmentSearchActivity.class);
                 startActivity(intentLoadNewActivity);
+
             }
         });
 
