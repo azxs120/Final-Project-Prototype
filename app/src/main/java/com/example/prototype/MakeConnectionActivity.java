@@ -197,7 +197,7 @@ public class MakeConnectionActivity extends AppCompatActivity  {
 
 
 
-                db.collection("links")
+                db.collection("connections")
                         .add(connection)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
