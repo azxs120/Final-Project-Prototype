@@ -30,24 +30,24 @@ public class RestorePasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restore_password);
 
-        toolbar = findViewById(R.id.toolbar3);
-        progressBar = findViewById(R.id.progressBar);
+        //toolbar = findViewById(R.id.toolbar3);
+       //progressBar = findViewById(R.id.progressBar);
         userEmail = findViewById(R.id.etUserEmail);
         userPass = findViewById(R.id.btnForgotPass);
 
-        toolbar.setTitle("Forgot password");
+        //toolbar.setTitle("Forgot password");
 
         firebaseAuth = FirebaseAuth.getInstance();
 
         userPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressBar.setVisibility(View.VISIBLE);
+                //progressBar.setVisibility(View.VISIBLE);
                 firebaseAuth.sendPasswordResetEmail(userEmail.getText().toString())
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                progressBar.setVisibility(View.GONE);
+                                //progressBar.setVisibility(View.GONE);
                                 if (task.isSuccessful()) {
                                     Toast.makeText(RestorePasswordActivity.this,
                                             "Password send to your email", Toast.LENGTH_LONG).show();
