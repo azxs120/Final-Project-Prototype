@@ -40,7 +40,7 @@ public class MakeConnectionActivity extends AppCompatActivity  {
     DatePickerDialog.OnDateSetListener onDateSetListener2;
     private RadioGroup identityGroup;
     private RadioButton tenant, homeOwner;
-    private String identity = "tenant", note = "", userEmail = "", mobileNumber = " mobileNumber is empty for now";
+    private String identity = "tenant", note = "", userEmail = "", mobileNumber = "", txtFromDate,txtToDate;
     private Button sendButton;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
@@ -51,14 +51,8 @@ public class MakeConnectionActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_make_connection);
         this.setTitle("Make Connection");
 
-        //get the user email
-        Bundle bundle = getIntent().getExtras();
-        if (bundle.getString("key") != null)
-            userEmail = bundle.getString("key");
-
         fromDate = findViewById(R.id.fromDate);
         toDate = findViewById(R.id.toDate);
-
         final Calendar calendarFrom = Calendar.getInstance();
         final int yearFrom = calendarFrom.get(Calendar.YEAR);
         final int monthFrom = calendarFrom.get(Calendar.MONTH);
@@ -72,6 +66,11 @@ public class MakeConnectionActivity extends AppCompatActivity  {
         identityGroup = findViewById(R.id.identityGroup);
         tenant = findViewById(R.id.tenant);
         homeOwner = findViewById(R.id.homeOwner);
+
+        //get the user email
+        Bundle bundle = getIntent().getExtras();
+        if (bundle.getString("key") != null)
+            userEmail = bundle.getString("key");
 
         // Initialize Firebase Auth
         mAuth = FirebaseConnection.getFirebaseAuth();
@@ -118,6 +117,32 @@ public class MakeConnectionActivity extends AppCompatActivity  {
             }
         };
 
+        db.collection("users")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            //run on the rows of the table
+                            for (QueryDocumentSnapshot doc : task.getResult()) {
+                                String emailFromDB = doc.getString("Email").trim();//get the email of every user
+
+                                //the emails match
+                                if (userEmail.equals(emailFromDB)) {
+                                    mobileNumber = doc.getString("Mobile Number");//get the MobileNumber.
+                                    identity = doc.getString("Identity");//get the identity
+                                    //Toast.makeText(AddNewCall.this, mobileNumber +"  " + identity , Toast.LENGTH_SHORT).show();
+
+                                    if (identity.equals("tenantAndHomeOwner"))
+                                        identityGroup.setVisibility(View.VISIBLE);//show me my options 
+                                    break;//done searching
+                                }
+                            }
+                        }
+                    }
+                });
+
+
 
         identityGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override//change the radioGroup
@@ -133,8 +158,6 @@ public class MakeConnectionActivity extends AppCompatActivity  {
             }
         });
 
-        getMobileNumber();
-        Toast.makeText(MakeConnectionActivity.this, mobileNumber, Toast.LENGTH_SHORT).show();
         submitConnection();
     }
 
@@ -147,38 +170,29 @@ public class MakeConnectionActivity extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
 
-                db = FirebaseConnection.getFirebaseFirestore();
-
+                txtFromDate = fromDate.getText().toString().trim();
+                txtToDate = toDate.getText().toString().trim();
                 //create an map object for the DB
                 Map<String, Object> connection = new HashMap<>();
-                connection.put("Start Date", fromDate);
-                connection.put("End Date", toDate);
+                connection.put("Start Date", txtFromDate);
+                connection.put("End Date", txtToDate);
                 connection.put("Notes", note);
                 connection.put("Identity", identity);
                 connection.put(identity + " Mobile Number", mobileNumber);//the user mobileNumber
 
                 if (identity.equals("tenant"))
                     connection.put("homeOwner Mobile Number", mobileNumber);//the user mobileNumber
-                else
+                else if (identity.equals("homeOwner"))
                     connection.put("tenant Mobile Number", mobileNumber);//the user mobileNumber
+                else {//tenantAndHomeOwner
+                    getOtherIdentity();
+                    connection.put(identity + " Mobile Number", mobileNumber);
+                }
 
-                db.collection("links")
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(MakeConnectionActivity.this, "OK", Toast.LENGTH_SHORT).show();
-
-                                }
-                                else
-                                    Toast.makeText(MakeConnectionActivity.this, "Fuck", Toast.LENGTH_SHORT).show();
-                            }
-                        });
 
 
                 //it falls here
-                /*
+
                 db.collection("links")
                         .add(connection)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -195,43 +209,34 @@ public class MakeConnectionActivity extends AppCompatActivity  {
                                 Toast.makeText(MakeConnectionActivity.this, "----- Error ----- the call was not created" + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
-                */
+
                 //for the dev
-                Toast.makeText(MakeConnectionActivity.this, "s " + mobileNumber, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MakeConnectionActivity.this, "s " + mobileNumber, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+
     /**
-     * a method that will go to the DataBase and get the user mobileNumber using the user email
+     * a method that returns the identity of the other side
      */
-    private void getMobileNumber() {
-        //get the MobileNumber of the user
-        db.collection("users")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            //run on the rows of the table
-                            for (QueryDocumentSnapshot doc : task.getResult()) {
-                                String emailFromDB = doc.getString("Email").trim();//get the email of every user
-
-                                //the emails match
-                                if (userEmail.equals(emailFromDB)) {
-                                    mobileNumber = doc.getString("Mobile Number");//get the MobileNumber.
-                                    identity = doc.getString("Identity");//get the identity
-
-
-                                    if (identity.equals("tenantAndHomeOwner"))
-                                        identityGroup.setVisibility(View.VISIBLE);//show me my options
-                                    break;//done searching
-                                }
-                            }
-                        }
-                    }
-                });
+    private void getOtherIdentity() {
+        identityGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override//change the radioGroup
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.tenant:
+                        identity = "tenant";
+                        break;
+                    case R.id.homeOwner:
+                        identity = "homeOwner";
+                        break;
+                }
+            }
+        });
     }
+
+
 
 
 }
