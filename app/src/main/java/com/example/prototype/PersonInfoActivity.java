@@ -13,7 +13,7 @@ public class PersonInfoActivity extends AppCompatActivity {
     private Button HistoryBtn;
     private Button ConnectionBtn;
     private String userEmail = null;
-
+    private String otherUserEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,13 +32,17 @@ public class PersonInfoActivity extends AppCompatActivity {
         idNumber.setText(id);
         ConnectionBtn = (Button) findViewById(R.id.ConnectionButton);
         HistoryBtn = (Button) findViewById(R.id.HistoryButton);
-
+        otherUserEmail=idNumber.getText().toString().trim();
         //set what happens when the user clicks Make Connection
         ConnectionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent newIntent = new Intent(PersonInfoActivity.this, MakeConnectionActivity.class);
-                newIntent.putExtra("key", userEmail);//take the email to CallHandlingActivity
+                //newIntent.putExtra("key", userEmail);//take the email to CallHandlingActivity
+                Bundle extras = new Bundle();
+                extras.putString("key",userEmail);
+                extras.putString("key1",otherUserEmail);
+                newIntent.putExtras(extras);
                 startActivity(newIntent);
             }
         });

@@ -72,6 +72,10 @@ public class MakeConnectionActivity extends AppCompatActivity  {
         Bundle bundle = getIntent().getExtras();
         if (bundle.getString("key") != null)
             userEmail = bundle.getString("key");
+        //get the other side phone
+        Bundle bundle2 = getIntent().getExtras();
+        if (bundle2.getString("key1") != null)
+            otherMobileNumber = bundle.getString("key1");
 
         // Initialize Firebase Auth
         mAuth = FirebaseConnection.getFirebaseAuth();
@@ -182,12 +186,12 @@ public class MakeConnectionActivity extends AppCompatActivity  {
                 connection.put(identity + " Mobile Number", mobileNumber);//the user mobileNumber
 
                 if (identity.equals("tenant"))
-                    connection.put("homeOwner Mobile Number", mobileNumber);//the user mobileNumber
+                    connection.put("homeOwner Mobile Number", otherMobileNumber);//the user mobileNumber
                 else if (identity.equals("homeOwner"))
-                    connection.put("tenant Mobile Number", mobileNumber);//the user mobileNumber
+                    connection.put("tenant Mobile Number", otherMobileNumber);//the user mobileNumber
                 else {//tenantAndHomeOwner
                     getOtherIdentity();
-                    connection.put(identity + " Mobile Number", mobileNumber);
+                    connection.put(identity + " Mobile Number", otherMobileNumber);
                 }
 
 
