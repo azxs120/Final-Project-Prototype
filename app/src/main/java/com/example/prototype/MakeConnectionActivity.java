@@ -34,14 +34,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MakeConnectionActivity extends AppCompatActivity  {
-    EditText fromDate;
-    EditText toDate;
+    private EditText fromDate;
+    private EditText toDate;
     DatePickerDialog.OnDateSetListener onDateSetListener;
     DatePickerDialog.OnDateSetListener onDateSetListener2;
     private RadioGroup identityGroup;
     private RadioButton tenant, homeOwner;
-    private String identity = "tenant", note = "", userEmail = "", mobileNumber = "", txtFromDate,txtToDate;
+    private String identity = "tenant", txtNote = "", userEmail = "", mobileNumber = "",otherMobileNumber, txtFromDate,txtToDate;
     private Button sendButton;
+    private EditText messageBox;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
 
@@ -66,7 +67,7 @@ public class MakeConnectionActivity extends AppCompatActivity  {
         identityGroup = findViewById(R.id.identityGroup);
         tenant = findViewById(R.id.tenant);
         homeOwner = findViewById(R.id.homeOwner);
-
+        messageBox = findViewById(R.id.messageBox);
         //get the user email
         Bundle bundle = getIntent().getExtras();
         if (bundle.getString("key") != null)
@@ -131,10 +132,10 @@ public class MakeConnectionActivity extends AppCompatActivity  {
                                 if (userEmail.equals(emailFromDB)) {
                                     mobileNumber = doc.getString("Mobile Number");//get the MobileNumber.
                                     identity = doc.getString("Identity");//get the identity
-                                    //Toast.makeText(AddNewCall.this, mobileNumber +"  " + identity , Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MakeConnectionActivity.this, userEmail, Toast.LENGTH_SHORT).show();
 
                                     if (identity.equals("tenantAndHomeOwner"))
-                                        identityGroup.setVisibility(View.VISIBLE);//show me my options 
+                                        identityGroup.setVisibility(View.VISIBLE);//show me my options
                                     break;//done searching
                                 }
                             }
@@ -169,14 +170,14 @@ public class MakeConnectionActivity extends AppCompatActivity  {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                txtNote = messageBox.getText().toString().trim();
                 txtFromDate = fromDate.getText().toString().trim();
                 txtToDate = toDate.getText().toString().trim();
                 //create an map object for the DB
                 Map<String, Object> connection = new HashMap<>();
                 connection.put("Start Date", txtFromDate);
                 connection.put("End Date", txtToDate);
-                connection.put("Notes", note);
+                connection.put("Notes", txtNote);
                 connection.put("Identity", identity);
                 connection.put(identity + " Mobile Number", mobileNumber);//the user mobileNumber
 
@@ -191,7 +192,6 @@ public class MakeConnectionActivity extends AppCompatActivity  {
 
 
 
-                //it falls here
 
                 db.collection("links")
                         .add(connection)
