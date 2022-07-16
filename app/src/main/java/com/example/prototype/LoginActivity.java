@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button loginBtn;
     private Button registerBtn;
     private Button restoreBtn;
-    private EditText pwd;
+    private EditText password;
     private TextView email;
     private ProgressBar progressBar;
     private boolean isConnect;
@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         email = findViewById(R.id.email);
-        pwd = findViewById(R.id.password);
+        password = findViewById(R.id.password);
         progressBar = findViewById(R.id.progress_bar);
         loginBtn = findViewById(R.id.loginBtn);
         registerBtn = findViewById(R.id.registerNowBtn);
@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (!TextUtils.isEmpty(typedEmail))
                     if (!typedEmail.matches(emailPattern))
                         Toast.makeText(LoginActivity.this, "Please enter valid email", Toast.LENGTH_SHORT).show();
-                if (pwd.getText().toString().equals(""))
+                if (password.getText().toString().equals(""))
                     Toast.makeText(LoginActivity.this, "Something went wrong\n" +
                             "The password field is empty", Toast.LENGTH_SHORT).show();
 
@@ -82,17 +82,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     for (QueryDocumentSnapshot doc : task.getResult()) {//תביא את כל הרשומות
                                         String emailFromDB = doc.getString("Email");
                                         String passwordFromDB = doc.getString("Password");
-
-
                                         String typedEmail = email.getText().toString().trim();
-                                        String typedPassword = pwd.getText().toString().trim();
+                                        String typedPassword = password.getText().toString().trim();
 /*
                                         String typedEmail = "momo@gmail.com";
                                         String typedPassword = "123456";
 */
+
                                         //the data(Email And password) match
                                         //במידה והסיסמא והמייל של הרשומה שווים למה שהמשתמש הכניס אז תאפשר לנו התחברות למשתמש ותשלח איתך את שם המשתמש
                                         if (emailFromDB.equals(typedEmail) && passwordFromDB.equals(typedPassword)) {
+                                            //flash the password and email textBoxes
+                                            password.setText("");
+                                            email.setText("");
+
                                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                             intent.putExtra("key", emailFromDB);//take the email to AddNewActivity
                                             startActivity(intent);

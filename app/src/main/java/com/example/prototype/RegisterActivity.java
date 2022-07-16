@@ -16,12 +16,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.prototype.DBConnections.FirebaseConnection;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,13 +35,13 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText edtFullName, edtEmail, edtMobile, edtPassword, edtConfirmPassword;
     private ProgressBar progressBar;
     private Button btnSignUp;
-    private String txtFullName, txtEmail, txtMobile, txtPassword, txtConfirmPassword,txtIdentity = "tenant";
+    private String txtFullName, txtEmail, txtMobile, txtPassword, txtConfirmPassword, txtIdentity = "tenant";
     private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     private RadioGroup radioGroup;
-    private RadioButton tenant, homeOwner,tenantAndHomeOwner;
-
+    private RadioButton tenant, homeOwner, tenantAndHomeOwner;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+    private boolean flag = true;
 
 
     @Override
@@ -57,20 +61,20 @@ public class RegisterActivity extends AppCompatActivity {
         homeOwner = findViewById(R.id.homeOwner);
         tenantAndHomeOwner = findViewById(R.id.tenantAndHomeOwner);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-           @Override//change the radioGroup
+            @Override//change the radioGroup
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId){
+                switch (checkedId) {
                     case R.id.tenant:
                         Toast.makeText(RegisterActivity.this, "U will sign up as a tenant", Toast.LENGTH_SHORT).show();
-                        txtIdentity ="tenant";
+                        txtIdentity = "tenant";
                         break;
                     case R.id.homeOwner:
                         Toast.makeText(RegisterActivity.this, "U will sign up as a home owner", Toast.LENGTH_SHORT).show();
-                        txtIdentity ="homeOwner";
+                        txtIdentity = "homeOwner";
                         break;
                     case R.id.tenantAndHomeOwner:
                         Toast.makeText(RegisterActivity.this, "U will sign up as a home owner and a tenant", Toast.LENGTH_SHORT).show();
-                        txtIdentity ="tenantAndHomeOwner";
+                        txtIdentity = "tenantAndHomeOwner";
                         break;
                 }
             }
@@ -132,7 +136,6 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     /**
@@ -144,16 +147,42 @@ public class RegisterActivity extends AppCompatActivity {
         //make the BTN disappear
         btnSignUp.setVisibility(View.INVISIBLE);
 
+        //check if the phone exists
+        db.collection("users")//go to users table
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {//אם הגישה לטבלה הצליחה
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot doc : task.getResult()) {//תביא את כל הרשומות
+                                String mobileNumberFromDB = doc.getString("Mobile Number");
+                                //check if the phone number exist in the system
+                                if (mobileNumberFromDB.equals(txtMobile))
+                                    flag = false;
+                            }
+                        }
+                    }
+                });
+            if(flag == true)
+                createUser();
+            else
+                Toast.makeText(RegisterActivity.this,
+                        "-----Error ----- user was not added the phone number already exists in the system",
+                        Toast.LENGTH_SHORT).show();
+
+    }
+
+    private void createUser() {
         mAuth.createUserWithEmailAndPassword(txtEmail, txtPassword).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
                 //create an map object for the DB
                 Map<String, Object> user = new HashMap<>();
-                user.put("FullName", txtFullName);
+                user.put("Full Name", txtFullName);
                 user.put("Email", txtEmail);
                 user.put("Mobile Number", txtMobile);
-                user.put("Password",txtPassword);
-                user.put("Identity",txtIdentity);
+                user.put("Password", txtPassword);
+                user.put("Identity", txtIdentity);
 
 
                 db.collection("users")
@@ -161,7 +190,7 @@ public class RegisterActivity extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
-                                Toast.makeText(RegisterActivity.this, "Data Stored Successfully !", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, "Data Stored Successfully!", Toast.LENGTH_SHORT).show();
                                 finish();//get back to login screen
                             }
                         })

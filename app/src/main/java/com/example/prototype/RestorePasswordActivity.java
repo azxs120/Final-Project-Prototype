@@ -17,11 +17,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class RestorePasswordActivity extends AppCompatActivity {
-
-    Toolbar toolbar;
-    ProgressBar progressBar;
     EditText userEmail;
-    Button userPass;
+    Button restoreUserPasswordBtn;
 
     FirebaseAuth firebaseAuth;
 
@@ -29,31 +26,22 @@ public class RestorePasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restore_password);
-
-        //toolbar = findViewById(R.id.toolbar3);
-       //progressBar = findViewById(R.id.progressBar);
         userEmail = findViewById(R.id.etUserEmail);
-        userPass = findViewById(R.id.btnForgotPass);
-
-        //toolbar.setTitle("Forgot password");
-
+        restoreUserPasswordBtn = findViewById(R.id.btnForgotPass);
         firebaseAuth = FirebaseAuth.getInstance();
 
-        userPass.setOnClickListener(new View.OnClickListener() {
+        restoreUserPasswordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //progressBar.setVisibility(View.VISIBLE);
-                firebaseAuth.sendPasswordResetEmail(userEmail.getText().toString())
+                firebaseAuth.sendPasswordResetEmail(userEmail.getText().toString().trim())
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                //progressBar.setVisibility(View.GONE);
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(RestorePasswordActivity.this,
-                                            "Password send to your email", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(RestorePasswordActivity.this, "Password was sent to your email", Toast.LENGTH_LONG).show();
+                                    finish();
                                 } else {
-                                    Toast.makeText(RestorePasswordActivity.this,
-                                            task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(RestorePasswordActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                 }
                             }
                         });
