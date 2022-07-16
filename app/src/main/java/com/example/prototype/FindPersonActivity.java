@@ -1,5 +1,6 @@
 package com.example.prototype;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MenuItemCompat;
 
@@ -17,6 +18,13 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.example.prototype.DBConnections.FirebaseConnection;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
 
 public class FindPersonActivity extends AppCompatActivity {
@@ -24,8 +32,8 @@ public class FindPersonActivity extends AppCompatActivity {
     ListView listView;
     ArrayList<String> stringArrayList = new ArrayList<>();
     ArrayAdapter<String> adapter;
-    private String userEmail = null;
-
+    private String userPhoneNumber= null;
+    private FirebaseFirestore db;
 
 
 
@@ -33,18 +41,32 @@ public class FindPersonActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_person);
-
+        db = FirebaseConnection.getFirebaseFirestore();
         //get the user email
         Bundle bundle = getIntent().getExtras();
         if(bundle.getString("key") != null)
-            userEmail = bundle.getString("key");
+            userPhoneNumber = bundle.getString("key");
 
         this.setTitle("Search Person");
         //Assign variable
         listView = findViewById(R.id.userList);
         //add item in array list
-        for (int i = 0; i <= 100; i++)
-            stringArrayList.add("Item" + i);
+        //for (int i = 0; i <= 100; i++)
+            //stringArrayList.add("Item" + i);
+        db.collection("users")//go to users table
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {//אם הגישה לטבלה הצליחה
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot doc : task.getResult()) {//תביא את כל הרשומות
+                                String phoneFromDB = doc.getString("Mobile Number");
+                                stringArrayList.add(phoneFromDB);
+                                }
+
+                            }
+                        }
+                });
 
 
         //Initialize adapter
@@ -61,7 +83,7 @@ public class FindPersonActivity extends AppCompatActivity {
                 String ID = adapter.getItem(position).toString();
                 //take the id number to PersonInfoActivity
                 Intent intent = new Intent(FindPersonActivity.this,PersonInfoActivity.class);
-                intent.putExtra("key", userEmail);//take the email to CallHandlingActivity
+                intent.putExtra("key", userPhoneNumber);//take the email to CallHandlingActivity
                 intent.putExtra("keyId",ID);
                 startActivity(intent);
             }
