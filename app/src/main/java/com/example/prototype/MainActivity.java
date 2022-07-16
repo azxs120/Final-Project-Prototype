@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnLogout;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
         //get the user email
         Bundle bundle = getIntent().getExtras();
-        if(bundle.getString("key") != null)
-            userEmail = bundle.getString("key");
+        if(bundle.getString("userEmail") != null)
+            userEmail = bundle.getString("userEmail");
 
         //wire up the button to do stuff
         //get the btn
@@ -39,10 +40,10 @@ public class MainActivity extends AppCompatActivity {
         callHandlingBtn = (ImageButton) findViewById(R.id.callBtn);
         myHistoryBtn = (ImageButton) findViewById(R.id.myHistoryBtn);
         searchBtn = (ImageButton) findViewById(R.id.searchBtn);
-        btnLogout = findViewById(R.id.logout);
         db = FirebaseConnection.getFirebaseFirestore();
         mAuth= FirebaseAuth.getInstance();
         //set what happens when the user clicks "Logout"
+        btnLogout = findViewById(R.id.logout);
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intentLoadNewActivity = new Intent(MainActivity.this, FindPersonActivity.class);
-                intentLoadNewActivity.putExtra("key", userEmail);//take the email to CallHandlingActivity
+                intentLoadNewActivity.putExtra("userEmail", userEmail);//take the email to CallHandlingActivity
                 startActivity(intentLoadNewActivity);
             }
         });

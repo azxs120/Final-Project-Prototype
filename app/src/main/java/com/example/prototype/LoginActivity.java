@@ -97,7 +97,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             email.setText("");
 
                                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                            intent.putExtra("key", emailFromDB);//take the email to AddNewActivity
+                                            intent.putExtra("userEmail", emailFromDB);//take the email to AddNewActivity
                                             startActivity(intent);
                                             isConnect = true;
                                             break;

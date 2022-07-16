@@ -1,5 +1,6 @@
 package com.example.prototype;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -7,41 +8,90 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.prototype.DBConnections.FirebaseConnection;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class PersonInfoActivity extends AppCompatActivity {
-    private TextView idNumber;
+    private TextView otherUserPhoneNumberTextView;
+    private TextView otherUserNameTextView;
     private Button HistoryBtn;
     private Button ConnectionBtn;
-    private String userEmail = null;
+    private FirebaseFirestore db;
+
+    //for sending to the next intent
+    private String userEmail;
     private String otherUserEmail;
+
+    //for printing
+    private String otherUserPhoneNumber = null;
+    private String otherUserName = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person_info);
         //save the id from FindPersonActivity
-        idNumber = findViewById(R.id.UserID);
+        otherUserPhoneNumberTextView = findViewById(R.id.otherUserPhoneNumber);
+
+        db = FirebaseConnection.getFirebaseFirestore();
 
         //get the user email
         Bundle bundle = getIntent().getExtras();
-        if(bundle.getString("key") != null)
-            userEmail = bundle.getString("key");
+        if (bundle.getString("otherUserPhoneNumber") != null)
+            otherUserPhoneNumber = bundle.getString("otherUserPhoneNumber");
 
-        Intent intentForId = getIntent();
-        String id = intentForId.getStringExtra("keyId");
-        idNumber.setText(id);
+        bundle = getIntent().getExtras();
+        if (bundle.getString("userEmail") != null)
+            userEmail = bundle.getString("userEmail");
+
+        //get the name of the other user
+        db.collection("users")//go to users table
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {//אם הגישה לטבלה הצליחה
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot doc : task.getResult()) {//תביא את כל הרשומות
+                                String mobileNumberFromDB = doc.getString("Mobile Number");
+                                if (otherUserPhoneNumber.equals(mobileNumberFromDB)) {
+                                    otherUserName = doc.getString("FullName");
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                });
+
+        //TODO set text box to be name
+        if(otherUserName == null)
+            Toast.makeText(PersonInfoActivity.this,
+                "-----Error ----- ",
+                Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(PersonInfoActivity.this,
+                    otherUserName,
+                    Toast.LENGTH_SHORT).show();
+        otherUserPhoneNumberTextView.setText(otherUserPhoneNumber);
         ConnectionBtn = (Button) findViewById(R.id.ConnectionButton);
         HistoryBtn = (Button) findViewById(R.id.HistoryButton);
-        otherUserEmail=idNumber.getText().toString().trim();
+        otherUserPhoneNumber = otherUserPhoneNumberTextView.getText().toString().trim();
+        otherUserNameTextView = findViewById(R.id.otherUserName);
+        otherUserNameTextView.setText(otherUserName);
+
         //set what happens when the user clicks Make Connection
         ConnectionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent newIntent = new Intent(PersonInfoActivity.this, MakeConnectionActivity.class);
-                //newIntent.putExtra("key", userEmail);//take the email to CallHandlingActivity
                 Bundle extras = new Bundle();
-                extras.putString("key",userEmail);
-                extras.putString("key1",otherUserEmail);
+                extras.putString("userEmail", userEmail);
+                extras.putString("otherUserPhoneNumber", otherUserPhoneNumber);
                 newIntent.putExtras(extras);
                 startActivity(newIntent);
             }
@@ -52,7 +102,7 @@ public class PersonInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent newIntent = new Intent(PersonInfoActivity.this, ViewHistoryActivity.class);
-                newIntent.putExtra("key", userEmail);//take the email to CallHandlingActivity
+                newIntent.putExtra("userEmail", userEmail);//take the email to CallHandlingActivity
                 startActivity(newIntent);
             }
         });

@@ -70,12 +70,12 @@ public class MakeConnectionActivity extends AppCompatActivity  {
         messageBox = findViewById(R.id.messageBox);
         //get the user email
         Bundle bundle = getIntent().getExtras();
-        if (bundle.getString("key") != null)
-            userEmail = bundle.getString("key");
+        if (bundle.getString("userEmail") != null)
+            userEmail = bundle.getString("userEmail");
         //get the other side phone
         Bundle bundle2 = getIntent().getExtras();
-        if (bundle2.getString("key1") != null)
-            otherMobileNumber = bundle.getString("key1");
+        if (bundle2.getString("otherUserPhoneNumber") != null)
+            otherMobileNumber = bundle.getString("otherUserPhoneNumber");
 
         // Initialize Firebase Auth
         mAuth = FirebaseConnection.getFirebaseAuth();

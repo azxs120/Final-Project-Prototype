@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import com.example.prototype.DBConnections.FirebaseConnection;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -32,9 +34,9 @@ public class FindPersonActivity extends AppCompatActivity {
     ListView listView;
     ArrayList<String> stringArrayList = new ArrayList<>();
     ArrayAdapter<String> adapter;
-    private String userPhoneNumber= null;
+    private String userEmail = null;
     private FirebaseFirestore db;
-
+    private Button showResultsBtn;
 
 
     @Override
@@ -44,15 +46,12 @@ public class FindPersonActivity extends AppCompatActivity {
         db = FirebaseConnection.getFirebaseFirestore();
         //get the user email
         Bundle bundle = getIntent().getExtras();
-        if(bundle.getString("key") != null)
-            userPhoneNumber = bundle.getString("key");
+        if (bundle.getString("userEmail") != null)
+            userEmail = bundle.getString("userEmail");
 
         this.setTitle("Search Person");
         //Assign variable
         listView = findViewById(R.id.userList);
-        //add item in array list
-        //for (int i = 0; i <= 100; i++)
-            //stringArrayList.add("Item" + i);
         db.collection("users")//go to users table
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -60,31 +59,37 @@ public class FindPersonActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {//אם הגישה לטבלה הצליחה
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot doc : task.getResult()) {//תביא את כל הרשומות
-                                String phoneFromDB = doc.getString("Mobile Number");
+                                String phoneFromDB = doc.getString("Mobile Number");//get all phone numbers
                                 stringArrayList.add(phoneFromDB);
-                                }
-
                             }
                         }
+                    }
                 });
 
+        showResultsBtn = findViewById(R.id.showResults);
+        showResultsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showResultsBtn.setVisibility(View.INVISIBLE);
 
-        //Initialize adapter
-        adapter = new ArrayAdapter<>(FindPersonActivity.this
-                , android.R.layout.simple_list_item_1, stringArrayList);
-        //Set adapter on list view
-        listView.setAdapter(adapter);
+                //Initialize adapter
+                adapter = new ArrayAdapter<>(FindPersonActivity.this
+                        , android.R.layout.simple_list_item_1, stringArrayList);
+                //Set adapter on list view
+                listView.setAdapter(adapter);
+            }
+        });
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Display click item position in toast
-                Toast.makeText(getApplicationContext(), adapter.getItem(position), Toast.LENGTH_SHORT).show();
-                String ID = adapter.getItem(position).toString();
+                String otherUserPhoneNumber = adapter.getItem(position).toString();
                 //take the id number to PersonInfoActivity
-                Intent intent = new Intent(FindPersonActivity.this,PersonInfoActivity.class);
-                intent.putExtra("key", userPhoneNumber);//take the email to CallHandlingActivity
-                intent.putExtra("keyId",ID);
+                Intent intent = new Intent(FindPersonActivity.this, PersonInfoActivity.class);
+                intent.putExtra("userEmail", userEmail);//take the email to PersonInfoActivity
+                intent.putExtra("otherUserPhoneNumber", otherUserPhoneNumber);
                 startActivity(intent);
             }
 
@@ -98,17 +103,18 @@ public class FindPersonActivity extends AppCompatActivity {
         //Initialize menu inflater
         MenuInflater menuInflater = getMenuInflater();
         //Inflate menu
-        menuInflater.inflate(R.menu.menu_search,menu);
+        menuInflater.inflate(R.menu.menu_search, menu);
         //Initialize menu item
         MenuItem menuItem = menu.findItem(R.id.search_view);
         //Initialize search view
         SearchView SearchView = (SearchView) MenuItemCompat.getActionView(menuItem);
-        SearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+        SearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 return false;
             }
-            public boolean onQueryTextChange(String newText){
+
+            public boolean onQueryTextChange(String newText) {
                 //Filter array list
                 adapter.getFilter().filter(newText);
                 return false;
