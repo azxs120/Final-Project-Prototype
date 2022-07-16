@@ -71,7 +71,10 @@ public class FindPersonActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot doc : task.getResult()) {//תביא את כל הרשומות
                                 String phoneFromDB = doc.getString("Mobile Number");//get all phone numbers
                                 String otherUserName = doc.getString("Name");
-                                if (!(userEmail.equals(doc.getString("Email"))) && !(identity.equals(doc.getString("Identity"))))
+
+                                if (!(userEmail.equals(doc.getString("Email"))) && !(identity.equals(doc.getString("Identity"))) && !identity.equals("tenantAndHomeOwner"))
+                                    stringArrayList.add(phoneFromDB);
+                                else if(!(userEmail.equals(doc.getString("Email"))) && identity.equals("tenantAndHomeOwner"))
                                     stringArrayList.add(phoneFromDB);
 
                                 personHashMap.put(phoneFromDB, otherUserName);
@@ -106,12 +109,9 @@ public class FindPersonActivity extends AppCompatActivity {
                         intent.putExtra("otherUserName", personHashMap.get(otherUserPhoneNumber).toString());
                         startActivity(intent);
                     }
-
                 });
             }
         });
-
-
     }
 
     @Override

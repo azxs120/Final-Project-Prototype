@@ -48,9 +48,9 @@ public class AddNewCall extends AppCompatActivity {
     String txtTitle, txtMessage, txtCurrentDate;
     Calendar calendar = Calendar.getInstance();
     private String userEmail = null;
-    private String mobileNumber = null;
-    private String identity = null;
-    private String otherIdentity = null;
+    private String userMobileNumber = null;
+    private String userIdentity = null;
+    private String otherIdentity = null, otherNumber = null;;
     private RadioButton tenant, homeOwner;
     private RadioGroup radioGroup;
 
@@ -91,11 +91,11 @@ public class AddNewCall extends AppCompatActivity {
 
                                 //the emails match
                                 if (userEmail.equals(emailFromDB)) {
-                                    mobileNumber = doc.getString("Mobile Number");//get the MobileNumber.
-                                    identity = doc.getString("Identity");//get the identity
-                                    Toast.makeText(AddNewCall.this, mobileNumber +"  " + identity , Toast.LENGTH_SHORT).show();
+                                    userMobileNumber = doc.getString("Mobile Number");//get the MobileNumber.
+                                    userIdentity = doc.getString("Identity");//get the identity
+                                    Toast.makeText(AddNewCall.this, userMobileNumber +"  " + userIdentity , Toast.LENGTH_SHORT).show();
 
-                                    if (identity.equals("tenantAndHomeOwner"))
+                                    if (userIdentity.equals("tenantAndHomeOwner"))
                                         radioGroup.setVisibility(View.VISIBLE);//show me my options
                                     break;//done searching
                                 }
@@ -120,27 +120,31 @@ public class AddNewCall extends AppCompatActivity {
                 call.put("Subject", txtTitle);
                 call.put("Call Body", txtMessage);
                 call.put("Start Date", txtCurrentDate);
-                call.put("Email", userEmail);
                 call.put("Tenant Call Status", "open");
                 call.put("Home owner Call Status", "open");
+
                 //my identity
-                if(identity.equals("tenant"))
-                    call.put("tenant Mobile Number", mobileNumber);
-                else if (identity.equals("homeOwner"))
-                    call.put("homeOwner Mobile Number", mobileNumber);
+                if(userIdentity.equals("tenant")) {
+                    call.put("tenant Mobile Number", userMobileNumber);
+                    call.put("homeOwner Mobile Number", getOtherPhoneNumber(userMobileNumber, "tenant"));
+                }
+                else if (userIdentity.equals("homeOwner")) {
+                    call.put("homeOwner Mobile Number", userMobileNumber);
+                    call.put("tenant Mobile Number", getOtherPhoneNumber(userMobileNumber, "homeOwner"));
+                }
                 else {//tenantAndHomeOwner
-                    getOtherIdentity();
-                    call.put(identity + " Mobile Number", mobileNumber);
+                    getMyIdentity();
+                    if(userIdentity.equals("tenant")) {
+                        call.put("tenant Mobile Number", userMobileNumber);
+                        call.put("homeOwner Mobile Number", getOtherPhoneNumber(userMobileNumber, "tenant"));
+                    }
+                    else if (userIdentity.equals("homeOwner")) {
+                        call.put("homeOwner Mobile Number", userMobileNumber);
+                        call.put("tenant Mobile Number", getOtherPhoneNumber(userMobileNumber, "homeOwner"));
+                    }
                 }
 
-                //other side identity
-                if(identity.equals("tenant"))
-                    call.put("homeOwner Mobile Number", null);
-                else if (identity.equals("homeOwner"))
-                    call.put("tenant Mobile Number", null);
-
                 //TODO check if the connection is made?
-                //TODO get the other side phone number after we will create the connection table
 
                 db.collection("calls")
                         .add(call)
@@ -164,19 +168,44 @@ public class AddNewCall extends AppCompatActivity {
 
     }
 
+   private String getOtherPhoneNumber(String myPhoneNumber,final String identity){
+       db.collection("connections")
+               .get()
+               .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                   @Override
+                   public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                       if (task.isSuccessful()) {
+                           //run on the rows of the table
+                           for (QueryDocumentSnapshot doc : task.getResult()) {
+                               String myPhoneNumberFromDB = doc.getString(identity + " Mobile Number").trim();//get the email of every user
+                               //the emails match
+                               if (myPhoneNumber.equals(myPhoneNumberFromDB)) {
+                                    if (identity.equals("tenant"))
+                                        otherNumber = doc.getString("homeOwner Mobile Number").trim();//get the email of every user
+                                    else
+                                        otherNumber = doc.getString("tenant Mobile Number").trim();//get the email of every user
+                               }
+                           }
+                       }
+                   }
+               });
+       return otherNumber;
+   }
+
+
     /**
      * a method that returns the identity of the other side
      */
-    private void getOtherIdentity() {
+    private void getMyIdentity() {
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override//change the radioGroup
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId){
                     case R.id.tenant:
-                        identity = "tenant";
+                        userIdentity = "tenant";
                         break;
                     case R.id.homeOwner:
-                        identity = "homeOwner";
+                        userIdentity = "homeOwner";
                         break;
                 }
             }

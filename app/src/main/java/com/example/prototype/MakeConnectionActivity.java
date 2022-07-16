@@ -71,11 +71,11 @@ public class MakeConnectionActivity extends AppCompatActivity  {
         //get the user email
         Bundle bundle = getIntent().getExtras();
         if (bundle.getString("userEmail") != null)
-            userEmail = bundle.getString("userEmail");
+            userEmail = bundle.getString("userEmail").trim();
         //get the other side phone
         Bundle bundle2 = getIntent().getExtras();
         if (bundle2.getString("otherUserPhoneNumber") != null)
-            otherMobileNumber = bundle.getString("otherUserPhoneNumber");
+            otherMobileNumber = bundle.getString("otherUserPhoneNumber").trim();
 
         // Initialize Firebase Auth
         mAuth = FirebaseConnection.getFirebaseAuth();
@@ -202,7 +202,7 @@ public class MakeConnectionActivity extends AppCompatActivity  {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
                                 Toast.makeText(MakeConnectionActivity.this, "Data Created Successfully!", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(MakeConnectionActivity.this, CallHandlingActivity.class);
+                                Intent intent = new Intent(MakeConnectionActivity.this, PersonInfoActivity.class);
                                 startActivity(intent);
                             }
                         })

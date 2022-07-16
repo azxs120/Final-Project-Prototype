@@ -27,4 +27,8 @@ public class FirebaseConnection {
             return FirebaseFirestore.getInstance();
         return db;
     }
+
+    public static void close(){
+        db.terminate();
+    }
 }

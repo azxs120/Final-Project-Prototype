@@ -86,6 +86,8 @@ public class PersonInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent newIntent = new Intent(PersonInfoActivity.this, ViewHistoryActivity.class);
+                Bundle extras = new Bundle();
+                extras.putString("otherUserPhoneNumber", otherUserPhoneNumber);
                 newIntent.putExtra("userEmail", userEmail);//take the email to CallHandlingActivity
                 startActivity(newIntent);
             }
