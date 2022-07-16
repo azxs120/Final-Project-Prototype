@@ -178,7 +178,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onSuccess(AuthResult authResult) {
                 //create an map object for the DB
                 Map<String, Object> user = new HashMap<>();
-                user.put("FullName", txtFullName);
+                user.put("Name", txtFullName);
                 user.put("Email", txtEmail);
                 user.put("Mobile Number", txtMobile);
                 user.put("Password", txtPassword);

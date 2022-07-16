@@ -26,7 +26,6 @@ public class PersonInfoActivity extends AppCompatActivity {
 
     //for sending to the next intent
     private String userEmail;
-    private String otherUserEmail;
 
     //for printing
     private String otherUserPhoneNumber = null;
@@ -47,36 +46,23 @@ public class PersonInfoActivity extends AppCompatActivity {
             otherUserPhoneNumber = bundle.getString("otherUserPhoneNumber");
 
         bundle = getIntent().getExtras();
+        if (bundle.getString("otherUserName") != null)
+            otherUserName = bundle.getString("otherUserName");
+
+        bundle = getIntent().getExtras();
         if (bundle.getString("userEmail") != null)
             userEmail = bundle.getString("userEmail");
 
-        //get the name of the other user
-        db.collection("users")//go to users table
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {//אם הגישה לטבלה הצליחה
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot doc : task.getResult()) {//תביא את כל הרשומות
-                                String mobileNumberFromDB = doc.getString("Mobile Number");
-                                if (otherUserPhoneNumber.equals(mobileNumberFromDB)) {
-                                    otherUserName = doc.getString("FullName");
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                });
-
         //TODO set text box to be name
-        if(otherUserName == null)
-            Toast.makeText(PersonInfoActivity.this,
-                "-----Error ----- ",
-                Toast.LENGTH_SHORT).show();
-        else
+        if(otherUserName != null)
             Toast.makeText(PersonInfoActivity.this,
                     otherUserName,
                     Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(PersonInfoActivity.this,
+                    "-----Error ----- ",
+                    Toast.LENGTH_SHORT).show();
+
         otherUserPhoneNumberTextView.setText(otherUserPhoneNumber);
         ConnectionBtn = (Button) findViewById(R.id.ConnectionButton);
         HistoryBtn = (Button) findViewById(R.id.HistoryButton);
@@ -107,4 +93,5 @@ public class PersonInfoActivity extends AppCompatActivity {
             }
         });
     }
+
 }
