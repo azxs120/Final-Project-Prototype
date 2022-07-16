@@ -136,7 +136,6 @@ public class MakeConnectionActivity extends AppCompatActivity  {
                                 if (userEmail.equals(emailFromDB)) {
                                     mobileNumber = doc.getString("Mobile Number");//get the MobileNumber.
                                     identity = doc.getString("Identity");//get the identity
-                                    Toast.makeText(MakeConnectionActivity.this, userEmail, Toast.LENGTH_SHORT).show();
 
                                     if (identity.equals("tenantAndHomeOwner"))
                                         identityGroup.setVisibility(View.VISIBLE);//show me my options

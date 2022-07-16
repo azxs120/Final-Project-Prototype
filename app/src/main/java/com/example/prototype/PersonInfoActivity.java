@@ -17,6 +17,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.Map;
+
 public class PersonInfoActivity extends AppCompatActivity {
     private TextView otherUserPhoneNumberTextView;
     private TextView otherUserNameTextView;
@@ -40,27 +42,23 @@ public class PersonInfoActivity extends AppCompatActivity {
 
         db = FirebaseConnection.getFirebaseFirestore();
 
-        //get the user email
+        //get the Extras
         Bundle bundle = getIntent().getExtras();
-        if (bundle.getString("otherUserPhoneNumber") != null)
-            otherUserPhoneNumber = bundle.getString("otherUserPhoneNumber");
-
-        bundle = getIntent().getExtras();
         if (bundle.getString("otherUserName") != null)
             otherUserName = bundle.getString("otherUserName");
-
+        bundle = getIntent().getExtras();
+        if (bundle.getString("otherUserPhoneNumber") != null)
+            otherUserPhoneNumber = bundle.getString("otherUserPhoneNumber");
         bundle = getIntent().getExtras();
         if (bundle.getString("userEmail") != null)
             userEmail = bundle.getString("userEmail");
 
+        this.setTitle(otherUserName + " Info");
+
         //TODO set text box to be name
-        if(otherUserName != null)
+        if(otherUserName == null)
             Toast.makeText(PersonInfoActivity.this,
-                    otherUserName,
-                    Toast.LENGTH_SHORT).show();
-        else
-            Toast.makeText(PersonInfoActivity.this,
-                    "-----Error ----- ",
+                    "-----Error name is empty ----- ",
                     Toast.LENGTH_SHORT).show();
 
         otherUserPhoneNumberTextView.setText(otherUserPhoneNumber);

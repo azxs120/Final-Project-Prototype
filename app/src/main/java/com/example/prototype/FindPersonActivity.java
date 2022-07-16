@@ -28,6 +28,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FindPersonActivity extends AppCompatActivity {
 
@@ -37,8 +39,7 @@ public class FindPersonActivity extends AppCompatActivity {
     private String userEmail = null;
     private FirebaseFirestore db;
     private Button showResultsBtn;
-    private String otherUserName;
-
+    Map<String, String> personHashMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,10 @@ public class FindPersonActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot doc : task.getResult()) {//תביא את כל הרשומות
                                 String phoneFromDB = doc.getString("Mobile Number");//get all phone numbers
+                                String otherUserName = doc.getString("Name");
                                 stringArrayList.add(phoneFromDB);
+
+                                personHashMap.put(phoneFromDB, otherUserName);
                             }
                         }
                     }
@@ -78,41 +82,26 @@ public class FindPersonActivity extends AppCompatActivity {
                         , android.R.layout.simple_list_item_1, stringArrayList);
                 //Set adapter on list view
                 listView.setAdapter(adapter);
+
+
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        //Display click item position in toast
+                        String otherUserPhoneNumber = adapter.getItem(position).toString();
+
+                        //take the DATA number to PersonInfoActivity
+                        Intent intent = new Intent(FindPersonActivity.this, PersonInfoActivity.class);
+                        intent.putExtra("userEmail", userEmail);//take the email to PersonInfoActivity
+                        intent.putExtra("otherUserPhoneNumber", otherUserPhoneNumber);
+                        intent.putExtra("otherUserName", personHashMap.get(otherUserPhoneNumber).toString());
+                        startActivity(intent);
+                    }
+
+                });
             }
         });
 
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Display click item position in toast
-                String otherUserPhoneNumber = adapter.getItem(position).toString();
-                //get the name of the other user
-                db.collection("users")//go to users table
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {//אם הגישה לטבלה הצליחה
-                                if (task.isSuccessful()) {
-                                    for (QueryDocumentSnapshot doc : task.getResult()) {//תביא את כל הרשומות
-                                        String mobileNumberFromDB = doc.getString("Mobile Number");
-                                        if (otherUserPhoneNumber.equals(mobileNumberFromDB)) {
-                                            otherUserName = doc.getString("Name");
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        });
-                //take the id number to PersonInfoActivity
-                Intent intent = new Intent(FindPersonActivity.this, PersonInfoActivity.class);
-                intent.putExtra("otherUserName", otherUserName); 
-                intent.putExtra("userEmail", userEmail);//take the email to PersonInfoActivity
-                intent.putExtra("otherUserPhoneNumber", otherUserPhoneNumber);
-                startActivity(intent);
-            }
-
-        });
 
 
     }
