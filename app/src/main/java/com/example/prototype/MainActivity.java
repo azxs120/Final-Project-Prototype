@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnLogout;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
-
+    String identity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if(bundle.getString("userEmail") != null)
             userEmail = bundle.getString("userEmail");
+        bundle = getIntent().getExtras();
+        if(bundle.getString("identity") != null)
+            identity = bundle.getString("identity");
 
         //wire up the button to do stuff
         //get the btn
@@ -90,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intentLoadNewActivity = new Intent(MainActivity.this, FindPersonActivity.class);
                 intentLoadNewActivity.putExtra("userEmail", userEmail);//take the email to CallHandlingActivity
+                intentLoadNewActivity.putExtra("identity", identity);//take the email to CallHandlingActivity
                 startActivity(intentLoadNewActivity);
             }
         });

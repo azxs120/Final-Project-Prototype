@@ -84,10 +84,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         String passwordFromDB = doc.getString("Password");
                                         String typedEmail = email.getText().toString().trim();
                                         String typedPassword = password.getText().toString().trim();
-/*
-                                        String typedEmail = "momo@gmail.com";
-                                        String typedPassword = "123456";
-*/
+                                        String identity = doc.getString("Identity");
+
+
+                                        typedEmail = "balo@gmail.com";
+                                        typedPassword = "123456";
+
 
                                         //the data(Email And password) match
                                         //במידה והסיסמא והמייל של הרשומה שווים למה שהמשתמש הכניס אז תאפשר לנו התחברות למשתמש ותשלח איתך את שם המשתמש
@@ -98,6 +100,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                             intent.putExtra("userEmail", emailFromDB);//take the email to AddNewActivity
+                                            intent.putExtra("identity", identity);//take the email to AddNewActivity
                                             startActivity(intent);
                                             isConnect = true;
                                             break;

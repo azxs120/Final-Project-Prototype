@@ -39,19 +39,27 @@ public class FindPersonActivity extends AppCompatActivity {
     private String userEmail = null;
     private FirebaseFirestore db;
     private Button showResultsBtn;
+    private String userIdentity = null, identity = null;
     Map<String, String> personHashMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_person);
+        this.setTitle("Search Person");
+
         db = FirebaseConnection.getFirebaseFirestore();
         //get the user email
         Bundle bundle = getIntent().getExtras();
         if (bundle.getString("userEmail") != null)
             userEmail = bundle.getString("userEmail");
+        bundle = getIntent().getExtras();
+        if (bundle.getString("identity") != null)
+            identity = bundle.getString("identity");
 
-        this.setTitle("Search Person");
+        //Assign variable
+        listView = findViewById(R.id.userList);
+
         //Assign variable
         listView = findViewById(R.id.userList);
         db.collection("users")//go to users table
@@ -63,7 +71,8 @@ public class FindPersonActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot doc : task.getResult()) {//תביא את כל הרשומות
                                 String phoneFromDB = doc.getString("Mobile Number");//get all phone numbers
                                 String otherUserName = doc.getString("Name");
-                                stringArrayList.add(phoneFromDB);
+                                if (!(userEmail.equals(doc.getString("Email"))) && !(identity.equals(doc.getString("Identity"))))
+                                    stringArrayList.add(phoneFromDB);
 
                                 personHashMap.put(phoneFromDB, otherUserName);
                             }
@@ -101,7 +110,6 @@ public class FindPersonActivity extends AppCompatActivity {
                 });
             }
         });
-
 
 
     }
