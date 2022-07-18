@@ -46,15 +46,14 @@ public class AddNewCall extends AppCompatActivity {
     private FirebaseAuth mAuth;
     Button newCallBtn;
     EditText message;
-    String txtTitle, txtMessage, txtCurrentDate;
+    String txtTitle, txtMessage, txtCurrentDate, endDate = "";
     Calendar calendar = Calendar.getInstance();
     private String userEmail = null;
     private String userMobileNumber = null;
-    private String userIdentity = null;
-    private String otherIdentity = null, otherNumber = null;
+    private String userIdentity = null, otherNumber = null;
+    private String otherIdentity = null;
     private RadioButton tenant, homeOwner;
     private RadioGroup radioGroup;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,11 +76,7 @@ public class AddNewCall extends AppCompatActivity {
             userMobileNumber = bundle.getString("userMobileNumber");
         bundle = getIntent().getExtras();
         if (bundle.getString("identity") != null)
-            userIdentity = bundle.getString("identity");
-
-        if (userIdentity.equals("tenantAndHomeOwner")) {
-            radioGroup.setVisibility(View.VISIBLE);//show me my options
-        }
+            userIdentity = bundle.getString("identity").trim();
 
         // Initialize Firebase Auth
         mAuth = FirebaseConnection.getFirebaseAuth();
@@ -108,6 +103,8 @@ public class AddNewCall extends AppCompatActivity {
                                 }
                             }
                         }
+
+
                     }
                 });
 
@@ -122,6 +119,7 @@ public class AddNewCall extends AppCompatActivity {
                 call.put("Subject", txtTitle);
                 call.put("Call Body", txtMessage);
                 call.put("Start Date", txtCurrentDate);
+                call.put("End Date", endDate);
                 call.put("Tenant Call Status", "open");
                 call.put("Home owner Call Status", "open");
 
@@ -134,7 +132,6 @@ public class AddNewCall extends AppCompatActivity {
                         call.put("homeOwner Mobile Number", userMobileNumber);
                         call.put("tenant Mobile Number", otherNumber);
                     } else {//tenantAndHomeOwner
-                        getMyIdentity();
                         if (userIdentity.equals("tenant")) {
                             call.put("tenant Mobile Number", userMobileNumber);
                             call.put("homeOwner Mobile Number", otherNumber);
@@ -149,44 +146,26 @@ public class AddNewCall extends AppCompatActivity {
                             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                 @Override
                                 public void onSuccess(DocumentReference documentReference) {
+
                                     Toast.makeText(AddNewCall.this, "Call Created Successfully!", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(AddNewCall.this, CallHandlingActivity.class);
-                                    startActivity(intent);
+                                    finish();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(AddNewCall.this, "----- Error ----- the call was not created" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(AddNewCall.this, CallHandlingActivity.class);
-                                    startActivity(intent);
+
+
+                                    Toast.makeText(AddNewCall.this, "----- Error ----- the call was not created", Toast.LENGTH_SHORT).show();
+                                    finish();
                                 }
                             });
                 } else
                     Toast.makeText(AddNewCall.this, "----- Error ----- there is no connection between you", Toast.LENGTH_SHORT).show();
+
             }
 
         });
 
     }
-
-    /**
-     * a method that returns the identity of the other side
-     */
-    private void getMyIdentity() {
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override//change the radioGroup
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.tenant:
-                        userIdentity = "tenant";
-                        break;
-                    case R.id.homeOwner:
-                        userIdentity = "homeOwner";
-                        break;
-                }
-            }
-        });
-    }
-
 }
