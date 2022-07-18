@@ -11,7 +11,7 @@
     <EditText
         android:id="@+id/subject"
         android:layout_width="950px"
-        android:layout_height="120px"
+        android:layout_height="140px"
         android:layout_marginTop="64dp"
         android:background="@drawable/textview_border"
         android:ems="10"
@@ -26,7 +26,7 @@
         android:id="@+id/messageBody"
         android:layout_width="950px"
         android:layout_height="265dp"
-        android:layout_marginTop="108dp"
+        android:layout_marginTop="120dp"
         android:background="@drawable/textview_border"
         android:ems="10"
         android:gravity="top"
@@ -41,7 +41,7 @@
     <EditText
         android:id="@+id/startDate"
         android:layout_width="950px"
-        android:layout_height="120px"
+        android:layout_height="140px"
         android:layout_marginTop="388dp"
         android:background="@drawable/textview_border"
         android:ems="10"
@@ -55,7 +55,7 @@
     <EditText
         android:id="@+id/endDate"
         android:layout_width="950px"
-        android:layout_height="120px"
+        android:layout_height="140px"
         android:layout_marginTop="444dp"
         android:background="@drawable/textview_border"
         android:ems="10"
@@ -69,7 +69,7 @@
     <EditText
         android:id="@+id/homeOwnerCallStatus"
         android:layout_width="950px"
-        android:layout_height="120px"
+        android:layout_height="140px"
         android:layout_marginTop="504dp"
         android:background="@drawable/textview_border"
         android:ems="10"
@@ -83,7 +83,7 @@
     <EditText
         android:id="@+id/tenantCallStatus"
         android:layout_width="950px"
-        android:layout_height="120px"
+        android:layout_height="140px"
         android:layout_marginTop="564dp"
         android:background="@drawable/textview_border"
         android:ems="10"
