@@ -6,4 +6,92 @@
     android:layout_height="match_parent"
     tools:context=".DetailHistory">
 
+
+
+    <EditText
+        android:id="@+id/subject"
+        android:layout_width="950px"
+        android:layout_height="120px"
+        android:layout_marginTop="64dp"
+        android:background="@drawable/textview_border"
+        android:ems="10"
+        android:hint="Subject"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.591"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/messageBody"
+        android:layout_width="950px"
+        android:layout_height="265dp"
+        android:layout_marginTop="108dp"
+        android:background="@drawable/textview_border"
+        android:ems="10"
+        android:gravity="top"
+        android:hint="Body"
+        android:padding="10dp"
+        android:scrollbars="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.591"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/startDate"
+        android:layout_width="950px"
+        android:layout_height="120px"
+        android:layout_marginTop="388dp"
+        android:background="@drawable/textview_border"
+        android:ems="10"
+        android:hint="Start Date"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.591"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/endDate"
+        android:layout_width="950px"
+        android:layout_height="120px"
+        android:layout_marginTop="444dp"
+        android:background="@drawable/textview_border"
+        android:ems="10"
+        android:hint="End Date"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.591"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/homeOwnerCallStatus"
+        android:layout_width="950px"
+        android:layout_height="120px"
+        android:layout_marginTop="504dp"
+        android:background="@drawable/textview_border"
+        android:ems="10"
+        android:hint="Home Owner Call Status"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.591"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/tenantCallStatus"
+        android:layout_width="950px"
+        android:layout_height="120px"
+        android:layout_marginTop="564dp"
+        android:background="@drawable/textview_border"
+        android:ems="10"
+        android:hint="Tenant Call Status"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.591"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

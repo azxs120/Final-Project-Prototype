@@ -32,8 +32,8 @@ public class ViewHistoryActivity extends AppCompatActivity {
     ListView listView;
     ArrayList<String> stringArrayList = new ArrayList<>();
     ArrayAdapter<String> adapter;
-    private Button showResultsBtn;
-    private String callBody;
+    private Button showHistoryBtn;
+    private String callBody, startDate, endDate;
     private String callSubject;
     private String homeOwnerCallStatus;
     private String tenantCallStatus;
@@ -48,8 +48,10 @@ public class ViewHistoryActivity extends AppCompatActivity {
         if (bundle.getString("otherUserPhoneNumber") != null)
             otherUserPhoneNumber = bundle.getString("otherUserPhoneNumber");
 
-        db = FirebaseConnection.getFirebaseFirestore();
+        listView = findViewById(R.id.userList);
 
+
+        db = FirebaseConnection.getFirebaseFirestore();
 
         db.collection("calls")//go to users table
                 .get()
@@ -60,34 +62,31 @@ public class ViewHistoryActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot doc : task.getResult()) {//תביא את כל הרשומות
                                 String tenantMobileNumber = doc.getString("tenant Mobile Number");
                                 String homeOwnerMobileNumber = doc.getString("homeOwner Mobile Number");
-
-                                if (tenantMobileNumber.equals(otherUserPhoneNumber) ||
-                                        homeOwnerMobileNumber.equals(otherUserPhoneNumber)) {
-                                    //TODO get all of the call data
-                                     callBody = doc.getString("Call Body");
-                                     callSubject = doc.getString("Subject");
-                                     homeOwnerCallStatus = doc.getString("Home owner Call Status");
-                                     tenantCallStatus = doc.getString("Tenant Call Status");
-                                     String startDate = doc.getString("Start Date");
-                                    stringArrayList.add(startDate);
-                                    //String homeOwnerMobileNumber = doc.getString("homeOwner Mobile Number");
-                                    //String tenantMobileNumber = doc.getString("tenant Mobile Number");
+                                if (tenantMobileNumber != null && homeOwnerMobileNumber != null)
+                                    if (tenantMobileNumber.equals(otherUserPhoneNumber) ||
+                                            homeOwnerMobileNumber.equals(otherUserPhoneNumber)) {
+                                        callBody = doc.getString("Call Body");
+                                        callSubject = doc.getString("Subject");
+                                        homeOwnerCallStatus = doc.getString("Home owner Call Status");
+                                        tenantCallStatus = doc.getString("Tenant Call Status");
+                                        startDate = doc.getString("Start Date");
+                                        endDate = doc.getString("End Date");
 
 
-
-                                }
-
-
+                                        stringArrayList.add(startDate);
+                                        //String homeOwnerMobileNumber = doc.getString("homeOwner Mobile Number");
+                                        //String tenantMobileNumber = doc.getString("tenant Mobile Number");
+                                    }
                             }
                         }
                     }
                 });
 
-        showResultsBtn = findViewById(R.id.showResults);
-        showResultsBtn.setOnClickListener(new View.OnClickListener() {
+        showHistoryBtn = findViewById(R.id.showHistory);
+        showHistoryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showResultsBtn.setVisibility(View.INVISIBLE);
+                showHistoryBtn.setVisibility(View.INVISIBLE);
 
                 //Initialize adapter
                 adapter = new ArrayAdapter<>(ViewHistoryActivity.this
@@ -104,17 +103,20 @@ public class ViewHistoryActivity extends AppCompatActivity {
 
                         //take the DATA number to PersonInfoActivity
                         Intent intent = new Intent(ViewHistoryActivity.this, DetailHistory.class);
-                        intent.putExtra("callBody",callBody);//take the callBody to
-                        intent.putExtra("callSubject",callSubject);
-                        intent.putExtra("homeOwnerCallStatus",homeOwnerCallStatus);
-                        intent.putExtra("tenantCallStatus",tenantCallStatus);
+                        intent.putExtra("callBody", callBody);//take the callBody to
+                        intent.putExtra("callSubject", callSubject);
+                        intent.putExtra("homeOwnerCallStatus", homeOwnerCallStatus);
+                        intent.putExtra("tenantCallStatus", tenantCallStatus);
+                        intent.putExtra("startDate", startDate);
+                        intent.putExtra("endDate", endDate);
+
+
                         startActivity(intent);
                     }
                 });
             }
         });
     }
-
 
 
     @Override
