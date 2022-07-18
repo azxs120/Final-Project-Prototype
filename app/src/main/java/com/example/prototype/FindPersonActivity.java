@@ -84,29 +84,29 @@ public class FindPersonActivity extends AppCompatActivity {
                 });
 
         showResultsBtn = findViewById(R.id.showResults);
-        showResultsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showResultsBtn.setVisibility(View.INVISIBLE);
+                        showResultsBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                showResultsBtn.setVisibility(View.INVISIBLE);
 
-                //Initialize adapter
-                adapter = new ArrayAdapter<>(FindPersonActivity.this
-                        , android.R.layout.simple_list_item_1, stringArrayList);
-                //Set adapter on list view
-                listView.setAdapter(adapter);
+                                //Initialize adapter
+                                adapter = new ArrayAdapter<>(FindPersonActivity.this
+                                        , android.R.layout.simple_list_item_1, stringArrayList);
+                                //Set adapter on list view
+                                listView.setAdapter(adapter);
 
 
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        //Display click item position in toast
-                        String otherUserPhoneNumber = adapter.getItem(position).toString();
+                                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                        //Display click item position in toast
+                                        String otherUserPhoneNumber = adapter.getItem(position).toString();
 
-                        //take the DATA number to PersonInfoActivity
-                        Intent intent = new Intent(FindPersonActivity.this, PersonInfoActivity.class);
-                        intent.putExtra("userEmail", userEmail);//take the email to PersonInfoActivity
-                        intent.putExtra("otherUserPhoneNumber", otherUserPhoneNumber);
-                        intent.putExtra("otherUserName", personHashMap.get(otherUserPhoneNumber).toString());
+                                        //take the DATA number to PersonInfoActivity
+                                        Intent intent = new Intent(FindPersonActivity.this, PersonInfoActivity.class);
+                                        intent.putExtra("userEmail", userEmail);//take the email to PersonInfoActivity
+                                        intent.putExtra("otherUserPhoneNumber", otherUserPhoneNumber);
+                                        intent.putExtra("otherUserName", personHashMap.get(otherUserPhoneNumber).toString());
                         startActivity(intent);
                     }
                 });

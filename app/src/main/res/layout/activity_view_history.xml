@@ -6,4 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".ViewHistoryActivity">
 
+    <ListView
+        android:id="@+id/userList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:dividerHeight="2dp"
+        tools:listitem="@android:layout/simple_list_item_1">
+
+
+    </ListView>
+    <Button
+        android:id="@+id/showResults"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Press hare to see the results" />
 </androidx.constraintlayout.widget.ConstraintLayout>

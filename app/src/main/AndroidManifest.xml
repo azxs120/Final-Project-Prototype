@@ -18,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Prototype">
         <activity
+            android:name=".DetailHistory"
+            android:exported="false" />
+        <activity
             android:name=".ChooseIdentity"
             android:exported="false" />
         <activity
