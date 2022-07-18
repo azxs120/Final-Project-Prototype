@@ -44,6 +44,12 @@ public class CallHandlingActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if(bundle.getString("userEmail") != null)
             userEmail = bundle.getString("userEmail");
+        //get the user email
+        bundle = getIntent().getExtras();
+        if(bundle.getString("identity") != null)
+            userIdentity = bundle.getString("identity");
+        //get the user email
+
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = binding.viewPager;
@@ -80,8 +86,17 @@ public class CallHandlingActivity extends AppCompatActivity {
         FloatingActionButton addNewCall = binding.addNewCallBtn;
         //set a Click Listener
         addNewCall.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+            @Override
+            public void onClick(View view) {
+                if (userIdentity.equals("tenantAndHomeOwner")) {
+                    //open the "AddNewCall" Activity.
+                    Intent intentLoadNewActivity = new Intent(CallHandlingActivity.this, ChooseIdentity.class);
+                    intentLoadNewActivity.putExtra("userEmail", userEmail);//take the email to AddNewCall
+                    intentLoadNewActivity.putExtra("userMobileNumber", userMobileNumber);//take the email to AddNewCall
+                    intentLoadNewActivity.putExtra("identity", userIdentity);//take the email to AddNewCall
+
+                    startActivity(intentLoadNewActivity);
+                } else {
                     //open the "AddNewCall" Activity.
                     Intent intentLoadNewActivity = new Intent(CallHandlingActivity.this, AddNewCall.class);
                     intentLoadNewActivity.putExtra("userEmail", userEmail);//take the email to AddNewCall
@@ -90,6 +105,7 @@ public class CallHandlingActivity extends AppCompatActivity {
 
                     startActivity(intentLoadNewActivity);
                 }
+            }
         });
     }
 
