@@ -41,9 +41,18 @@ public class ViewHistoryActivity extends AppCompatActivity {
                                 String tenantMobileNumber = doc.getString("tenant Mobile Number");
                                 String homeOwnerMobileNumber = doc.getString("homeOwner Mobile Number");
 
-                                if(tenantMobileNumber.equals(otherUserPhoneNumber) ||
+                                if (tenantMobileNumber.equals(otherUserPhoneNumber) ||
                                         homeOwnerMobileNumber.equals(otherUserPhoneNumber)) {
                                     //TODO get all of the call data
+                                    String callBody = doc.getString("Call Body");
+                                    String callSubject = doc.getString("Subject");
+                                    String homeOwnerCallStatus = doc.getString("Home owner Call Status");
+                                    String tenantCallStatus = doc.getString("Tenant Call Status");
+                                    //String startDate = doc.getString("Start Date");
+                                    //String homeOwnerMobileNumber = doc.getString("homeOwner Mobile Number");
+                                    //String tenantMobileNumber = doc.getString("tenant Mobile Number");
+
+
 
                                 }
 
