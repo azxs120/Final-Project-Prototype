@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         String identity = doc.getString("Identity");
 
 
-                                        typedEmail = "momo@gmail.com";
+                                        typedEmail = "h@gmail.com";
                                         typedPassword = "123456";
 
                                         //the data(Email And password) match

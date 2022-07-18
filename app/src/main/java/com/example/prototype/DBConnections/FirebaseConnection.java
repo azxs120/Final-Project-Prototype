@@ -29,6 +29,7 @@ public class FirebaseConnection {
     }
 
     public static void close(){
-        db.terminate();
+        if(db != null)
+            db.terminate();
     }
 }

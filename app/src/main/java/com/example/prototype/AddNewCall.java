@@ -50,9 +50,10 @@ public class AddNewCall extends AppCompatActivity {
     private String userEmail = null;
     private String userMobileNumber = null;
     private String userIdentity = null;
-    private String otherIdentity = null, otherNumber = null;;
+    private String otherIdentity = null, otherNumber = null;
     private RadioButton tenant, homeOwner;
     private RadioGroup radioGroup;
+
 
 
     @Override
@@ -60,6 +61,7 @@ public class AddNewCall extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_call);
         this.setTitle("Open New Call");
+
         callTitle = (EditText) findViewById(R.id.subject);
         message = (EditText) findViewById(R.id.messageBody);
         newCallBtn = (Button) findViewById(R.id.submitCall);
@@ -69,17 +71,23 @@ public class AddNewCall extends AppCompatActivity {
 
         //get the user email
         Bundle bundle = getIntent().getExtras();
-        if (bundle.getString("key") != null)
-            userEmail = bundle.getString("key");
+        if (bundle.getString("userEmail") != null)
+            userEmail = bundle.getString("userEmail");
+        bundle = getIntent().getExtras();
+        if (bundle.getString("userMobileNumber") != null)
+            userMobileNumber = bundle.getString("userMobileNumber");
+        bundle = getIntent().getExtras();
+        if (bundle.getString("identity") != null)
+            userIdentity = bundle.getString("identity");
 
+        if (userIdentity.equals("tenantAndHomeOwner"))
+            radioGroup.setVisibility(View.VISIBLE);//show me my options
+
+        //get the other user mobile number
         // Initialize Firebase Auth
         mAuth = FirebaseConnection.getFirebaseAuth();
-
-        // Initialize Firebase Firestore
         db = FirebaseConnection.getFirebaseFirestore();
-
-        //get the MobileNumber of the user
-        db.collection("users")
+        db.collection("connections")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -87,28 +95,25 @@ public class AddNewCall extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             //run on the rows of the table
                             for (QueryDocumentSnapshot doc : task.getResult()) {
-                                String emailFromDB = doc.getString("Email").trim();//get the email of every user
+                                String myPhoneNumberFromDB = doc.getString(userIdentity + " Mobile Number");//get the email of every user
 
                                 //the emails match
-                                if (userEmail.equals(emailFromDB)) {
-                                    userMobileNumber = doc.getString("Mobile Number");//get the MobileNumber.
-                                    userIdentity = doc.getString("Identity");//get the identity
-                                    Toast.makeText(AddNewCall.this, userMobileNumber +"  " + userIdentity , Toast.LENGTH_SHORT).show();
-
-                                    if (userIdentity.equals("tenantAndHomeOwner"))
-                                        radioGroup.setVisibility(View.VISIBLE);//show me my options
-                                    break;//done searching
+                                if (userMobileNumber.equals(myPhoneNumberFromDB)) {
+                                    if (userIdentity.equals("tenant"))
+                                        otherNumber = doc.getString("homeOwner Mobile Number").trim();//get the email of every user
+                                    else
+                                        otherNumber = doc.getString("tenant Mobile Number").trim();//get the email of every user
+                                    break;
                                 }
                             }
                         }
                     }
                 });
 
-        SignUpCall();
-    }
+        //SignUpCall();
 
 
-    private void SignUpCall() {
+
         newCallBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -123,75 +128,57 @@ public class AddNewCall extends AppCompatActivity {
                 call.put("Tenant Call Status", "open");
                 call.put("Home owner Call Status", "open");
 
-                //my identity
-                if(userIdentity.equals("tenant")) {
-                    call.put("tenant Mobile Number", userMobileNumber);
-                    call.put("homeOwner Mobile Number", getOtherPhoneNumber(userMobileNumber, "tenant"));
-                }
-                else if (userIdentity.equals("homeOwner")) {
-                    call.put("homeOwner Mobile Number", userMobileNumber);
-                    call.put("tenant Mobile Number", getOtherPhoneNumber(userMobileNumber, "homeOwner"));
-                }
-                else {//tenantAndHomeOwner
-                    getMyIdentity();
-                    if(userIdentity.equals("tenant")) {
+                if (otherNumber != null) {
+
+                    //my identity
+                    if (userIdentity.equals("tenant")) {
                         call.put("tenant Mobile Number", userMobileNumber);
-                        call.put("homeOwner Mobile Number", getOtherPhoneNumber(userMobileNumber, "tenant"));
-                    }
-                    else if (userIdentity.equals("homeOwner")) {
+                        call.put("homeOwner Mobile Number", otherNumber);
+                    } else if (userIdentity.equals("homeOwner")) {
                         call.put("homeOwner Mobile Number", userMobileNumber);
-                        call.put("tenant Mobile Number", getOtherPhoneNumber(userMobileNumber, "homeOwner"));
+                        call.put("tenant Mobile Number", otherNumber);
+                    } else {//tenantAndHomeOwner
+                        getMyIdentity();
+                        if (userIdentity.equals("tenant")) {
+                            call.put("tenant Mobile Number", userMobileNumber);
+                            call.put("homeOwner Mobile Number", otherNumber);
+                        } else if (userIdentity.equals("homeOwner")) {
+                            call.put("homeOwner Mobile Number", userMobileNumber);
+                            call.put("tenant Mobile Number", otherNumber);
+                        }
                     }
-                }
 
-                //TODO check if the connection is made?
-
-                db.collection("calls")
-                        .add(call)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Toast.makeText(AddNewCall.this, "Call Created Successfully!", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(AddNewCall.this, CallHandlingActivity.class);
-                                startActivity(intent);
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(AddNewCall.this, "----- Error ----- the call was not created" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                    db.collection("calls")
+                            .add(call)
+                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    Toast.makeText(AddNewCall.this, "Call Created Successfully!", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(AddNewCall.this, CallHandlingActivity.class);
+                                    startActivity(intent);
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(AddNewCall.this, "----- Error ----- the call was not created" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(AddNewCall.this, CallHandlingActivity.class);
+                                    startActivity(intent);
+                                }
+                            });
+                }else
+                    Toast.makeText(AddNewCall.this, "----- Error ----- there is no connection between you" , Toast.LENGTH_SHORT).show();
             }
+
         });
+    }
+
+
+    private void SignUpCall() {
+
 
 
     }
-
-   private String getOtherPhoneNumber(String myPhoneNumber,final String identity){
-       db.collection("connections")
-               .get()
-               .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                   @Override
-                   public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                       if (task.isSuccessful()) {
-                           //run on the rows of the table
-                           for (QueryDocumentSnapshot doc : task.getResult()) {
-                               String myPhoneNumberFromDB = doc.getString(identity + " Mobile Number").trim();//get the email of every user
-                               //the emails match
-                               if (myPhoneNumber.equals(myPhoneNumberFromDB)) {
-                                    if (identity.equals("tenant"))
-                                        otherNumber = doc.getString("homeOwner Mobile Number").trim();//get the email of every user
-                                    else
-                                        otherNumber = doc.getString("tenant Mobile Number").trim();//get the email of every user
-                               }
-                           }
-                       }
-                   }
-               });
-       return otherNumber;
-   }
-
 
     /**
      * a method that returns the identity of the other side
@@ -200,7 +187,7 @@ public class AddNewCall extends AppCompatActivity {
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override//change the radioGroup
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId){
+                switch (checkedId) {
                     case R.id.tenant:
                         userIdentity = "tenant";
                         break;
