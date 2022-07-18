@@ -1,6 +1,7 @@
 package com.example.prototype;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlarmManager;
@@ -11,6 +12,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,7 +40,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class AddNewCall extends AppCompatActivity {
     private EditText callTitle;
     private FirebaseFirestore db;
@@ -53,8 +54,6 @@ public class AddNewCall extends AppCompatActivity {
     private String otherIdentity = null, otherNumber = null;
     private RadioButton tenant, homeOwner;
     private RadioGroup radioGroup;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,13 +79,15 @@ public class AddNewCall extends AppCompatActivity {
         if (bundle.getString("identity") != null)
             userIdentity = bundle.getString("identity");
 
-        if (userIdentity.equals("tenantAndHomeOwner"))
+        if (userIdentity.equals("tenantAndHomeOwner")) {
             radioGroup.setVisibility(View.VISIBLE);//show me my options
+        }
 
-        //get the other user mobile number
         // Initialize Firebase Auth
         mAuth = FirebaseConnection.getFirebaseAuth();
         db = FirebaseConnection.getFirebaseFirestore();
+
+        //get the other user mobile number
         db.collection("connections")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -110,10 +111,6 @@ public class AddNewCall extends AppCompatActivity {
                     }
                 });
 
-        //SignUpCall();
-
-
-
         newCallBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,7 +126,6 @@ public class AddNewCall extends AppCompatActivity {
                 call.put("Home owner Call Status", "open");
 
                 if (otherNumber != null) {
-
                     //my identity
                     if (userIdentity.equals("tenant")) {
                         call.put("tenant Mobile Number", userMobileNumber);
@@ -166,18 +162,12 @@ public class AddNewCall extends AppCompatActivity {
                                     startActivity(intent);
                                 }
                             });
-                }else
-                    Toast.makeText(AddNewCall.this, "----- Error ----- there is no connection between you" , Toast.LENGTH_SHORT).show();
+                } else
+                    Toast.makeText(AddNewCall.this, "----- Error ----- there is no connection between you", Toast.LENGTH_SHORT).show();
             }
 
         });
-    }
-
-
-    private void SignUpCall() {
-
-
-
+        
     }
 
     /**
