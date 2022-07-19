@@ -7,30 +7,23 @@ import com.example.prototype.DBConnections.FirebaseConnection;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
-import com.example.prototype.ui.main.SectionsPagerAdapter;
+import com.example.prototype.ui.Call_Handling.SectionsPagerAdapter;
 import com.example.prototype.databinding.ActivityCallHandlingBinding;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import io.realm.Realm;
-
 public class CallHandlingActivity extends AppCompatActivity {
-    private String userEmail = null;
     private ActivityCallHandlingBinding binding;
-    String userMobileNumber, userIdentity;
+    private String userEmail = null, userMobilNumber= null, identity = null;
     private FirebaseFirestore db;
 
     @Override
@@ -44,19 +37,13 @@ public class CallHandlingActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if(bundle.getString("userEmail") != null)
             userEmail = bundle.getString("userEmail");
-        //get the user email
+        //get the user identity
         bundle = getIntent().getExtras();
         if(bundle.getString("identity") != null)
-            userIdentity = bundle.getString("identity");
-        //get the user email
-
-
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-        ViewPager viewPager = binding.viewPager;
-        viewPager.setAdapter(sectionsPagerAdapter);
-        TabLayout tabs = binding.tabs;
-        tabs.setupWithViewPager(viewPager);
-
+            identity = bundle.getString("identity");
+        bundle = getIntent().getExtras();
+        if (bundle.getString("userMobilNumber") != null)
+            userMobilNumber = bundle.getString("userMobilNumber");
         // Initialize Firebase Firestore
         db = FirebaseConnection.getFirebaseFirestore();
 
@@ -73,8 +60,8 @@ public class CallHandlingActivity extends AppCompatActivity {
 
                                 //the emails match
                                 if (userEmail.equals(emailFromDB)) {
-                                    userMobileNumber = doc.getString("Mobile Number");//get the MobileNumber.
-                                    userIdentity = doc.getString("Identity");//get the identity
+                                    //userMobileNumber = doc.getString("Mobile Number");//get the MobileNumber.
+                                    identity = doc.getString("Identity");//get the identity
                                     break;//done searching
                                 }
                             }
@@ -82,26 +69,33 @@ public class CallHandlingActivity extends AppCompatActivity {
                     }
                 });
 
-        //get the button
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager(), userMobilNumber, identity);
+        ViewPager viewPager = binding.viewPager;
+        viewPager.setAdapter(sectionsPagerAdapter);
+        TabLayout tabs = binding.tabs;
+        tabs.setupWithViewPager(viewPager);
+
+
+
+        //get the add new call button
         FloatingActionButton addNewCall = binding.addNewCallBtn;
-        //set a Click Listener
         addNewCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (userIdentity.equals("tenantAndHomeOwner")) {
+                if (identity.equals("tenantAndHomeOwner")) {
                     //open the "AddNewCall" Activity.
                     Intent intentLoadNewActivity = new Intent(CallHandlingActivity.this, ChooseIdentity.class);
                     intentLoadNewActivity.putExtra("userEmail", userEmail);//take the email to AddNewCall
-                    intentLoadNewActivity.putExtra("userMobileNumber", userMobileNumber);//take the email to AddNewCall
-                    intentLoadNewActivity.putExtra("identity", userIdentity);//take the email to AddNewCall
+                    intentLoadNewActivity.putExtra("userMobileNumber", userMobilNumber);//take the email to AddNewCall
+                    intentLoadNewActivity.putExtra("identity", identity);//take the email to AddNewCall
 
                     startActivity(intentLoadNewActivity);
                 } else {
                     //open the "AddNewCall" Activity.
                     Intent intentLoadNewActivity = new Intent(CallHandlingActivity.this, AddNewCall.class);
                     intentLoadNewActivity.putExtra("userEmail", userEmail);//take the email to AddNewCall
-                    intentLoadNewActivity.putExtra("userMobileNumber", userMobileNumber);//take the email to AddNewCall
-                    intentLoadNewActivity.putExtra("identity", userIdentity);//take the email to AddNewCall
+                    intentLoadNewActivity.putExtra("userMobileNumber", userMobilNumber);//take the email to AddNewCall
+                    intentLoadNewActivity.putExtra("identity", identity);//take the email to AddNewCall
 
                     startActivity(intentLoadNewActivity);
                 }

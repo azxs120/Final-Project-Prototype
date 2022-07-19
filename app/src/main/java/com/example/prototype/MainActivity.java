@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intentLoadNewActivity = new Intent(MainActivity.this, CallHandlingActivity.class);
                 intentLoadNewActivity.putExtra("userEmail", userEmail);//take the email to CallHandlingActivity
                 intentLoadNewActivity.putExtra("identity", identity);//take the email to CallHandlingActivity
+                intentLoadNewActivity.putExtra("userMobilNumber", userMobilNumber);//take the email to CallHandlingActivity
 
                 startActivity(intentLoadNewActivity);
             }

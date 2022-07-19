@@ -1,4 +1,4 @@
-package com.example.prototype.ui.main;
+package com.example.prototype.ui.Call_Handling;
 
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
@@ -13,8 +13,11 @@ public class PageViewModel extends ViewModel {
 
         @Override
         public String apply(Integer input) {
-            // we should put the calls hare
-            return "Future feature!\nWe will put hare the calls.";
+            // we should put the calls hare+
+
+
+            return "";
+           // return "Future feature!\nWe will put hare the calls.";
         }
     });
 
