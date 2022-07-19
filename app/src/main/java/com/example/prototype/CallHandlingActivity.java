@@ -18,7 +18,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.prototype.ui.Call_Handling.SectionsPagerAdapter;
 import com.example.prototype.databinding.ActivityCallHandlingBinding;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -81,10 +80,6 @@ public class CallHandlingActivity extends AppCompatActivity implements View.OnCl
                         }
                     }
                 });
-
-
-
-
 
         //get the add new call button
         FloatingActionButton addNewCall = binding.addNewCallBtn;

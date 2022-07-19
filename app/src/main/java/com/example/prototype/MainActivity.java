@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
-    private ImageButton homeBtn,callHandlingBtn, myHistoryBtn, searchBtn;
+    private ImageButton homeBtn,callHandlingBtn, myHistoryBtn, searchBtn, reviewBtn ;
     private String userEmail = null, userMobilNumber= null, identity = null;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         callHandlingBtn = (ImageButton) findViewById(R.id.callBtn);
         myHistoryBtn = (ImageButton) findViewById(R.id.myHistoryBtn);
         searchBtn = (ImageButton) findViewById(R.id.searchBtn);
+        reviewBtn= (ImageButton) findViewById(R.id.review);
         db = FirebaseConnection.getFirebaseFirestore();
         mAuth = FirebaseAuth.getInstance();
 
@@ -60,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intentLoadNewActivity = new Intent(MainActivity.this, ApartmentSearchActivity.class);
                 startActivity(intentLoadNewActivity);
-
             }
         });
 
@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
                 intentLoadNewActivity.putExtra("userEmail", userEmail);//take the email to CallHandlingActivity
                 intentLoadNewActivity.putExtra("identity", identity);//take the email to CallHandlingActivity
                 intentLoadNewActivity.putExtra("userMobilNumber", userMobilNumber);//take the email to CallHandlingActivity
-
                 startActivity(intentLoadNewActivity);
             }
         });
@@ -94,6 +93,18 @@ public class MainActivity extends AppCompatActivity {
                 Intent intentLoadNewActivity = new Intent(MainActivity.this, FindPersonActivity.class);
                 intentLoadNewActivity.putExtra("userEmail", userEmail);//take the email to CallHandlingActivity
                 intentLoadNewActivity.putExtra("identity", identity);//take the email to CallHandlingActivity
+                startActivity(intentLoadNewActivity);
+            }
+        });
+
+        //PersonReview
+        reviewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentLoadNewActivity = new Intent(MainActivity.this, PersonReview.class);
+                intentLoadNewActivity.putExtra("userEmail", userEmail);//take the email to CallHandlingActivity
+                intentLoadNewActivity.putExtra("identity", identity);//take the email to CallHandlingActivity
+                intentLoadNewActivity.putExtra("userMobilNumber", userMobilNumber);//take the email to CallHandlingActivity
                 startActivity(intentLoadNewActivity);
             }
         });

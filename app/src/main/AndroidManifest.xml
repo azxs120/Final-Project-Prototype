@@ -18,6 +18,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Prototype">
         <activity
+            android:name=".ChooseIdentityForReview"
+            android:exported="false" />
+        <activity
+            android:name=".WriteReview"
+            android:exported="false" />
+        <activity
+            android:name=".PersonReview"
+            android:exported="false" />
+        <activity
             android:name=".DetailHistory"
             android:exported="false" />
         <activity

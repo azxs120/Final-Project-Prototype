@@ -12,23 +12,29 @@
         <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/activity_apartment_search.xml" value="0.4432291666666667" />
         <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/activity_call_handling.xml" value="0.33" />
         <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/activity_choose_identity.xml" value="0.3541666666666667" />
+        <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/activity_choose_identity_for_review.xml" value="0.4432291666666667" />
         <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/activity_detail_history.xml" value="0.5" />
         <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/activity_find_person.xml" value="0.4925925925925926" />
         <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/activity_home.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/activity_login.xml" value="0.5" />
-        <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/activity_main.xml" value="0.67" />
+        <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/activity_main2.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/activity_make_connection.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/activity_my_history.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/activity_new.xml" value="0.253125" />
         <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/activity_person_info.xml" value="0.5" />
+        <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/activity_person_review.xml" value="0.4432291666666667" />
         <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/activity_register.xml" value="0.5" />
         <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/activity_view_history.xml" value="0.5" />
+        <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/activity_write_review.xml" value="0.4432291666666667" />
+        <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/closed_calls_cab.xml" value="0.4432291666666667" />
         <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/frag1.xml" value="0.4432291666666667" />
         <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/fragment_blank1.xml" value="0.4432291666666667" />
         <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/fragment_blank2.xml" value="0.4432291666666667" />
         <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/fragment_blank3.xml" value="0.4432291666666667" />
         <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/fragment_call_handling.xml" value="0.5" />
+        <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/handling_callstab.xml" value="0.4432291666666667" />
+        <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/layout/ongoing_calls_tab.xml" value="0.4432291666666667" />
         <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/menu/menu_search.xml" value="0.48385416666666664" />
         <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/menu/menu_settings.xml" value="0.4432291666666667" />
         <entry key="..\:/Users/AZXS/AndroidStudioProjects/Prototype/app/src/main/res/mipmap-anydpi-v26/History-book.xml" value="0.4635416666666667" />

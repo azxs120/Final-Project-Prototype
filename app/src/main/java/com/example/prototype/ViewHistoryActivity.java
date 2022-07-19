@@ -155,6 +155,10 @@ public class ViewHistoryActivity extends AppCompatActivity {
                     calls.get(i - 1).showInSearch(true);
                 }
                 break;
+            case "noInput":
+                stringArrayList.add(i + ". " + startDate);// put it in the list(for UI)
+                calls.get(i - 1).showInSearch(true);
+                break;
         }
     }
 

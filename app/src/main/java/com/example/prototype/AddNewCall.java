@@ -54,6 +54,7 @@ public class AddNewCall extends AppCompatActivity {
     private String otherIdentity = null;
     private RadioButton tenant, homeOwner;
     private RadioGroup radioGroup;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -162,7 +163,6 @@ public class AddNewCall extends AppCompatActivity {
                             });
                 } else
                     Toast.makeText(AddNewCall.this, "----- Error ----- there is no connection between you", Toast.LENGTH_SHORT).show();
-
             }
 
         });
