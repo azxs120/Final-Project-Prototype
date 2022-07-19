@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    tools:context=".ApartmentSearchActivity">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        tools:context=".ApartmentSearchActivity">
+        <!--CheakBox -->
+
+        <CheckBox
+            android:id="@+id/mamad"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="56dp"
+            android:button="@null"
+            android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
+            android:text="@string/mamad"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pets"
+            tools:ignore="InvalidId" />
+
+        <CheckBox
+            android:id="@+id/furnished"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="32dp"
+            android:button="@null"
+            android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
+            android:text="@string/furnished"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/renovated"
+            tools:ignore="InvalidId" />
+
+        <CheckBox
+            android:id="@+id/pets"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="56dp"
+            android:button="@null"
+            android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
+            android:text="@string/pets"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/disabledAcess"
+            tools:ignore="InvalidId" />
+
+        <CheckBox
+            android:id="@+id/renovated"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="32dp"
+            android:button="@null"
+            android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
+            android:text="@string/renovated"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bars"
+            tools:ignore="InvalidId" />
+
+        <CheckBox
+            android:id="@+id/disabledAcess"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="56dp"
+            android:button="@null"
+            android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
+            android:text="@string/disabledAcess"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/elevator"
+            tools:ignore="InvalidId" />
+
+        <CheckBox
+            android:id="@+id/elevator"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="52dp"
+            android:button="@null"
+            android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
+            android:text="@string/elevator"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/parking"
+            tools:ignore="InvalidId" />
+
+        <CheckBox
+            android:id="@+id/parking"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="56dp"
+            android:button="@null"
+            android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
+            android:text="@string/parking"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            tools:ignore="InvalidId" />
+
+        <CheckBox
+            android:id="@+id/balcony"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="32dp"
+            android:button="@null"
+            android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
+            android:text="@string/balcony"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/airConditioning"
+            tools:ignore="InvalidId" />
+
+        <CheckBox
+            android:id="@+id/airConditioning"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="40dp"
+            android:button="@null"
+            android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
+            android:text="@string/airConditioning"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            tools:ignore="InvalidId" />
+
+        <CheckBox
+            android:id="@+id/bars"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="32dp"
+            android:button="@null"
+            android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
+            android:text="@string/bars"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/balcony"
+            tools:ignore="InvalidId" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/CityText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="45dp"
+            android:hint="@string/city"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.157"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="294dp"
+            android:layout_height="21dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="44dp"
+            android:text="@string/choose"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/StreetText" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/StreetText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="@string/street"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.473"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/CityText" />
+
+        <Button
+            android:id="@+id/PublishBtn"
+            android:layout_width="183dp"
+            android:layout_height="54dp"
+            android:layout_marginTop="68dp"
+            android:layout_marginEnd="100dp"
+            android:shadowColor="@color/black"
+            android:text="publish"
+            android:textColor="#000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mamad"
+            tools:ignore="TextContrastCheck" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

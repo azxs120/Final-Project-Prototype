@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
-    private ImageButton homeBtn,callHandlingBtn, myHistoryBtn, searchBtn, reviewBtn ;
+    private ImageButton homeBtn,callHandlingBtn, myHistoryBtn, searchBtn, reviewBtn, publishApartmentBtn ;
     private String userEmail = null, userMobilNumber= null, identity = null;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         myHistoryBtn = (ImageButton) findViewById(R.id.myHistoryBtn);
         searchBtn = (ImageButton) findViewById(R.id.searchBtn);
         reviewBtn= (ImageButton) findViewById(R.id.review);
+        publishApartmentBtn = (ImageButton) findViewById(R.id.publishApartmentBtn);
         db = FirebaseConnection.getFirebaseFirestore();
         mAuth = FirebaseAuth.getInstance();
 
@@ -102,9 +103,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intentLoadNewActivity = new Intent(MainActivity.this, PersonReview.class);
-                intentLoadNewActivity.putExtra("userEmail", userEmail);//take the email to CallHandlingActivity
-                intentLoadNewActivity.putExtra("identity", identity);//take the email to CallHandlingActivity
-                intentLoadNewActivity.putExtra("userMobilNumber", userMobilNumber);//take the email to CallHandlingActivity
+                intentLoadNewActivity.putExtra("userEmail", userEmail);
+                intentLoadNewActivity.putExtra("identity", identity);
+                intentLoadNewActivity.putExtra("userMobilNumber", userMobilNumber);//take the mobile to PersonReviewActivity
+                startActivity(intentLoadNewActivity);
+            }
+        });
+
+        //set what happens when the user clicks "Publish Apartment"
+        publishApartmentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentLoadNewActivity = new Intent(MainActivity.this, PublishApartment.class);
+                intentLoadNewActivity.putExtra("userMobilNumber", userMobilNumber);//take the mobile to publishApartmentActivity
                 startActivity(intentLoadNewActivity);
             }
         });

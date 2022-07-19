@@ -18,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Prototype">
         <activity
+            android:name=".PublishApartment"
+            android:exported="false" />
+        <activity
             android:name=".ChooseIdentityForReview"
             android:exported="false" />
         <activity
