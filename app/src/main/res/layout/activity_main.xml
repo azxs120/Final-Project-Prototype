@@ -11,8 +11,6 @@
     tools:context=".MainActivity"
     tools:ignore="ExtraText">
 
-
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="120dp"

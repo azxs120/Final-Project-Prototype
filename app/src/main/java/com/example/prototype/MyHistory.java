@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 
+import com.example.prototype.DBClasess.Call;
 import com.example.prototype.DBConnections.FirebaseConnection;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -29,6 +30,8 @@ public class MyHistory extends AppCompatActivity {
     private FirebaseFirestore db;
     ListView listView;
     ArrayList<String> stringArrayList = new ArrayList<>();
+    ArrayList<Call> calls = new ArrayList<Call>();
+
     ArrayAdapter<String> adapter;
     private Button showHistoryBtn;
     private String userMobileNumber = null;
@@ -53,6 +56,7 @@ public class MyHistory extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {//אם הגישה לטבלה הצליחה
                         if (task.isSuccessful()) {
+                            int i = 1;
                             for (QueryDocumentSnapshot doc : task.getResult()) {//תביא את כל הרשומות
                                 String tenantMobileNumber = doc.getString("tenant Mobile Number");
                                 String homeOwnerMobileNumber = doc.getString("homeOwner Mobile Number");
@@ -67,7 +71,11 @@ public class MyHistory extends AppCompatActivity {
                                         startDate = doc.getString("Start Date");
                                         endDate = doc.getString("End Date");
 
-                                        stringArrayList.add(startDate);// put it in the list(for UI)
+                                        Call newCall = new Call(callSubject, callBody, homeOwnerCallStatus, tenantCallStatus, startDate, endDate);
+                                        calls.add(newCall);
+
+                                        stringArrayList.add(i + ". " +  startDate);// put it in the list(for UI)
+                                        i++;
                                     }
                             }
                         }
@@ -91,17 +99,17 @@ public class MyHistory extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         //Display click item position in toast
-                        String otherUserPhoneNumber = adapter.getItem(position).toString();
+                        String textOfTheItem = adapter.getItem(position).toString();
+                        int index = Integer.parseInt(textOfTheItem.substring(0, 1)) - 1;
 
                         //take the DATA number to PersonInfoActivity
                         Intent intent = new Intent(MyHistory.this, DetailHistory.class);
-                        intent.putExtra("callBody", callBody);//take the callBody to
-                        intent.putExtra("callSubject", callSubject);
-                        intent.putExtra("homeOwnerCallStatus", homeOwnerCallStatus);
-                        intent.putExtra("tenantCallStatus", tenantCallStatus);
-                        intent.putExtra("startDate", startDate);
-                        intent.putExtra("endDate", endDate);
-
+                        intent.putExtra("callBody", calls.get(index).getCallBody());//take the callBody to
+                        intent.putExtra("callSubject", calls.get(index).getSubject());
+                        intent.putExtra("homeOwnerCallStatus", calls.get(index).getHomeOwnerCallStatus());
+                        intent.putExtra("tenantCallStatus", calls.get(index).getTenantCallStatus());
+                        intent.putExtra("startDate", calls.get(index).getStartDate());
+                        intent.putExtra("endDate", calls.get(index).getEndDate());
 
                         startActivity(intent);
                     }

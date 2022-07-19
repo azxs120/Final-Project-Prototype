@@ -20,14 +20,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
-    private ImageButton homeBtn;
-    private ImageButton callHandlingBtn;
-    private ImageButton myHistoryBtn;
-    private ImageButton searchBtn;
-    private String userEmail = null;
+    private ImageButton homeBtn,callHandlingBtn, myHistoryBtn, searchBtn;
+    private String userEmail = null, userMobilNumber= null, identity = null;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
-    String identity;
     ActivityMainBinding binding; //for the menu
 
     @Override
@@ -36,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         //get the user email
         Bundle bundle = getIntent().getExtras();
         if (bundle.getString("userEmail") != null)
@@ -43,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
         bundle = getIntent().getExtras();
         if (bundle.getString("identity") != null)
             identity = bundle.getString("identity");
+        bundle = getIntent().getExtras();
+        if (bundle.getString("mobileNumber") != null)
+            userMobilNumber = bundle.getString("mobileNumber");
 
         //wire up the button to do stuff
         //get the btn
@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intentLoadNewActivity = new Intent(MainActivity.this, MyHistory.class);
+                intentLoadNewActivity.putExtra("mobileNumber", userMobilNumber);//take the email to CallHandlingActivity
                 startActivity(intentLoadNewActivity);
             }
         });
