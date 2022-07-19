@@ -13,9 +13,7 @@ public class DetailHistory extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_history);
-
-
-
+        this.setTitle("history");
 
         Bundle bundle = getIntent().getExtras();
         if (bundle.getString("callBody") != null)
@@ -36,7 +34,6 @@ public class DetailHistory extends AppCompatActivity {
         if (bundle5.getString("endDate") != null)
             endDteDataMember = bundle.getString("endDate");
 
-        this.setTitle("history");
 
 
         subject =  (EditText) findViewById(R.id.subject);

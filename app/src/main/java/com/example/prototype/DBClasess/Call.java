@@ -14,10 +14,10 @@ public class Call {
     private String tenantCallStatus;
     private String startDate;
     private String endDate;
+    private boolean show = false;
 
 
-
-    public Call(String callSubject, String callBody, String homeOwnerCallStatus,String tenantCallStatus, String startDate, String endDate) {
+    public Call(String callSubject, String callBody, String homeOwnerCallStatus, String tenantCallStatus, String startDate, String endDate) {
         this.subject = callSubject;
         this.callBody = callBody;
         this.HomeOwnerCallStatus = homeOwnerCallStatus;
@@ -60,5 +60,12 @@ public class Call {
 
     public String getEndDate() {
         return endDate;
+    }
+
+    public void showInSearch(boolean show) {
+        this.show = show;
+    }
+    public boolean isShow(){
+        return show;
     }
 }

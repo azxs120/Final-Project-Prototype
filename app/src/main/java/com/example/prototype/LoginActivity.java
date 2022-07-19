@@ -46,14 +46,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         progressBar = findViewById(R.id.progress_bar);
+
         loginBtn = findViewById(R.id.loginBtn);
         registerBtn = findViewById(R.id.registerNowBtn);
         restoreBtn = findViewById(R.id.restorePassword);
 
         db = FirebaseConnection.getFirebaseFirestore();
+
         loginBtn.setOnClickListener(this);
         registerBtn.setOnClickListener(this);
         restoreBtn.setOnClickListener(this);
@@ -87,7 +90,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         String identity = doc.getString("Identity");
                                         String mobileNumber = doc.getString("Mobile Number");
 
-                                        typedEmail = "aazxs120@gmail.com";
+                                        typedEmail = "momo@gmail.com";
                                         typedPassword = "123456";
 
                                         //the data(Email And password) match

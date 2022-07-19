@@ -28,7 +28,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 public class ViewHistoryActivity extends AppCompatActivity {
-    private String otherUserPhoneNumber = null;
+    private String otherUserPhoneNumber = null, status = "noInput";
     private FirebaseFirestore db;
     ListView listView;
     ArrayList<String> stringArrayList = new ArrayList<>();
@@ -39,17 +39,19 @@ public class ViewHistoryActivity extends AppCompatActivity {
     private String callBody, startDate, endDate, callSubject, homeOwnerCallStatus, tenantCallStatus;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_history);
-        this.setTitle(otherUserPhoneNumber + " history");
 
         Bundle bundle = getIntent().getExtras();
         if (bundle.getString("otherUserPhoneNumber") != null)
             otherUserPhoneNumber = bundle.getString("otherUserPhoneNumber");
+        bundle = getIntent().getExtras();
+        if (bundle.getString("status") != null)
+            status = bundle.getString("status");
+
+        this.setTitle(otherUserPhoneNumber + " history");
 
         listView = findViewById(R.id.userList);
 
@@ -66,7 +68,8 @@ public class ViewHistoryActivity extends AppCompatActivity {
                                 String tenantMobileNumber = doc.getString("tenant Mobile Number");
                                 String homeOwnerMobileNumber = doc.getString("homeOwner Mobile Number");
 
-                                if (tenantMobileNumber != null && homeOwnerMobileNumber != null)
+
+                                if (tenantMobileNumber != null && homeOwnerMobileNumber != null) {
                                     if (tenantMobileNumber.equals(otherUserPhoneNumber) ||
                                             homeOwnerMobileNumber.equals(otherUserPhoneNumber)) {
                                         callBody = doc.getString("Call Body");
@@ -79,13 +82,18 @@ public class ViewHistoryActivity extends AppCompatActivity {
                                         Call newCall = new Call(callSubject, callBody, homeOwnerCallStatus, tenantCallStatus, startDate, endDate);
                                         calls.add(newCall);
 
-                                        stringArrayList.add(i + ". " +  startDate);// put it in the list(for UI)
+                                        showRelevantStatus(i);
+
+                                        //stringArrayList.add(i + ". " + startDate);// put it in the list(for UI)
                                         i++;
                                     }
+
+                                }
                             }
                         }
                     }
                 });
+
 
         showHistoryBtn = findViewById(R.id.showHistory);
         showHistoryBtn.setOnClickListener(new View.OnClickListener() {
@@ -104,26 +112,51 @@ public class ViewHistoryActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         //Display click item position in toast
-                        String textOfTheItem = adapter.getItem(position).toString();
-                        int index = Integer.parseInt(textOfTheItem.substring(0, 1)) - 1;
+                        if (adapter != null) {
+                            String textOfTheItem = adapter.getItem(position).toString();
+                            int index = Integer.parseInt(textOfTheItem.substring(0, 1)) - 1;
 
-                        //take the DATA number to PersonInfoActivity
-                        Intent intent = new Intent(ViewHistoryActivity.this, DetailHistory.class);
-                        intent.putExtra("callBody", calls.get(index).getCallBody());//take the callBody to
-                        intent.putExtra("callSubject", calls.get(index).getSubject());
-                        intent.putExtra("homeOwnerCallStatus", calls.get(index).getHomeOwnerCallStatus());
-                        intent.putExtra("tenantCallStatus", calls.get(index).getTenantCallStatus());
-                        intent.putExtra("startDate", calls.get(index).getStartDate());
-                        intent.putExtra("endDate", calls.get(index).getEndDate());
+                            //take the DATA number to PersonInfoActivity
+                            Intent intent = new Intent(ViewHistoryActivity.this, DetailHistory.class);
+                            intent.putExtra("callBody", calls.get(index).getCallBody());//take the callBody to
+                            intent.putExtra("callSubject", calls.get(index).getSubject());
+                            intent.putExtra("homeOwnerCallStatus", calls.get(index).getHomeOwnerCallStatus());
+                            intent.putExtra("tenantCallStatus", calls.get(index).getTenantCallStatus());
+                            intent.putExtra("startDate", calls.get(index).getStartDate());
+                            intent.putExtra("endDate", calls.get(index).getEndDate());
 
 
-                        startActivity(intent);
+                            startActivity(intent);
+                        }
                     }
                 });
             }
         });
     }
 
+    private void showRelevantStatus(int i) {
+        switch (status) {
+            case "open":
+                if (calls.get(i - 1).getHomeOwnerCallStatus().equals("open") && calls.get(i - 1).getHomeOwnerCallStatus().equals("open")) {
+                    stringArrayList.add(i + ". " + startDate);// put it in the list(for UI)
+                    calls.get(i - 1).showInSearch(true);
+                }
+
+                break;
+            case "handling":
+                if (calls.get(i - 1).getHomeOwnerCallStatus().equals("handling") || calls.get(i - 1).getHomeOwnerCallStatus().equals("handling")) {
+                    stringArrayList.add(i + ". " + startDate);// put it in the list(for UI)
+                    calls.get(i - 1).showInSearch(true);
+                }
+                break;
+            case "closed":
+                if (calls.get(i - 1).getHomeOwnerCallStatus().equals("closed") && calls.get(i - 1).getHomeOwnerCallStatus().equals("closed")) {
+                    stringArrayList.add(i + ". " + startDate);// put it in the list(for UI)
+                    calls.get(i - 1).showInSearch(true);
+                }
+                break;
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
