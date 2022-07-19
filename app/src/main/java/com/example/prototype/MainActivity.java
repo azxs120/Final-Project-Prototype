@@ -15,12 +15,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
-    private ImageButton homeBtn;
+    private ImageButton apartmentSearchBtn;
     private ImageButton callHandlingBtn;
     private ImageButton myHistoryBtn;
     private ImageButton searchBtn;
-    private String userEmail = null;
-    private Button btnLogout;
+    private String userEmail = null, userMobileNumber;
+    private Button logoutBtn;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     String identity;
@@ -37,10 +37,13 @@ public class MainActivity extends AppCompatActivity {
         bundle = getIntent().getExtras();
         if (bundle.getString("identity") != null)
             identity = bundle.getString("identity");
+        bundle = getIntent().getExtras();
+        if (bundle.getString("mobileNumber") != null)
+            userMobileNumber = bundle.getString("mobileNumber");
 
         //wire up the button to do stuff
         //get the btn
-        homeBtn = (ImageButton) findViewById(R.id.homeBtn);
+        apartmentSearchBtn = (ImageButton) findViewById(R.id.homeBtn);
         callHandlingBtn = (ImageButton) findViewById(R.id.callBtn);
         myHistoryBtn = (ImageButton) findViewById(R.id.myHistoryBtn);
         searchBtn = (ImageButton) findViewById(R.id.searchBtn);
@@ -48,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         //set what happens when the user clicks "Logout"
-        btnLogout = findViewById(R.id.logout);
-        btnLogout.setOnClickListener(new View.OnClickListener() {
+        logoutBtn = findViewById(R.id.logout);
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mAuth.signOut();
@@ -61,12 +64,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //set what happens when the user clicks "Find Apartment"
-        homeBtn.setOnClickListener(new View.OnClickListener() {
+        apartmentSearchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intentLoadNewActivity = new Intent(MainActivity.this, ApartmentSearchActivity.class);
                 startActivity(intentLoadNewActivity);
-
             }
         });
 
@@ -87,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intentLoadNewActivity = new Intent(MainActivity.this, MyHistory.class);
+                intentLoadNewActivity.putExtra("mobileNumber", userMobileNumber);//take the email to CallHandlingActivity
+
                 startActivity(intentLoadNewActivity);
             }
         });

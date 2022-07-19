@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         String typedEmail = email.getText().toString().trim();
                                         String typedPassword = password.getText().toString().trim();
                                         String identity = doc.getString("Identity");
-
+                                        String mobileNumber = doc.getString("Mobile Number");
 
                                         typedEmail = "momo@gmail.com";
                                         typedPassword = "123456";
@@ -100,6 +100,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                             intent.putExtra("userEmail", emailFromDB);//take the email to AddNewActivity
                                             intent.putExtra("identity", identity);//take the email to AddNewActivity
+                                            intent.putExtra("mobileNumber", mobileNumber);//take the email to AddNewActivity
                                             startActivity(intent);
                                             isConnect = true;
                                             break;
