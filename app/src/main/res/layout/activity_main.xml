@@ -130,8 +130,8 @@
         android:scaleY="1.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/homeBtn"
-        app:srcCompat="@drawable/review"
-        tools:srcCompat="@drawable/review"
+        app:srcCompat="@drawable/ic_rent"
+        tools:srcCompat="@drawable/ic_rent"
         android:visibility="invisible"/>
 
     <TextView

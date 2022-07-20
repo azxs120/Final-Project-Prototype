@@ -134,7 +134,7 @@ public class PublishApartment extends AppCompatActivity {
 
 
 
-                    db.collection("Apartments")
+                    db.collection("apartments")
                             .add(apartment)
                             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                 @Override
