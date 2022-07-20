@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.prototype.DBConnections.FirebaseConnection;
@@ -22,6 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class MainActivity extends AppCompatActivity {
     private ImageButton homeBtn,callHandlingBtn, myHistoryBtn, searchBtn, reviewBtn, publishApartmentBtn ;
     private String userEmail = null, userMobilNumber= null, identity = null;
+    private TextView publishApartmentText;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     ActivityMainBinding binding; //for the menu
@@ -52,10 +54,15 @@ public class MainActivity extends AppCompatActivity {
         searchBtn = (ImageButton) findViewById(R.id.searchBtn);
         reviewBtn= (ImageButton) findViewById(R.id.review);
         publishApartmentBtn = (ImageButton) findViewById(R.id.publishApartmentBtn);
+        publishApartmentText= findViewById(R.id.publishApartmentText);
         db = FirebaseConnection.getFirebaseFirestore();
         mAuth = FirebaseAuth.getInstance();
 
-
+        if (identity.equals("homeOwner")||identity.equals("tenantAndHomeOwner"))
+        {
+            publishApartmentBtn.setVisibility(View.VISIBLE);
+            publishApartmentText.setVisibility(View.VISIBLE);
+        }
         //set what happens when the user clicks "Find Apartment"
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
