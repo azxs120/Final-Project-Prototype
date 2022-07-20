@@ -162,7 +162,7 @@
             android:layout_height="21dp"
             android:layout_marginTop="36dp"
             android:layout_marginEnd="44dp"
-            android:text="@string/choose"
+            android:text="what your apartment contains?"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="#000000"
