@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firestore.v1.Document;
 
 import java.util.ArrayList;
 
@@ -34,7 +35,7 @@ public class MyHistory extends AppCompatActivity {
 
     ArrayAdapter<String> adapter;
     private Button showHistoryBtn;
-    private String userMobileNumber = null;
+    private String userMobileNumber = null,  docId;
     private String callBody, startDate, endDate, callSubject, homeOwnerCallStatus, tenantCallStatus;
 
     @Override
@@ -70,7 +71,7 @@ public class MyHistory extends AppCompatActivity {
                                         tenantCallStatus = doc.getString("Tenant Call Status");
                                         startDate = doc.getString("Start Date");
                                         endDate = doc.getString("End Date");
-
+                                        docId = doc.getId();
                                         Call newCall = new Call(callSubject, callBody, homeOwnerCallStatus, tenantCallStatus, startDate, endDate);
                                         calls.add(newCall);
 
@@ -110,7 +111,7 @@ public class MyHistory extends AppCompatActivity {
                         intent.putExtra("tenantCallStatus", calls.get(index).getTenantCallStatus());
                         intent.putExtra("startDate", calls.get(index).getStartDate());
                         intent.putExtra("endDate", calls.get(index).getEndDate());
-
+                        intent.putExtra("docId", docId);
                         startActivity(intent);
                     }
                 });

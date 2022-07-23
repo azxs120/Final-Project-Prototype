@@ -36,7 +36,7 @@ public class ViewHistoryActivity extends AppCompatActivity {
 
     ArrayAdapter<String> adapter;
     private Button showHistoryBtn;
-    private String callBody, startDate, endDate, callSubject, homeOwnerCallStatus, tenantCallStatus;
+    private String callBody, startDate, endDate, callSubject, homeOwnerCallStatus, tenantCallStatus,identity,docId;
 
 
     @Override
@@ -50,6 +50,10 @@ public class ViewHistoryActivity extends AppCompatActivity {
         bundle = getIntent().getExtras();
         if (bundle.getString("status") != null)
             status = bundle.getString("status");
+        if (bundle.getString("identity") != null)
+            identity = bundle.getString("identity");
+        if (bundle.getString("docId") != null)
+            docId = bundle.getString("docId");
 
         this.setTitle(otherUserPhoneNumber + " history");
 
@@ -124,6 +128,9 @@ public class ViewHistoryActivity extends AppCompatActivity {
                             intent.putExtra("tenantCallStatus", calls.get(index).getTenantCallStatus());
                             intent.putExtra("startDate", calls.get(index).getStartDate());
                             intent.putExtra("endDate", calls.get(index).getEndDate());
+                            intent.putExtra("identity",identity );
+                            intent.putExtra("docId",docId);
+
 
 
                             startActivity(intent);

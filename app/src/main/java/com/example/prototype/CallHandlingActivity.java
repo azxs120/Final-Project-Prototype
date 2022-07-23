@@ -56,6 +56,7 @@ public class CallHandlingActivity extends AppCompatActivity implements View.OnCl
         bundle = getIntent().getExtras();
         if (bundle.getString("userMobilNumber") != null)
             userMobilNumber = bundle.getString("userMobilNumber");
+
         // Initialize Firebase Firestore
         db = FirebaseConnection.getFirebaseFirestore();
 
@@ -113,6 +114,7 @@ public class CallHandlingActivity extends AppCompatActivity implements View.OnCl
                 Intent OngoingCalls_view = new Intent(CallHandlingActivity.this, ViewHistoryActivity.class);
                 OngoingCalls_view.putExtra("otherUserPhoneNumber", userMobilNumber);//take the email to AddNewCall
                 OngoingCalls_view.putExtra("status", "open");//take the email to AddNewCall
+                OngoingCalls_view.putExtra("identity", identity);//take the email to AddNewCall
                 startActivity(OngoingCalls_view);
                 break;
 
@@ -120,12 +122,14 @@ public class CallHandlingActivity extends AppCompatActivity implements View.OnCl
                 Intent HandlingCalls_view = new Intent(CallHandlingActivity.this, ViewHistoryActivity.class);
                 HandlingCalls_view.putExtra("otherUserPhoneNumber", userMobilNumber);//take the email to AddNewCall
                 HandlingCalls_view.putExtra("status", "handling");//take the email to AddNewCall
+                HandlingCalls_view.putExtra("identity", identity);//take the email to AddNewCall
                 startActivity(HandlingCalls_view);
                 break;
             case R.id.ClosedCallsTab:
                 Intent ClosedCalls_view = new Intent(CallHandlingActivity.this, ViewHistoryActivity.class);
                 ClosedCalls_view.putExtra("otherUserPhoneNumber", userMobilNumber);//take the email to AddNewCall
                 ClosedCalls_view.putExtra("status", "closed");//take the email to AddNewCall
+                ClosedCalls_view.putExtra("identity", identity);//take the email to AddNewCall
                 startActivity(ClosedCalls_view);
                 break;
         }

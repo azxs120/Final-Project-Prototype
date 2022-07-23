@@ -2,41 +2,39 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="409dp"
-    android:layout_height="780dp"
-    tools:layout_editor_absoluteX="389dp"
-    tools:layout_editor_absoluteY="1dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:fillViewport="true">
+
     <androidx.constraintlayout.widget.ConstraintLayout
 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="1200dp"
         tools:context=".DetailHistory">
 
 
         <TextView
             android:id="@+id/subjectTextView"
-            android:layout_width="950px"
+            android:layout_width="1200px"
             android:layout_height="20dp"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
             android:gravity="center"
             android:text="Subject"
             android:textAlignment="gravity"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="parent" />
 
         <EditText
             android:id="@+id/subject"
             android:layout_width="950px"
             android:layout_height="140px"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="32dp"
             android:background="@drawable/textview_border"
             android:ems="10"
             android:hint="Subject"
             android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.489"
+            app:layout_constraintHorizontal_bias="0.531"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,12 +43,13 @@
             android:layout_width="950px"
             android:layout_height="20dp"
             android:layout_marginTop="88dp"
-            android:layout_marginEnd="24dp"
             android:gravity="center"
             android:text="Body"
             android:textAlignment="gravity"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
 
         <EditText
             android:id="@+id/messageBody"
@@ -64,22 +63,21 @@
             android:padding="10dp"
             android:scrollbars="vertical"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.53"
+            app:layout_constraintHorizontal_bias="0.489"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
 
         <TextView
             android:id="@+id/startDateTextView"
             android:layout_width="950px"
             android:layout_height="20dp"
             android:layout_marginTop="372dp"
-            android:layout_marginEnd="24dp"
             android:gravity="center"
             android:text="Start Date"
             android:textAlignment="gravity"
 
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
@@ -101,12 +99,12 @@
             android:layout_width="950px"
             android:layout_height="20dp"
             android:layout_marginTop="444dp"
-            android:layout_marginEnd="24dp"
             android:gravity="center"
 
             android:text="End Date"
             android:textAlignment="gravity"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
@@ -129,25 +127,25 @@
             android:layout_width="950px"
             android:layout_height="20dp"
             android:layout_marginTop="516dp"
-            android:layout_marginEnd="20dp"
 
             android:gravity="center"
             android:text="Home Owner Call Status"
             android:textAlignment="gravity"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/homeOwnerCallStatus"
             android:layout_width="950px"
             android:layout_height="140px"
-            android:layout_marginTop="536dp"
+            android:layout_marginTop="540dp"
             android:background="@drawable/textview_border"
             android:ems="10"
             android:hint="Home Owner Call Status"
             android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.591"
+            app:layout_constraintHorizontal_bias="0.53"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -156,12 +154,11 @@
             android:layout_width="950px"
             android:layout_height="20dp"
             android:layout_marginTop="588dp"
-            android:layout_marginEnd="24dp"
             android:gravity="center"
-
             android:text="Tenant Call Status"
             android:textAlignment="gravity"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
@@ -174,7 +171,7 @@
             android:hint="Tenant Call Status"
             android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.591"
+            app:layout_constraintHorizontal_bias="0.53"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -192,17 +189,31 @@
 
         <Spinner
             android:id="@+id/spinnerStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_width="950px"
+            android:layout_height="140px"
+            android:layout_marginTop="680dp"
+            android:background="@drawable/textview_border"
+            android:dropDownWidth="300dp"
             android:entries="@array/Spinner_items"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.51"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/changeStatusText"
-            app:layout_constraintVertical_bias="0.184" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-
+        <Button
+            android:id="@+id/updateStatusBtn"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="752dp"
+            android:dropDownWidth="350dp"
+            android:text="Update Your Status"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.576"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
 
