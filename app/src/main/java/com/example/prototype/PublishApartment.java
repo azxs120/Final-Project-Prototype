@@ -65,16 +65,6 @@ public class PublishApartment extends AppCompatActivity {
             public void onClick(View view) {
                 txtCity = CityText.getText().toString().trim();
                 txtStreet = StreetText.getText().toString().trim();
-                //txtAirConditioning = airConditioning.getText().toString().trim();
-                //txtparking = parking.getText().toString().trim();
-                //txtbalcony = balcony.getText().toString().trim();
-                //txtelevator = elevator.getText().toString().trim();
-                //txtbars = bars.getText().toString().trim();
-                //txtdisabledAcess = disabledAcess.getText().toString().trim();
-                //txtrenovated = renovated.getText().toString().trim();
-                //txtfurnished = furnished.getText().toString().trim();
-                //txtmamad = mamad.getText().toString().trim();
-                //txtpets = pets.getText().toString().trim();
 
                 if (airConditioning.isChecked())
                     txtAirConditioning = "true";

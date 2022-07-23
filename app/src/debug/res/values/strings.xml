@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Spinner</string>
+    <string name="app_name">RentMe</string>
     <string-array name="Spinner_items">
         <item>Open</item>
         <item>Handdling</item>
