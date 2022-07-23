@@ -1,1 +1,8 @@
-<resources></resources>
+<resources>
+    <string name="app_name">Spinner</string>
+    <string-array name="Spinner_items">
+        <item>Open</item>
+        <item>Handdling</item>
+        <item>Closed</item>
+    </string-array>
+</resources>

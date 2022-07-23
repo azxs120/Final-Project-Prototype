@@ -1,174 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".DetailHistory">
+    android:layout_width="409dp"
+    android:layout_height="780dp"
+    tools:layout_editor_absoluteX="389dp"
+    tools:layout_editor_absoluteY="1dp"
+    android:fillViewport="true">
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".DetailHistory">
 
 
-    <TextView
-        android:id="@+id/subjectTextView"
-        android:layout_width="950px"
-        android:layout_height="20dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:gravity="center"
-        android:text="Subject"
-        android:textAlignment="gravity"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/subjectTextView"
+            android:layout_width="950px"
+            android:layout_height="20dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:gravity="center"
+            android:text="Subject"
+            android:textAlignment="gravity"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/subject"
-        android:layout_width="950px"
-        android:layout_height="140px"
-        android:layout_marginTop="36dp"
-        android:background="@drawable/textview_border"
-        android:ems="10"
-        android:hint="Subject"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <EditText
+            android:id="@+id/subject"
+            android:layout_width="950px"
+            android:layout_height="140px"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/textview_border"
+            android:ems="10"
+            android:hint="Subject"
+            android:padding="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.489"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/messageBodyTextView"
-        android:layout_width="950px"
-        android:layout_height="20dp"
-        android:layout_marginTop="88dp"
-        android:layout_marginEnd="24dp"
-        android:text="Body"
-        android:gravity="center"
-        android:textAlignment="gravity"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/messageBodyTextView"
+            android:layout_width="950px"
+            android:layout_height="20dp"
+            android:layout_marginTop="88dp"
+            android:layout_marginEnd="24dp"
+            android:gravity="center"
+            android:text="Body"
+            android:textAlignment="gravity"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/messageBody"
-        android:layout_width="950px"
-        android:layout_height="265dp"
-        android:layout_marginTop="108dp"
-        android:background="@drawable/textview_border"
-        android:ems="10"
-        android:gravity="top"
-        android:hint="Body"
-        android:padding="10dp"
-        android:scrollbars="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.53"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <TextView
-        android:id="@+id/startDateTextView"
-        android:layout_width="950px"
-        android:layout_height="20dp"
-        android:layout_marginTop="372dp"
-        android:layout_marginEnd="24dp"
-        android:text="Start Date"
-        android:textAlignment="gravity"
-        android:gravity="center"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/startDate"
-        android:layout_width="950px"
-        android:layout_height="140px"
-        android:layout_marginTop="388dp"
-        android:background="@drawable/textview_border"
-        android:ems="10"
-        android:hint="Start Date"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.53"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/endDateTextView"
-        android:layout_width="950px"
-        android:layout_height="20dp"
-        android:layout_marginTop="444dp"
-        android:layout_marginEnd="24dp"
-        android:gravity="center"
-
-        android:text="End Date"
-        android:textAlignment="gravity"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/endDate"
-        android:layout_width="950px"
-        android:layout_height="140px"
-        android:layout_marginTop="464dp"
-        android:background="@drawable/textview_border"
-        android:ems="10"
-        android:hint="End Date"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.53"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <EditText
+            android:id="@+id/messageBody"
+            android:layout_width="950px"
+            android:layout_height="265dp"
+            android:layout_marginTop="108dp"
+            android:background="@drawable/textview_border"
+            android:ems="10"
+            android:gravity="top"
+            android:hint="Body"
+            android:padding="10dp"
+            android:scrollbars="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.53"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-    <TextView
-        android:id="@+id/homeOwnerCallStatusTextView"
-        android:layout_width="950px"
-        android:layout_height="20dp"
-        android:layout_marginTop="516dp"
-        android:gravity="center"
+        <TextView
+            android:id="@+id/startDateTextView"
+            android:layout_width="950px"
+            android:layout_height="20dp"
+            android:layout_marginTop="372dp"
+            android:layout_marginEnd="24dp"
+            android:gravity="center"
+            android:text="Start Date"
+            android:textAlignment="gravity"
 
-        android:layout_marginEnd="20dp"
-        android:text="Home Owner Call Status"
-        android:textAlignment="gravity"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/homeOwnerCallStatus"
-        android:layout_width="950px"
-        android:layout_height="140px"
-        android:layout_marginTop="536dp"
-        android:background="@drawable/textview_border"
-        android:ems="10"
-        android:hint="Home Owner Call Status"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.591"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <EditText
+            android:id="@+id/startDate"
+            android:layout_width="950px"
+            android:layout_height="140px"
+            android:layout_marginTop="388dp"
+            android:background="@drawable/textview_border"
+            android:ems="10"
+            android:hint="Start Date"
+            android:padding="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.53"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tenantCallStatusTextView"
-        android:layout_width="950px"
-        android:layout_height="20dp"
-        android:layout_marginTop="588dp"
-        android:layout_marginEnd="24dp"
-        android:gravity="center"
+        <TextView
+            android:id="@+id/endDateTextView"
+            android:layout_width="950px"
+            android:layout_height="20dp"
+            android:layout_marginTop="444dp"
+            android:layout_marginEnd="24dp"
+            android:gravity="center"
 
-        android:text="Tenant Call Status"
-        android:textAlignment="gravity"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            android:text="End Date"
+            android:textAlignment="gravity"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/tenantCallStatus"
-        android:layout_width="950px"
-        android:layout_height="140px"
-        android:layout_marginTop="608dp"
-        android:background="@drawable/textview_border"
-        android:ems="10"
-        android:hint="Tenant Call Status"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.591"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <EditText
+            android:id="@+id/endDate"
+            android:layout_width="950px"
+            android:layout_height="140px"
+            android:layout_marginTop="464dp"
+            android:background="@drawable/textview_border"
+            android:ems="10"
+            android:hint="End Date"
+            android:padding="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.53"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/homeOwnerCallStatusTextView"
+            android:layout_width="950px"
+            android:layout_height="20dp"
+            android:layout_marginTop="516dp"
+            android:layout_marginEnd="20dp"
+
+            android:gravity="center"
+            android:text="Home Owner Call Status"
+            android:textAlignment="gravity"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/homeOwnerCallStatus"
+            android:layout_width="950px"
+            android:layout_height="140px"
+            android:layout_marginTop="536dp"
+            android:background="@drawable/textview_border"
+            android:ems="10"
+            android:hint="Home Owner Call Status"
+            android:padding="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.591"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tenantCallStatusTextView"
+            android:layout_width="950px"
+            android:layout_height="20dp"
+            android:layout_marginTop="588dp"
+            android:layout_marginEnd="24dp"
+            android:gravity="center"
+
+            android:text="Tenant Call Status"
+            android:textAlignment="gravity"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/tenantCallStatus"
+            android:layout_width="950px"
+            android:layout_height="140px"
+            android:layout_marginTop="608dp"
+            android:background="@drawable/textview_border"
+            android:ems="10"
+            android:hint="Tenant Call Status"
+            android:padding="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.591"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/changeStatusText"
+            android:layout_width="950px"
+            android:layout_height="20dp"
+            android:layout_marginTop="660dp"
+            android:gravity="center"
+            android:text="Change Your Status"
+            android:textAlignment="gravity"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/spinnerStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:entries="@array/Spinner_items"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/changeStatusText"
+            app:layout_constraintVertical_bias="0.184" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
+

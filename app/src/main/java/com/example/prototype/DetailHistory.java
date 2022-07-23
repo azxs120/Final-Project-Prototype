@@ -3,10 +3,15 @@ package com.example.prototype;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 
-public class DetailHistory extends AppCompatActivity {
+public class DetailHistory extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private String callBody, callSubject,homeOwnerCallStatusDataMember,tenantCallStatusDataMember, startDateDataMember, endDteDataMember;
+    private Spinner spinnerStatus;
 
     EditText subject, messageBody, startDate, endDate, homeOwnerCallStatus, tenantCallStatus;
     @Override
@@ -42,13 +47,24 @@ public class DetailHistory extends AppCompatActivity {
         endDate  = (EditText) findViewById(R.id.endDate);
         homeOwnerCallStatus  = (EditText) findViewById(R.id.homeOwnerCallStatus);
         tenantCallStatus  = (EditText) findViewById(R.id.tenantCallStatus);
-
+        spinnerStatus = findViewById(R.id.spinnerStatus);
+        spinnerStatus.setOnItemSelectedListener(this);
         subject.setText(callSubject);
         messageBody.setText(callBody);
         startDate.setText(startDateDataMember);
         endDate.setText(endDteDataMember);
         homeOwnerCallStatus.setText(homeOwnerCallStatusDataMember);
         tenantCallStatus.setText(tenantCallStatusDataMember);
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        Toast.makeText(this, parent.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
 
     }
 }
