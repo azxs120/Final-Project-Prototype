@@ -1,9 +1,12 @@
 package com.example.prototype.DBClasess;
 
+import java.util.ArrayList;
+
 public class Apartment {
     private String cityName, street,airConditioning, parking, balcony, elevator;
     private String  bars, disabledAcess, renovated , furnished,panicRoom,pets;
     private String HomeOwnerMobilNumber;
+    private ArrayList<Boolean> q = new ArrayList<>();
 
     public Apartment(String cityName, String street, String airConditioning, String parking, String balcony,
                      String elevator, String bars, String disabledAcess, String renovated, String furnished,
@@ -21,6 +24,47 @@ public class Apartment {
         this.panicRoom = panicRoom;
         this.pets = pets;
         HomeOwnerMobilNumber = homeOwnerMobilNumber;
+        if(airConditioning.equals("true"))
+            q.add(true);
+        else
+            q.add(false);
+        if(balcony.equals("true"))
+            q.add(true);
+        else
+            q.add(false);
+        if(bars.equals("true"))
+            q.add(true);
+        else
+            q.add(false);
+        if(disabledAcess.equals("true"))
+            q.add(true);
+        else
+            q.add(false);
+        if(elevator.equals("true"))
+            q.add(true);
+        else
+            q.add(false);
+        if(furnished.equals("true"))
+            q.add(true);
+        else
+            q.add(false);
+        if(panicRoom.equals("true"))
+            q.add(true);
+        else
+            q.add(false);
+        if(parking.equals("true"))
+            q.add(true);
+        else
+            q.add(false);
+        if(pets.equals("true"))
+            q.add(true);
+        else
+            q.add(false);
+        if(renovated.equals("true"))
+            q.add(true);
+        else
+            q.add(false);
+
     }
 
     public String getCityName() {
@@ -125,5 +169,8 @@ public class Apartment {
 
     public void setHomeOwnerMobilNumber(String homeOwnerMobilNumber) {
         HomeOwnerMobilNumber = homeOwnerMobilNumber;
+    }
+    public ArrayList<Boolean> getQ(){
+        return q;
     }
 }
