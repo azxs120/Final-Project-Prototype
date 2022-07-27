@@ -123,15 +123,14 @@ public class DetailHistory extends AppCompatActivity implements AdapterView.OnIt
                                     if (userIdentity.equals("tenant"))
                                         if (subjectDB.equals(callSubject) && startDateFromDB.equals(startDateDataMember)) {
                                             String newStatus=spinnerStatus.getSelectedItem().toString();
-                                            db.collection("calls").document(docId.toString()).update("Tenant Call Status",newStatus);//get the email of every user
-                                            Toast.makeText(DetailHistory.this, docId.toString(), Toast.LENGTH_SHORT).show();
+                                            db.collection("calls").document("HyjCcedxey5e9ZpRbcgF").update("Tenant Call Status",newStatus);//get the email of every user
+
                                         }
                                     if (userIdentity.equals("homeOwner"))
                                         if (subjectDB.equals(callSubject) && startDateFromDB.equals(startDateDataMember)) {
                                             String newStatus=spinnerStatus.getSelectedItem().toString();
-                                            db.collection("calls").document(docId.toString()).update("homeOwner Call Status",newStatus);
-                                           // reference.child("calls").child("HyjCcedxey5e9ZpRbcgF").child("Home owner Call Status").setValue(spinnerStatus.getSelectedItem().toString());//get the email of every user
-                                            Toast.makeText(DetailHistory.this, docId.toString(), Toast.LENGTH_SHORT).show();
+                                            db.collection("calls").document("HyjCcedxey5e9ZpRbcgF").update("homeOwner Call Status",newStatus);
+
                                         }
                                 }
                             }

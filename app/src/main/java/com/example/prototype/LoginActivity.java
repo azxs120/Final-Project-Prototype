@@ -26,6 +26,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.onesignal.OneSignal;
 
 import javax.annotation.Nullable;
 
@@ -60,6 +62,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginBtn.setOnClickListener(this);
         registerBtn.setOnClickListener(this);
         restoreBtn.setOnClickListener(this);
+
+
     }
 
     public void onClick(View v) {

@@ -71,7 +71,8 @@ public class MyHistory extends AppCompatActivity {
                                         tenantCallStatus = doc.getString("Tenant Call Status");
                                         startDate = doc.getString("Start Date");
                                         endDate = doc.getString("End Date");
-                                        docId = doc.getId();
+                                       // docId = doc.getId();
+                                        docId="HyjCcedxey5e9ZpRbcgF";
                                         Call newCall = new Call(callSubject, callBody, homeOwnerCallStatus, tenantCallStatus, startDate, endDate);
                                         calls.add(newCall);
 

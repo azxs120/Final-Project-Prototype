@@ -19,6 +19,7 @@ import com.example.prototype.DBConnections.FirebaseConnection;
 import com.example.prototype.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.onesignal.OneSignal;
 
 public class MainActivity extends AppCompatActivity {
     private ImageButton homeBtn,callHandlingBtn, myHistoryBtn, searchBtn, reviewBtn, publishApartmentBtn ;
@@ -57,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
         publishApartmentText= findViewById(R.id.publishApartmentText);
         db = FirebaseConnection.getFirebaseFirestore();
         mAuth = FirebaseAuth.getInstance();
-
         if (identity.equals("homeOwner")||identity.equals("tenantAndHomeOwner"))
         {
             publishApartmentBtn.setVisibility(View.VISIBLE);

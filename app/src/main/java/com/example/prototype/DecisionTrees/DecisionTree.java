@@ -5,7 +5,7 @@ import com.example.prototype.DBClasess.Apartment;
 import java.util.ArrayList;
 
 public class DecisionTree {
-    ArrayList<Apartment> apartments = new ArrayList<>();
+   /* ArrayList<Apartment> apartments = new ArrayList<>();
     BineryTree rootNode = null;
 
 
@@ -57,6 +57,6 @@ public class DecisionTree {
 }
         return true;
 
-                }
+                }*/
                 }
 

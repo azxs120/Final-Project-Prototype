@@ -93,7 +93,7 @@ public class ApartmentSearchActivity extends AppCompatActivity {
                     }
                 });
 
-        DecisionTree dt = new DecisionTree(apartments);
+        //DecisionTree dt = new DecisionTree(apartments);
 
 
     }
