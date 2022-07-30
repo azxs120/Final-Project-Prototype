@@ -3,13 +3,13 @@ package com.example.prototype.DBClasess;
 import java.util.ArrayList;
 
 public class Apartment {
-    private String cityName, street,airConditioning, parking, balcony, elevator;
-    private String  bars, disabledAcess, renovated , furnished,panicRoom,pets;
+    private String cityName, street, airConditioning, parking, balcony, elevator;
+    private String bars, disabledAccess, renovated, furnished, panicRoom, pets;
     private String HomeOwnerMobilNumber;
     private ArrayList<Boolean> q = new ArrayList<>();
 
     public Apartment(String cityName, String street, String airConditioning, String parking, String balcony,
-                     String elevator, String bars, String disabledAcess, String renovated, String furnished,
+                     String elevator, String bars, String disabledAccess, String renovated, String furnished,
                      String panicRoom, String pets, String homeOwnerMobilNumber) {
         this.cityName = cityName;
         this.street = street;
@@ -18,49 +18,51 @@ public class Apartment {
         this.balcony = balcony;
         this.elevator = elevator;
         this.bars = bars;
-        this.disabledAcess = disabledAcess;
+        this.disabledAccess = disabledAccess;
         this.renovated = renovated;
         this.furnished = furnished;
         this.panicRoom = panicRoom;
         this.pets = pets;
+
         HomeOwnerMobilNumber = homeOwnerMobilNumber;
-        if(airConditioning.equals("true"))
+
+        if (airConditioning.equals("true"))
             q.add(true);
         else
             q.add(false);
-        if(balcony.equals("true"))
+        if (balcony.equals("true"))
             q.add(true);
         else
             q.add(false);
-        if(bars.equals("true"))
+        if (bars.equals("true"))
             q.add(true);
         else
             q.add(false);
-        if(disabledAcess.equals("true"))
+        if (disabledAccess.equals("true"))
             q.add(true);
         else
             q.add(false);
-        if(elevator.equals("true"))
+        if (elevator.equals("true"))
             q.add(true);
         else
             q.add(false);
-        if(furnished.equals("true"))
+        if (furnished.equals("true"))
             q.add(true);
         else
             q.add(false);
-        if(panicRoom.equals("true"))
+        if (panicRoom.equals("true"))
             q.add(true);
         else
             q.add(false);
-        if(parking.equals("true"))
+        if (parking.equals("true"))
             q.add(true);
         else
             q.add(false);
-        if(pets.equals("true"))
+        if (pets.equals("true"))
             q.add(true);
         else
             q.add(false);
-        if(renovated.equals("true"))
+        if (renovated.equals("true"))
             q.add(true);
         else
             q.add(false);
@@ -124,11 +126,11 @@ public class Apartment {
     }
 
     public String getDisabledAcess() {
-        return disabledAcess;
+        return disabledAccess;
     }
 
     public void setDisabledAcess(String disabledAcess) {
-        this.disabledAcess = disabledAcess;
+        this.disabledAccess = disabledAcess;
     }
 
     public String getRenovated() {
@@ -170,7 +172,8 @@ public class Apartment {
     public void setHomeOwnerMobilNumber(String homeOwnerMobilNumber) {
         HomeOwnerMobilNumber = homeOwnerMobilNumber;
     }
-    public ArrayList<Boolean> getQ(){
+
+    public ArrayList<Boolean> getQ() {
         return q;
     }
 }

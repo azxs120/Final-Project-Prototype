@@ -1,4 +1,4 @@
-package com.example.prototype.DecisionTrees;
+package com.example.prototype.ApartmentSearch;
 
 public class BineryTree {
     private int nodeID;

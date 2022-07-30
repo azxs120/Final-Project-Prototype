@@ -116,11 +116,12 @@ public class AddNewCall extends AppCompatActivity {
                 txtMessage = message.getText().toString().trim();
                 txtCurrentDate = DateFormat.getDateInstance().format(calendar.getTime());
                 if (!txtTitle.equals("") && !txtMessage.equals("")) {
+                    /*
                     FCMSend.pushNotification(AddNewCall.this,
                             "c_NsG5UlSZyBjO2JVTouC3:APA91bFhU8igTPl9Y-pL1GWDNrdH80fbsfKLngt6XkXcwZZTmoxT2Ea5juXtXv8QFmiMA0_iDgOsTMIE0f0X5yUvAiQ8br5zv6b50pgC0mgNFEt5sJiPabX2soqCik0UJzGGysnUnxSr",
                             txtTitle,
                             txtMessage);
-
+*/
                     Map<String, Object> call = new HashMap<>();
                     call.put("Subject", txtTitle);
                     call.put("Call Body", txtMessage);

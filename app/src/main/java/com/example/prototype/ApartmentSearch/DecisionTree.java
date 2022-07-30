@@ -1,8 +1,4 @@
-package com.example.prototype.DecisionTrees;
-
-import com.example.prototype.DBClasess.Apartment;
-
-import java.util.ArrayList;
+package com.example.prototype.ApartmentSearch;
 
 public class DecisionTree {
    /* ArrayList<Apartment> apartments = new ArrayList<>();
