@@ -49,8 +49,8 @@ public class AddNewCall extends AppCompatActivity {
     String txtTitle, txtMessage, txtCurrentDate, endDate = "";
     Calendar calendar = Calendar.getInstance();
     private String userEmail = null;
-    private String userMobileNumber = null;
-    private String userIdentity = null, otherNumber = null;
+    private String userMobileNumber = null, a;
+    private String userIdentity = null, otherNumber = null, apartmentId = null;
     private String otherIdentity = null;
     private RadioButton tenant, homeOwner;
     private RadioGroup radioGroup;
@@ -96,6 +96,7 @@ public class AddNewCall extends AppCompatActivity {
 
                                 //the emails match
                                 if (userMobileNumber.equals(myPhoneNumberFromDB)) {
+                                    apartmentId = doc.getString("Apartment Id");
                                     if (userIdentity.equals("tenant"))
                                         otherNumber = doc.getString("homeOwner Mobile Number").trim();//get the email of every user
                                     else
@@ -129,6 +130,10 @@ public class AddNewCall extends AppCompatActivity {
                     call.put("End Date", endDate);
                     call.put("Tenant Call Status", "open");
                     call.put("Home owner Call Status", "open");
+
+                    if(apartmentId != null){
+                        call.put("Apartment Id", apartmentId);
+                    }
 
                     if (otherNumber != null) {
                         //my identity

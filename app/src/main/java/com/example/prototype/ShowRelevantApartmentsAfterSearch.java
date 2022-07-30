@@ -94,9 +94,6 @@ public class ShowRelevantApartmentsAfterSearch extends AppCompatActivity {
                 //Display click item position in toast
                 if (adapter != null) {
                     String textOfTheItem = adapter.getItem(position).toString();
-                    //int index = Integer.parseInt(textOfTheItem.substring(0, 1)) - 1;
-
-                    //take the DATA number to PersonInfoActivity
 
                     Intent intent = new Intent(ShowRelevantApartmentsAfterSearch.this, RelevantCalls.class);
                     intent.putExtra("relevantCalls", callsList);//take the email to CallHandlingActivity
