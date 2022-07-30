@@ -54,6 +54,7 @@ public class AddNewCall extends AppCompatActivity {
     private String otherIdentity = null;
     private RadioButton tenant, homeOwner;
     private RadioGroup radioGroup;
+    private static int callId = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,8 +131,9 @@ public class AddNewCall extends AppCompatActivity {
                     call.put("End Date", endDate);
                     call.put("Tenant Call Status", "open");
                     call.put("Home owner Call Status", "open");
-
-                    if(apartmentId != null){
+                    call.put("Call Id", callId);
+                    callId++;
+                    if (apartmentId != null) {
                         call.put("Apartment Id", apartmentId);
                     }
 
@@ -158,7 +160,6 @@ public class AddNewCall extends AppCompatActivity {
                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                     @Override
                                     public void onSuccess(DocumentReference documentReference) {
-
                                         Toast.makeText(AddNewCall.this, "Call Created Successfully!", Toast.LENGTH_SHORT).show();
                                         finish();
                                     }

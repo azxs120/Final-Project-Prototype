@@ -9,6 +9,7 @@ public class Call implements Serializable {
 
     private String subject;
     private String callBody;
+    private String callId;
     private String homeOwnerMobileNumber;
     private String tenantMobileNumber;
     private String HomeOwnerCallStatus;
@@ -32,6 +33,20 @@ public class Call implements Serializable {
         this.startDate = startDate;
         this.endDate = endDate;
         this.homeOwnerMobileNumber = homeOwnerMobileNumber;
+    }
+
+    public Call(String callId,String callSubject,String callBody,String homeOwnerCallStatus,String tenantCallStatus,String startDate,String endDate){
+        this.callId = callId;
+        this.subject = callSubject;
+        this.callBody = callBody;
+        this.HomeOwnerCallStatus =homeOwnerCallStatus;
+        this.tenantCallStatus = tenantCallStatus;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    public String getCallId(){
+        return this.callId;
     }
 
     public static int getCounterForID() {

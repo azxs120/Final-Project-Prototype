@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">RentMe</string>
     <string-array name="Spinner_items">
-        <item>Open</item>
-        <item>Handdling</item>
-        <item>Closed</item>
+        <item>open</item>
+        <item>handling</item>
+        <item>closed</item>
     </string-array>
 </resources>

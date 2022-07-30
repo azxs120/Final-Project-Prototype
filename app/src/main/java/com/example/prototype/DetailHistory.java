@@ -29,15 +29,16 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
 public class DetailHistory extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private String callBody, callSubject, homeOwnerCallStatusDataMember, tenantCallStatusDataMember, startDateDataMember, endDteDataMember;
     private Spinner spinnerStatus;
-    private String userIdentity = null,docId;
+    private String userIdentity = null, docId, callId;
     private Button updateStatusBtn;
-    EditText subject, messageBody, startDate, endDate, homeOwnerCallStatus, tenantCallStatus;
+    EditText subject,  messageBody, startDate, endDate, homeOwnerCallStatus, tenantCallStatus;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     DatabaseReference reference;
@@ -74,6 +75,9 @@ public class DetailHistory extends AppCompatActivity implements AdapterView.OnIt
         if (bundle.getString("docId") != null)
             docId = bundle.getString("docId");
 
+        if (bundle.getString("callId") != null)
+            callId = bundle.getString("callId");
+
 
         subject = (EditText) findViewById(R.id.subject);
         messageBody = (EditText) findViewById(R.id.messageBody);
@@ -107,7 +111,6 @@ public class DetailHistory extends AppCompatActivity implements AdapterView.OnIt
     }
 
     public boolean statusIsChanged() {
-
         if (!userIdentity.equals(spinnerStatus.toString())) {
             db.collection("calls")
                     .get()
@@ -117,21 +120,32 @@ public class DetailHistory extends AppCompatActivity implements AdapterView.OnIt
                             if (task.isSuccessful()) {
                                 //run on the rows of the table
                                 for (QueryDocumentSnapshot doc : task.getResult()) {
-                                    String subjectDB = doc.getString("Subject");//get the email of every user
+                                    String callIdFromDB = doc.getString("Call Id");//get the email of every user
                                     String startDateFromDB = doc.getString("Start Date");
 
-                                    if (userIdentity.equals("tenant"))
-                                        if (subjectDB.equals(callSubject) && startDateFromDB.equals(startDateDataMember)) {
-                                            String newStatus=spinnerStatus.getSelectedItem().toString();
-                                            db.collection("calls").document("HyjCcedxey5e9ZpRbcgF").update("Tenant Call Status",newStatus);//get the email of every user
+                                    if (callIdFromDB != null) {
+                                        if (userIdentity.equals("tenant"))
+                                            if (callIdFromDB.equals(callId)) {
+                                                String newStatus = spinnerStatus.getSelectedItem().toString();
 
-                                        }
-                                    if (userIdentity.equals("homeOwner"))
-                                        if (subjectDB.equals(callSubject) && startDateFromDB.equals(startDateDataMember)) {
-                                            String newStatus=spinnerStatus.getSelectedItem().toString();
-                                            db.collection("calls").document("HyjCcedxey5e9ZpRbcgF").update("homeOwner Call Status",newStatus);
+                                                db.collection("calls").document(doc.getId()).
+                                                        update("Tenant Call Status", newStatus);//get the email of every user
+                                                if(newStatus.equals("closed")){
+                                                    //get current date
+                                                    Calendar calendar = Calendar.getInstance();
+                                                    String txtCurrentDate = DateFormat.getDateInstance().format(calendar.getTime());
+                                                    //set the end Date
+                                                    db.collection("calls").document(doc.getId()).
+                                                            update("End Date", txtCurrentDate);
+                                                }
+                                            }
+                                        if (userIdentity.equals("homeOwner"))
+                                            if (callIdFromDB.equals(callId)) {
+                                                String newStatus = spinnerStatus.getSelectedItem().toString();
+                                                db.collection("calls").document(doc.getId()).update("homeOwner Call Status", newStatus);
 
-                                        }
+                                            }
+                                    }
                                 }
                             }
 

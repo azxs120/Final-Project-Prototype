@@ -82,6 +82,8 @@ public class CallHandlingActivity extends AppCompatActivity implements View.OnCl
                     }
                 });
 
+
+
         //get the add new call button
         FloatingActionButton addNewCall = binding.addNewCallBtn;
         addNewCall.setOnClickListener(new View.OnClickListener() {
