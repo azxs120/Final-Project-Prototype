@@ -5,13 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.prototype.ApartmentSearch.ApartmentSearch;
 import com.example.prototype.DBClasess.Apartment;
@@ -102,7 +100,7 @@ public class ApartmentSearchActivity extends AppCompatActivity implements View.O
 
     public void onClick(View v) {
         //Toast.makeText(ApartmentSearchActivity.this, "its clicked\n" , Toast.LENGTH_SHORT).show();
-        setContentView(R.layout.activity_apartment_search);
+        //setContentView(R.layout.activity_apartment_search);
 
         CityText = (EditText) findViewById(R.id.CityText);
         StreetText = (EditText) findViewById(R.id.StreetText);
@@ -119,7 +117,7 @@ public class ApartmentSearchActivity extends AppCompatActivity implements View.O
 
         String cityName = CityText.getText().toString();
         String street = StreetText.getText().toString();
-        String txtCity, txtStreet,txtAirConditioning, txtParking, txtbalcony, txtElevator;
+        String txtCity, txtStreet,txtAirConditioning, txtParking, txtBalcony, txtElevator;
         String  txtBars, txtDisabledAccess, txtRenovated , txtFurnished,txtPanicRoom,txtPets;
 
         if (airConditioning.isChecked())
@@ -131,9 +129,9 @@ public class ApartmentSearchActivity extends AppCompatActivity implements View.O
         else
             txtParking = "false";
         if (balcony.isChecked())
-            txtbalcony = "true";
+            txtBalcony = "true";
         else
-            txtbalcony = "false";
+            txtBalcony = "false";
         if (elevator.isChecked())
             txtElevator = "true";
         else
@@ -165,17 +163,20 @@ public class ApartmentSearchActivity extends AppCompatActivity implements View.O
 
         //create apartment from user input
         apartment = new Apartment(CityText.getText().toString(), StreetText.getText().toString(), txtAirConditioning, txtParking
-                , txtbalcony, txtElevator, txtBars, txtDisabledAccess,
+                , txtBalcony, txtElevator, txtBars, txtDisabledAccess,
                 txtRenovated, txtFurnished, txtPanicRoom, txtPets,"" );
 
         //ApartmentSearch
         ApartmentSearch apartmentSearch = new ApartmentSearch(apartmentsList);
+
         ArrayList<Apartment> relevantApartments =  apartmentSearch.searchApartment(apartment);
 
-
         //show relevant Apartments in different screen
+        Intent intentLoadNewActivity = new Intent(ApartmentSearchActivity.this, ShowApartmentAfterSearch.class);
+        //intentLoadNewActivity.putParcelableArrayListExtra("relevantApartments", relevantApartments);
 
-
+        intentLoadNewActivity.putExtra("relevantApartments", relevantApartments);//take the email to CallHandlingActivity
+        startActivity(intentLoadNewActivity);
     }
 
 }
