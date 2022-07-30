@@ -115,54 +115,60 @@ public class AddNewCall extends AppCompatActivity {
                 txtTitle = callTitle.getText().toString().trim();
                 txtMessage = message.getText().toString().trim();
                 txtCurrentDate = DateFormat.getDateInstance().format(calendar.getTime());
+                if (!txtTitle.equals("") && !txtMessage.equals("")) {
+                    FCMSend.pushNotification(AddNewCall.this,
+                            "c_NsG5UlSZyBjO2JVTouC3:APA91bFhU8igTPl9Y-pL1GWDNrdH80fbsfKLngt6XkXcwZZTmoxT2Ea5juXtXv8QFmiMA0_iDgOsTMIE0f0X5yUvAiQ8br5zv6b50pgC0mgNFEt5sJiPabX2soqCik0UJzGGysnUnxSr",
+                            txtTitle,
+                            txtMessage);
 
-                Map<String, Object> call = new HashMap<>();
-                call.put("Subject", txtTitle);
-                call.put("Call Body", txtMessage);
-                call.put("Start Date", txtCurrentDate);
-                call.put("End Date", endDate);
-                call.put("Tenant Call Status", "open");
-                call.put("Home owner Call Status", "open");
+                    Map<String, Object> call = new HashMap<>();
+                    call.put("Subject", txtTitle);
+                    call.put("Call Body", txtMessage);
+                    call.put("Start Date", txtCurrentDate);
+                    call.put("End Date", endDate);
+                    call.put("Tenant Call Status", "open");
+                    call.put("Home owner Call Status", "open");
 
-                if (otherNumber != null) {
-                    //my identity
-                    if (userIdentity.equals("tenant")) {
-                        call.put("tenant Mobile Number", userMobileNumber);
-                        call.put("homeOwner Mobile Number", otherNumber);
-                    } else if (userIdentity.equals("homeOwner")) {
-                        call.put("homeOwner Mobile Number", userMobileNumber);
-                        call.put("tenant Mobile Number", otherNumber);
-                    } else {//tenantAndHomeOwner
+                    if (otherNumber != null) {
+                        //my identity
                         if (userIdentity.equals("tenant")) {
                             call.put("tenant Mobile Number", userMobileNumber);
                             call.put("homeOwner Mobile Number", otherNumber);
                         } else if (userIdentity.equals("homeOwner")) {
                             call.put("homeOwner Mobile Number", userMobileNumber);
                             call.put("tenant Mobile Number", otherNumber);
+                        } else {//tenantAndHomeOwner
+                            if (userIdentity.equals("tenant")) {
+                                call.put("tenant Mobile Number", userMobileNumber);
+                                call.put("homeOwner Mobile Number", otherNumber);
+                            } else if (userIdentity.equals("homeOwner")) {
+                                call.put("homeOwner Mobile Number", userMobileNumber);
+                                call.put("tenant Mobile Number", otherNumber);
+                            }
                         }
-                    }
 
-                    db.collection("calls")
-                            .add(call)
-                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                @Override
-                                public void onSuccess(DocumentReference documentReference) {
+                        db.collection("calls")
+                                .add(call)
+                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                    @Override
+                                    public void onSuccess(DocumentReference documentReference) {
 
-                                    Toast.makeText(AddNewCall.this, "Call Created Successfully!", Toast.LENGTH_SHORT).show();
-                                    finish();
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(AddNewCall.this, "Call Created Successfully!", Toast.LENGTH_SHORT).show();
+                                        finish();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
 
 
-                                    Toast.makeText(AddNewCall.this, "----- Error ----- the call was not created", Toast.LENGTH_SHORT).show();
-                                    finish();
-                                }
-                            });
-                } else
-                    Toast.makeText(AddNewCall.this, "----- Error ----- there is no connection between you", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(AddNewCall.this, "----- Error ----- the call was not created", Toast.LENGTH_SHORT).show();
+                                        finish();
+                                    }
+                                });
+                    } else
+                        Toast.makeText(AddNewCall.this, "----- Error ----- there is no connection between you", Toast.LENGTH_SHORT).show();
+                }
             }
 
         });

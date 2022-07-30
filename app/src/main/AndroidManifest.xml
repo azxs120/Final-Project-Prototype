@@ -83,7 +83,13 @@
             android:value="@string/facebook_app_id" />
 
         <receiver android:name=".Snooze" />
-
+        <service
+            android:name=".PushNotificationService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 
