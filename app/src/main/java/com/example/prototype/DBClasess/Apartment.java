@@ -1,11 +1,14 @@
 package com.example.prototype.DBClasess;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Apartment {
+public class Apartment implements Serializable {
     private String cityName, street, airConditioning, parking, balcony, elevator;
     private String bars, disabledAccess, renovated, furnished, panicRoom, pets;
     private String HomeOwnerMobilNumber;
+
+
     private ArrayList<Boolean> q = new ArrayList<>();
 
     public Apartment(String cityName, String street, String airConditioning, String parking, String balcony,

@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.prototype.ApartmentSearch.ApartmentSearch;
 import com.example.prototype.DBClasess.Apartment;
@@ -99,9 +100,6 @@ public class ApartmentSearchActivity extends AppCompatActivity implements View.O
     }
 
     public void onClick(View v) {
-        //Toast.makeText(ApartmentSearchActivity.this, "its clicked\n" , Toast.LENGTH_SHORT).show();
-        //setContentView(R.layout.activity_apartment_search);
-
         CityText = (EditText) findViewById(R.id.CityText);
         StreetText = (EditText) findViewById(R.id.StreetText);
         airConditioning = (CheckBox) findViewById(R.id.airConditioning);
@@ -117,8 +115,8 @@ public class ApartmentSearchActivity extends AppCompatActivity implements View.O
 
         String cityName = CityText.getText().toString();
         String street = StreetText.getText().toString();
-        String txtCity, txtStreet,txtAirConditioning, txtParking, txtBalcony, txtElevator;
-        String  txtBars, txtDisabledAccess, txtRenovated , txtFurnished,txtPanicRoom,txtPets;
+        String txtCity, txtStreet, txtAirConditioning, txtParking, txtBalcony, txtElevator;
+        String txtBars, txtDisabledAccess, txtRenovated, txtFurnished, txtPanicRoom, txtPets;
 
         if (airConditioning.isChecked())
             txtAirConditioning = "true";
@@ -164,19 +162,22 @@ public class ApartmentSearchActivity extends AppCompatActivity implements View.O
         //create apartment from user input
         apartment = new Apartment(CityText.getText().toString(), StreetText.getText().toString(), txtAirConditioning, txtParking
                 , txtBalcony, txtElevator, txtBars, txtDisabledAccess,
-                txtRenovated, txtFurnished, txtPanicRoom, txtPets,"" );
+                txtRenovated, txtFurnished, txtPanicRoom, txtPets, "");
 
         //ApartmentSearch
         ApartmentSearch apartmentSearch = new ApartmentSearch(apartmentsList);
 
-        ArrayList<Apartment> relevantApartments =  apartmentSearch.searchApartment(apartment);
+        ArrayList<Apartment> relevantApartments = apartmentSearch.searchApartment(apartment);
+        if (relevantApartments.size() > 0) {
+            //show relevant Apartments in different screen
+            Intent intent = new Intent(ApartmentSearchActivity.this, ShowRelevantApartmentsAfterSearch.class);
+            //intentLoadNewActivity.putParcelableArrayListExtra("relevantApartments", relevantApartments);
 
-        //show relevant Apartments in different screen
-        Intent intentLoadNewActivity = new Intent(ApartmentSearchActivity.this, ShowApartmentAfterSearch.class);
-        //intentLoadNewActivity.putParcelableArrayListExtra("relevantApartments", relevantApartments);
-
-        intentLoadNewActivity.putExtra("relevantApartments", relevantApartments);//take the email to CallHandlingActivity
-        startActivity(intentLoadNewActivity);
+            intent.putExtra("relevantApartments", relevantApartments);//take the email to CallHandlingActivity
+            startActivity(intent);
+        } else{
+            Toast.makeText(ApartmentSearchActivity.this, "No Matches Found\n" , Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

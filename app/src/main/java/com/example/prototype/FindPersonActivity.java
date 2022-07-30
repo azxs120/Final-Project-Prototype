@@ -41,6 +41,7 @@ public class FindPersonActivity extends AppCompatActivity {
     private Button showResultsBtn;
     private String userIdentity = null, identity = null;
     Map<String, String> personHashMap = new HashMap<>();
+    Map<String, String> apartmentIdMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,12 +73,20 @@ public class FindPersonActivity extends AppCompatActivity {
                                 String phoneFromDB = doc.getString("Mobile Number");//get all phone numbers
                                 String otherUserName = doc.getString("Name");
 
-                                if (!(userEmail.equals(doc.getString("Email"))) && !(identity.equals(doc.getString("Identity"))) && !identity.equals("tenantAndHomeOwner"))
-                                    stringArrayList.add(phoneFromDB);
-                                else if (!(userEmail.equals(doc.getString("Email"))) && identity.equals("tenantAndHomeOwner"))
+                                String apartmentId = null;
+                                if (!(userEmail.equals(doc.getString("Email"))) && !(identity.equals(doc.getString("Identity"))) && !identity.equals("tenantAndHomeOwner")){
+                                    apartmentId = doc.getString("Apartment Id");
                                     stringArrayList.add(phoneFromDB);
 
+                                }
+                                else if (!(userEmail.equals(doc.getString("Email"))) && identity.equals("tenantAndHomeOwner")) {
+                                    stringArrayList.add(phoneFromDB);
+                                }
+
+
                                 personHashMap.put(phoneFromDB, otherUserName);
+                                if(apartmentId != null)
+                                    apartmentIdMap.put(phoneFromDB, apartmentId);
                             }
                         }
                     }
@@ -106,6 +115,8 @@ public class FindPersonActivity extends AppCompatActivity {
                         Intent intent = new Intent(FindPersonActivity.this, PersonInfoActivity.class);
                         intent.putExtra("userEmail", userEmail);//take the email to PersonInfoActivity
                         intent.putExtra("otherUserPhoneNumber", otherUserPhoneNumber);
+                        if(apartmentIdMap.size() !=0 )
+                            intent.putExtra("apartmentId", apartmentIdMap.get(otherUserPhoneNumber).toString());
                         intent.putExtra("otherUserName", personHashMap.get(otherUserPhoneNumber).toString());
                         startActivity(intent);
                     }

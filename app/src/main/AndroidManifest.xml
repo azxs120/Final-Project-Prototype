@@ -19,6 +19,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Prototype">
         <activity
+            android:name=".RelevantCalls"
+            android:exported="false" />
+        <activity
+            android:name=".ShowRelevantApartmentsAfterSearch"
+            android:exported="false" />
+        <activity
             android:name=".ShowApartmentAfterSearch"
             android:exported="false" />
         <activity

@@ -45,7 +45,7 @@ public class MakeConnectionActivity extends AppCompatActivity  {
     private EditText messageBox;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
-
+    private int apartmentId = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +63,8 @@ public class MakeConnectionActivity extends AppCompatActivity  {
         final int monthTo = calendarTo.get(Calendar.MONTH);
         final int dayTo = calendarTo.get(Calendar.DAY_OF_MONTH);
 
+
+
         sendButton = (Button) findViewById(R.id.sendButton);
         identityGroup = findViewById(R.id.identityGroup);
         tenant = findViewById(R.id.tenant);
@@ -76,6 +78,9 @@ public class MakeConnectionActivity extends AppCompatActivity  {
         Bundle bundle2 = getIntent().getExtras();
         if (bundle2.getString("otherUserPhoneNumber") != null)
             otherMobileNumber = bundle.getString("otherUserPhoneNumber").trim();
+        bundle2 = getIntent().getExtras();
+        if (bundle2.getString("apartmentId") != null)
+            apartmentId = Integer.parseInt(bundle.getString("apartmentId").trim());
 
         // Initialize Firebase Auth
         mAuth = FirebaseConnection.getFirebaseAuth();
@@ -137,8 +142,10 @@ public class MakeConnectionActivity extends AppCompatActivity  {
                                     mobileNumber = doc.getString("Mobile Number");//get the MobileNumber.
                                     identity = doc.getString("Identity");//get the identity
 
-                                    if (identity.equals("tenantAndHomeOwner"))
+                                    if (identity.equals("tenantAndHomeOwner")) {
                                         identityGroup.setVisibility(View.VISIBLE);//show me my options
+                                    }
+
                                     break;//done searching
                                 }
                             }
@@ -182,6 +189,8 @@ public class MakeConnectionActivity extends AppCompatActivity  {
                 connection.put("End Date", txtToDate);
                 connection.put("Notes", txtNote);
                 connection.put("Identity", identity);
+                connection.put("Apartment Id", apartmentId);
+
                 connection.put(identity + " Mobile Number", mobileNumber);//the user mobileNumber
 
                 if (identity.equals("tenant"))
@@ -202,7 +211,10 @@ public class MakeConnectionActivity extends AppCompatActivity  {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
                                 Toast.makeText(MakeConnectionActivity.this, "Data Created Successfully!", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(MakeConnectionActivity.this, PersonInfoActivity.class);
+                                Intent intent = new Intent(MakeConnectionActivity.this, MainActivity.class);
+                                intent.putExtra("userEmail", userEmail);//take the email to CallHandlingActivity
+                                intent.putExtra("identity", identity);//take the email to CallHandlingActivity
+                                intent.putExtra("mobileNumber", mobileNumber);//take the email to CallHandlingActivity
                                 startActivity(intent);
                             }
                         })

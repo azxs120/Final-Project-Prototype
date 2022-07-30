@@ -23,15 +23,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PublishApartment extends AppCompatActivity {
-    private TextView CityText,StreetText;
+    private TextView CityText, StreetText;
     private CheckBox airConditioning, parking, balcony, elevator, bars, disabledAcess, renovated, furnished, mamad, pets;
     private Button PublishBtn;
     private String HomeOwnerMobilNumber;
-    private String txtCity, txtStreet,txtAirConditioning, txtparking, txtbalcony, txtelevator;
-    private String  txtbars, txtdisabledAcess, txtrenovated , txtfurnished,txtmamad,txtpets;
+    private String txtCity, txtStreet, txtAirConditioning, txtparking, txtbalcony, txtelevator;
+    private String txtbars, txtdisabledAcess, txtrenovated, txtfurnished, txtmamad, txtpets;
+    private static int apartmentId = 3;
 
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,29 +122,30 @@ public class PublishApartment extends AppCompatActivity {
                 apartment.put("Furnished", txtfurnished);
                 apartment.put("Panic Room", txtmamad);
                 apartment.put("Pets", txtpets);
-                apartment.put("Home Owner Mobile Number",HomeOwnerMobilNumber);
+                apartment.put("Home Owner Mobile Number", HomeOwnerMobilNumber);
+                apartment.put("Apartment Id", apartmentId);
+                apartmentId ++;
 
 
+                db.collection("apartments")
+                        .add(apartment)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
 
-                    db.collection("apartments")
-                            .add(apartment)
-                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                @Override
-                                public void onSuccess(DocumentReference documentReference) {
-
-                                    Toast.makeText(PublishApartment.this, "The apartment was successfully advertised!", Toast.LENGTH_SHORT).show();
-                                    finish();
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(PublishApartment.this, "The apartment was successfully advertised!", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
 
 
-                                    Toast.makeText(PublishApartment.this, "----- Error ----- the call was not created", Toast.LENGTH_SHORT).show();
-                                    finish();
-                                }
-                            });
+                                Toast.makeText(PublishApartment.this, "----- Error ----- the call was not created", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        });
 
             }
 

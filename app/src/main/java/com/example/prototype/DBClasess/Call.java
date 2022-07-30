@@ -1,9 +1,10 @@
 package com.example.prototype.DBClasess;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.Date;
 
-public class Call {
+public class Call implements Serializable {
     static int counterForID = 0;
 
     private String subject;
@@ -24,6 +25,13 @@ public class Call {
         this.tenantCallStatus = tenantCallStatus;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+    public Call(String subject,String callBody,String startDate,String endDate,String homeOwnerMobileNumber){
+        this.subject = subject;
+        this.callBody = callBody;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.homeOwnerMobileNumber = homeOwnerMobileNumber;
     }
 
     public static int getCounterForID() {

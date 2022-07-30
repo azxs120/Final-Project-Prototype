@@ -42,7 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private boolean flag = true;
-
+    private static int apartmentId = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,7 +183,10 @@ public class RegisterActivity extends AppCompatActivity {
                 user.put("Mobile Number", txtMobile);
                 user.put("Password", txtPassword);
                 user.put("Identity", txtIdentity);
-
+                if(!txtIdentity.equals("tenant")){
+                    user.put("Apartment Id", apartmentId);
+                    apartmentId++;
+                }
 
                 db.collection("users")
                         .add(user)

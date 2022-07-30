@@ -28,7 +28,7 @@ public class PersonInfoActivity extends AppCompatActivity {
 
     //for sending to the next intent
     private String userEmail;
-
+    private String apartmentId;
     //for printing
     private String otherUserPhoneNumber = null;
     private String otherUserName = null;
@@ -52,6 +52,9 @@ public class PersonInfoActivity extends AppCompatActivity {
         bundle = getIntent().getExtras();
         if (bundle.getString("userEmail") != null)
             userEmail = bundle.getString("userEmail");
+        bundle = getIntent().getExtras();
+        if (bundle.getString("apartmentId") != null)
+            apartmentId = bundle.getString("apartmentId");
 
         this.setTitle(otherUserName + " Info");
 
@@ -76,6 +79,8 @@ public class PersonInfoActivity extends AppCompatActivity {
                 Bundle extras = new Bundle();
                 extras.putString("userEmail", userEmail);
                 extras.putString("otherUserPhoneNumber", otherUserPhoneNumber);
+                extras.putString("apartmentId", apartmentId);
+
                 newIntent.putExtras(extras);
                 startActivity(newIntent);
             }
