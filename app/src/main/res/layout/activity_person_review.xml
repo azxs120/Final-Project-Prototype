@@ -13,17 +13,23 @@
         android:dividerHeight="2dp"
         tools:listitem="@android:layout/simple_list_item_1">
 
-
     </ListView>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <Button
-            android:id="@+id/showResults"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <Button
+            android:id="@+id/showResultsPerson"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Press hare to see the results" />
-    </LinearLayout>
+            android:text="Write review about person" />
+            <Button
+                android:id="@+id/showResultsApartment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Write review about apartment" />
+        </LinearLayout>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -30,7 +30,7 @@ public class WriteReview extends AppCompatActivity {
     private FirebaseFirestore db;
     EditText message;
     String txtMessage;
-    private String txtCurrentDate, userMobileNumber, otherUserPhoneNumber, userIdentity;
+    private String txtCurrentDate, userMobileNumber, reviewAbout, userIdentity,apartmentID;
 
     private Calendar calendar = Calendar.getInstance();
 
@@ -46,14 +46,16 @@ public class WriteReview extends AppCompatActivity {
         db = FirebaseConnection.getFirebaseFirestore();
 
         Bundle bundle = getIntent().getExtras();
-        if (bundle.getString("otherUserPhoneNumber") != null)
-            otherUserPhoneNumber = bundle.getString("otherUserPhoneNumber");
+        if (bundle.getString("review about") != null)
+            reviewAbout = bundle.getString("review about");
         bundle = getIntent().getExtras();
         if (bundle.getString("userMobileNumber") != null)
             userMobileNumber = bundle.getString("userMobileNumber");
         bundle = getIntent().getExtras();
         if (bundle.getString("identity") != null)
             userIdentity = bundle.getString("identity");
+        if (bundle.getString("apartmentId") != null)
+            apartmentID = bundle.getString("apartmentId");
 
         message = (EditText) findViewById(R.id.messageBody);
 
@@ -65,25 +67,27 @@ public class WriteReview extends AppCompatActivity {
 
                 txtMessage = message.getText().toString().trim();
                 Map<String, Object> call = new HashMap<>();
-
-                call.put("Apartment ID", 0);
+                if(apartmentID != null)
+                    call.put("Apartment ID", apartmentID);
+                else
+                    call.put("Apartment ID", -1);
                 call.put("Body", txtMessage);
                 call.put("Date", txtCurrentDate);
 
                 //my identity
                 if (userIdentity.equals("tenant")) {
                     call.put("tenant Mobile Number", userMobileNumber);
-                    call.put("homeOwner Mobile Number", otherUserPhoneNumber);
+                    call.put("Review About", reviewAbout);
                 } else if (userIdentity.equals("homeOwner")) {
                     call.put("homeOwner Mobile Number", userMobileNumber);
-                    call.put("tenant Mobile Number", otherUserPhoneNumber);
+                    call.put("Review About", reviewAbout);
                 } else {//tenantAndHomeOwner
                     if (userIdentity.equals("tenant")) {
                         call.put("tenant Mobile Number", userMobileNumber);
-                        call.put("homeOwner Mobile Number", otherUserPhoneNumber);
+                        call.put("Review About", reviewAbout);
                     } else if (userIdentity.equals("homeOwner")) {
                         call.put("homeOwner Mobile Number", userMobileNumber);
-                        call.put("tenant Mobile Number", otherUserPhoneNumber);
+                        call.put("Review About", reviewAbout);
                     }
                 }
 
