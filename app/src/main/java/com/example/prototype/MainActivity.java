@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intentLoadNewActivity = new Intent(MainActivity.this, PersonReview.class);
                 intentLoadNewActivity.putExtra("userEmail", userEmail);
                 intentLoadNewActivity.putExtra("identity", identity);
-                intentLoadNewActivity.putExtra("userMobilNumber", userMobilNumber);//take the mobile to PersonReviewActivity
+                //intentLoadNewActivity.putExtra("userMobilNumber", userMobilNumber);//take the mobile to PersonReviewActivity
                 startActivity(intentLoadNewActivity);
             }
         });

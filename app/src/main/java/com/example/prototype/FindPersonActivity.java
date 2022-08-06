@@ -50,7 +50,7 @@ public class FindPersonActivity extends AppCompatActivity {
         this.setTitle("Search Person");
 
         db = FirebaseConnection.getFirebaseFirestore();
-        //get the user email
+        //get the user info from MainActivity
         Bundle bundle = getIntent().getExtras();
         if (bundle.getString("userEmail") != null)
             userEmail = bundle.getString("userEmail");
@@ -115,7 +115,7 @@ public class FindPersonActivity extends AppCompatActivity {
                         Intent intent = new Intent(FindPersonActivity.this, PersonInfoActivity.class);
                         intent.putExtra("userEmail", userEmail);//take the email to PersonInfoActivity
                         intent.putExtra("otherUserPhoneNumber", otherUserPhoneNumber);
-                        if(apartmentIdMap.size() !=0 )
+                       if (apartmentIdMap.get(otherUserPhoneNumber)!= null)
                             intent.putExtra("apartmentId", apartmentIdMap.get(otherUserPhoneNumber).toString());
                         intent.putExtra("otherUserName", personHashMap.get(otherUserPhoneNumber).toString());
                         startActivity(intent);
