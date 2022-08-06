@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.prototype.DBConnections.FirebaseConnection;
@@ -37,9 +38,10 @@ import java.util.Map;
 public class DetailHistory extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private String callBody, callSubject, homeOwnerCallStatusDataMember, tenantCallStatusDataMember, startDateDataMember, endDteDataMember;
     private Spinner spinnerStatus;
-    private String userIdentity = null, docId, callId;
+    private String userIdentity = null, docId, callId,showStatus;
     private Button updateStatusBtn;
     EditText subject,  messageBody, startDate, endDate, homeOwnerCallStatus, tenantCallStatus;
+    TextView changeStatusText;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     DatabaseReference reference;
@@ -79,6 +81,8 @@ public class DetailHistory extends AppCompatActivity implements AdapterView.OnIt
         if (bundle.getString("callId") != null)
             callId = bundle.getString("callId");
 
+        if (bundle.getString("statusToShow") != null)
+            showStatus = bundle.getString("statusToShow");
 
         subject = (EditText) findViewById(R.id.subject);
         messageBody = (EditText) findViewById(R.id.messageBody);
@@ -88,6 +92,7 @@ public class DetailHistory extends AppCompatActivity implements AdapterView.OnIt
         tenantCallStatus = (EditText) findViewById(R.id.tenantCallStatus);
         updateStatusBtn = (Button) findViewById(R.id.updateStatusBtn);
         spinnerStatus = findViewById(R.id.spinnerStatus);
+        changeStatusText = findViewById(R.id.changeStatusText);
         spinnerStatus.setOnItemSelectedListener(this);
         subject.setText(callSubject);
         messageBody.setText(callBody);
@@ -99,6 +104,13 @@ public class DetailHistory extends AppCompatActivity implements AdapterView.OnIt
         mAuth = FirebaseConnection.getFirebaseAuth();
         db = FirebaseConnection.getFirebaseFirestore();
         reference = FirebaseDatabase.getInstance().getReference("calls");
+//option to change status when you in callHeadlingActivity
+        if (showStatus.equals("yes")) {
+            spinnerStatus.setVisibility(View.VISIBLE);
+            updateStatusBtn.setVisibility(View.VISIBLE);
+            changeStatusText.setVisibility(View.VISIBLE);
+
+        }
         updateStatusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,7 +133,7 @@ public class DetailHistory extends AppCompatActivity implements AdapterView.OnIt
                             if (task.isSuccessful()) {
                                 //run on the rows of the table
                                 for (QueryDocumentSnapshot doc : task.getResult()) {
-                                    String callIdFromDB = doc.getString("Call Id");//get the email of every user
+                                    String callIdFromDB = doc.getString("Call Id");
                                     String startDateFromDB = doc.getString("Start Date");
 
                                     if (callIdFromDB != null) {

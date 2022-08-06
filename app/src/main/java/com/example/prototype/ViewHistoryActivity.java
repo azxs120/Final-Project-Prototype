@@ -28,7 +28,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 public class ViewHistoryActivity extends AppCompatActivity {
-    private String otherUserPhoneNumber = null, status = "noInput";
+    private String otherUserPhoneNumber = null, status = "noInput",showStatus="no";
     private FirebaseFirestore db;
     ListView listView;
     ArrayList<String> stringArrayList = new ArrayList<>();
@@ -54,6 +54,9 @@ public class ViewHistoryActivity extends AppCompatActivity {
             identity = bundle.getString("identity");
         if (bundle.getString("docId") != null)
             docId = bundle.getString("docId");
+        if (bundle.getString("statusToShow") != null)
+            showStatus = bundle.getString("statusToShow");
+
 
         this.setTitle(otherUserPhoneNumber + " history");
 
@@ -132,6 +135,7 @@ public class ViewHistoryActivity extends AppCompatActivity {
                             intent.putExtra("endDate", callsList.get(index).getEndDate());
                             intent.putExtra("identity",identity );
                             intent.putExtra("docId",docId);
+                            intent.putExtra("statusToShow",showStatus);
 
 
 

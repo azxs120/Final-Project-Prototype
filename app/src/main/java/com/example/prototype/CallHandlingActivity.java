@@ -117,6 +117,7 @@ public class CallHandlingActivity extends AppCompatActivity implements View.OnCl
                 OngoingCalls_view.putExtra("otherUserPhoneNumber", userMobilNumber);//take the email to AddNewCall
                 OngoingCalls_view.putExtra("status", "open");//take the email to AddNewCall
                 OngoingCalls_view.putExtra("identity", identity);//take the email to AddNewCall
+                OngoingCalls_view.putExtra("statusToShow", "yes");//take the email to AddNewCall
                 startActivity(OngoingCalls_view);
                 break;
 
@@ -125,6 +126,7 @@ public class CallHandlingActivity extends AppCompatActivity implements View.OnCl
                 HandlingCalls_view.putExtra("otherUserPhoneNumber", userMobilNumber);//take the email to AddNewCall
                 HandlingCalls_view.putExtra("status", "handling");//take the email to AddNewCall
                 HandlingCalls_view.putExtra("identity", identity);//take the email to AddNewCall
+                HandlingCalls_view.putExtra("statusToShow", "yes");//take the email to AddNewCall
                 startActivity(HandlingCalls_view);
                 break;
             case R.id.ClosedCallsTab:
@@ -132,6 +134,7 @@ public class CallHandlingActivity extends AppCompatActivity implements View.OnCl
                 ClosedCalls_view.putExtra("otherUserPhoneNumber", userMobilNumber);//take the email to AddNewCall
                 ClosedCalls_view.putExtra("status", "closed");//take the email to AddNewCall
                 ClosedCalls_view.putExtra("identity", identity);//take the email to AddNewCall
+                ClosedCalls_view.putExtra("statusToShow", "yes");//take the email to AddNewCall
                 startActivity(ClosedCalls_view);
                 break;
         }
