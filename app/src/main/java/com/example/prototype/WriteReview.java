@@ -30,7 +30,7 @@ public class WriteReview extends AppCompatActivity {
     private FirebaseFirestore db;
     EditText message;
     String txtMessage;
-    private String txtCurrentDate, userMobileNumber, reviewAbout, userIdentity,apartmentID;
+    private String txtCurrentDate, userMobileNumber, reviewAbout, userIdentity,apartmentId;
 
     private Calendar calendar = Calendar.getInstance();
 
@@ -55,7 +55,7 @@ public class WriteReview extends AppCompatActivity {
         if (bundle.getString("identity") != null)
             userIdentity = bundle.getString("identity");
         if (bundle.getString("apartmentId") != null)
-            apartmentID = bundle.getString("apartmentId");
+            apartmentId = bundle.getString("apartmentId");
 
         message = (EditText) findViewById(R.id.messageBody);
 
@@ -67,8 +67,8 @@ public class WriteReview extends AppCompatActivity {
 
                 txtMessage = message.getText().toString().trim();
                 Map<String, Object> call = new HashMap<>();
-                if(apartmentID != null)
-                    call.put("Apartment ID", apartmentID);
+                if(apartmentId != null)
+                    call.put("Apartment ID", apartmentId);
                 else
                     call.put("Apartment ID", -1);
                 call.put("Body", txtMessage);

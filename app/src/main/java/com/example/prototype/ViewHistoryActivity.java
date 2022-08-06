@@ -43,7 +43,7 @@ public class ViewHistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_history);
-
+       //get user info from CallHandlingActivity
         Bundle bundle = getIntent().getExtras();
         if (bundle.getString("otherUserPhoneNumber") != null)
             otherUserPhoneNumber = bundle.getString("otherUserPhoneNumber");
@@ -78,7 +78,7 @@ public class ViewHistoryActivity extends AppCompatActivity {
                                             homeOwnerMobileNumber.equals(otherUserPhoneNumber)) {
                                         callBody = doc.getString("Call Body");
                                         callSubject = doc.getString("Subject");
-                                        homeOwnerCallStatus = doc.getString("Home owner Call Status");
+                                        homeOwnerCallStatus = doc.getString("Homeowner Call Status");
                                         tenantCallStatus = doc.getString("Tenant Call Status");
                                         startDate = doc.getString("Start Date");
                                         endDate = doc.getString("End Date");
@@ -146,20 +146,20 @@ public class ViewHistoryActivity extends AppCompatActivity {
     private void showRelevantStatus(int i) {
         switch (status) {
             case "open":
-                if (callsList.get(i - 1).getHomeOwnerCallStatus().equals("open") && callsList.get(i - 1).getHomeOwnerCallStatus().equals("open")) {
+                if (callsList.get(i - 1).getHomeOwnerCallStatus().equals("open") || callsList.get(i - 1).getTenantCallStatus().equals("open")) {
                     stringArrayList.add(i + ". " + startDate);// put it in the list(for UI)
                     callsList.get(i - 1).showInSearch(true);
                 }
 
                 break;
             case "handling":
-                if (callsList.get(i - 1).getHomeOwnerCallStatus().equals("handling") || callsList.get(i - 1).getHomeOwnerCallStatus().equals("handling")) {
+                if (callsList.get(i - 1).getHomeOwnerCallStatus().equals("handling") || callsList.get(i - 1).getTenantCallStatus().equals("handling")) {
                     stringArrayList.add(i + ". " + startDate);// put it in the list(for UI)
                     callsList.get(i - 1).showInSearch(true);
                 }
                 break;
             case "closed":
-                if (callsList.get(i - 1).getHomeOwnerCallStatus().equals("closed") && callsList.get(i - 1).getHomeOwnerCallStatus().equals("closed")) {
+                if (callsList.get(i - 1).getHomeOwnerCallStatus().equals("closed") && callsList.get(i - 1).getTenantCallStatus().equals("closed")) {
                     stringArrayList.add(i + ". " + startDate);// put it in the list(for UI)
                     callsList.get(i - 1).showInSearch(true);
                 }

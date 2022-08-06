@@ -69,7 +69,7 @@ public class AddNewCall extends AppCompatActivity {
         tenant = findViewById(R.id.tenant);
         homeOwner = findViewById(R.id.homeOwner);
 
-        //get the user email
+        //get the user info from CallHandlingActivity
         Bundle bundle = getIntent().getExtras();
         if (bundle.getString("userEmail") != null)
             userEmail = bundle.getString("userEmail");
@@ -130,8 +130,8 @@ public class AddNewCall extends AppCompatActivity {
                     call.put("Start Date", txtCurrentDate);
                     call.put("End Date", endDate);
                     call.put("Tenant Call Status", "open");
-                    call.put("Home owner Call Status", "open");
-                    call.put("Call Id", callId);
+                    call.put("Homeowner Call Status", "open");
+                    call.put("Call Id", String.valueOf(callId));
                     callId++;
                     if (apartmentId != null) {
                         call.put("Apartment Id", apartmentId);

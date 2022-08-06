@@ -186,6 +186,7 @@ public class PersonReview extends AppCompatActivity {
                                 //take the DATA number to PersonInfoActivity
                                 if (flag == 1) { //the review was about apartment
                                     apartmentStreet = adapter.getItem(position).toString();
+                                    intent.putExtra("apartmentId", apartmentID);
                                     db.collection("apartments")//go to apartments table to take the apartment id
                                             .get()
                                             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -199,6 +200,8 @@ public class PersonReview extends AppCompatActivity {
                                                             if (streetAndCityFromDB.equals(apartmentStreet) ) {
                                                                 String apartmentIDFromDB = doc.getString("Apartment Id");
                                                                 apartmentID=apartmentIDFromDB;
+                                                                Intent intent = new Intent(PersonReview.this, WriteReview.class);
+                                                                intent.putExtra("apartmentId", apartmentID);
                                                             }
                                                         }
 
@@ -206,7 +209,7 @@ public class PersonReview extends AppCompatActivity {
                                                 }
                                             });
                                     intent.putExtra("review about", apartmentStreet);
-                                    intent.putExtra("apartmentId", apartmentID);
+
                                 }
                                 intent.putExtra("userMobileNumber", userMobileNumber);
                                 intent.putExtra("identity", identity);

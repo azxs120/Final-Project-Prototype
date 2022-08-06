@@ -3,6 +3,7 @@ package com.example.prototype;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -129,7 +130,7 @@ public class DetailHistory extends AppCompatActivity implements AdapterView.OnIt
                                                 String newStatus = spinnerStatus.getSelectedItem().toString();
 
                                                 db.collection("calls").document(doc.getId()).
-                                                        update("Tenant Call Status", newStatus);//get the email of every user
+                                                        update("Tenant Call Status", newStatus);
                                                 if(newStatus.equals("closed")){
                                                     //get current date
                                                     Calendar calendar = Calendar.getInstance();
@@ -142,9 +143,20 @@ public class DetailHistory extends AppCompatActivity implements AdapterView.OnIt
                                         if (userIdentity.equals("homeOwner"))
                                             if (callIdFromDB.equals(callId)) {
                                                 String newStatus = spinnerStatus.getSelectedItem().toString();
-                                                db.collection("calls").document(doc.getId()).update("homeOwner Call Status", newStatus);
 
+                                                db.collection("calls").document(doc.getId()).
+                                                        update("Homeowner Call Status", newStatus);
+                                                if (newStatus.equals("closed")) {
+                                                    //get current date
+                                                    Calendar calendar = Calendar.getInstance();
+                                                    String txtCurrentDate = DateFormat.getDateInstance().format(calendar.getTime());
+                                                    //set the end Date
+                                                    db.collection("calls").document(doc.getId()).
+                                                            update("End Date", txtCurrentDate);
+
+                                                }
                                             }
+
                                     }
                                 }
                             }
@@ -162,6 +174,8 @@ public class DetailHistory extends AppCompatActivity implements AdapterView.OnIt
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Toast.makeText(this, parent.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+
+
     }
 
 
