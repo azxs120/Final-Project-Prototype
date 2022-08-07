@@ -202,6 +202,7 @@ public class PersonReview extends AppCompatActivity {
                                                                 apartmentID=apartmentIDFromDB;
                                                                 Intent intent = new Intent(PersonReview.this, WriteReview.class);
                                                                 intent.putExtra("apartmentId", apartmentID);
+                                                                intent.putExtra("userMobileNumber", userMobileNumber);
                                                             }
                                                         }
 
