@@ -19,6 +19,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Prototype">
         <activity
+            android:name=".ViewReviewsDate"
+            android:exported="false" />
+        <activity
+            android:name=".ReadReview"
+            android:exported="false" />
+        <activity
             android:name=".RelevantApartmentCallDetails"
             android:exported="false" />
         <activity

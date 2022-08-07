@@ -22,7 +22,7 @@ import java.util.Map;
 public class PersonInfoActivity extends AppCompatActivity {
     private TextView otherUserPhoneNumberTextView;
     private TextView otherUserNameTextView;
-    private Button HistoryBtn;
+    private Button HistoryBtn, ReviewBtn;
     private Button ConnectionBtn;
     private FirebaseFirestore db;
 
@@ -69,6 +69,7 @@ public class PersonInfoActivity extends AppCompatActivity {
         HistoryBtn = (Button) findViewById(R.id.HistoryButton);
         otherUserPhoneNumber = otherUserPhoneNumberTextView.getText().toString().trim();
         otherUserNameTextView = findViewById(R.id.otherUserName);
+        ReviewBtn = findViewById(R.id.ReviewButton);
         otherUserNameTextView.setText(otherUserName);
 
         //set what happens when the user clicks Make Connection
@@ -80,6 +81,20 @@ public class PersonInfoActivity extends AppCompatActivity {
                 extras.putString("userEmail", userEmail);
                 extras.putString("otherUserPhoneNumber", otherUserPhoneNumber);
                 extras.putString("apartmentId", apartmentId);
+
+                newIntent.putExtras(extras);
+                startActivity(newIntent);
+            }
+        });
+
+        //set what happens when the user clicks Read Review
+        ReviewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent newIntent = new Intent(PersonInfoActivity.this, ViewReviewsDate.class);
+                Bundle extras = new Bundle();
+                //extras.putString("userEmail", userEmail);
+                extras.putString("otherUserPhoneNumber", otherUserPhoneNumber);
 
                 newIntent.putExtras(extras);
                 startActivity(newIntent);
