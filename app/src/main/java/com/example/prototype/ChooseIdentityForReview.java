@@ -1,5 +1,6 @@
 package com.example.prototype;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,6 +10,12 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 public class ChooseIdentityForReview extends AppCompatActivity {
     Button moveToNewCall;
     private String userEmail = null, otherUserPhoneNumber;
@@ -17,6 +24,7 @@ public class ChooseIdentityForReview extends AppCompatActivity {
     private String otherIdentity = null, otherNumber = null;
     private RadioButton tenant, homeOwner;
     private RadioGroup radioGroup;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -33,11 +33,11 @@ public class PersonReview extends AppCompatActivity {
     ListView listView;
     private FirebaseFirestore db;
     ArrayList<String> stringArrayList = new ArrayList<>();
-    ArrayList<String>stringArrayListID = new ArrayList<>();
+    ArrayList<String> stringArrayListApartmentId = new ArrayList<>();
     ArrayList<String> stringArrayListApartments = new ArrayList<>();
     Map<String, String> personHashMap = new HashMap<>();
-    private String userEmail, identity, userMobileNumber, apartmentID ,apartmentStreet;
-    private Button showResultsPersonBtn,showResultsApartmentBtn;
+    private String userEmail, identity, userMobileNumber, apartmentID, apartmentStreet;
+    private Button showResultsPersonBtn, showResultsApartmentBtn;
     ArrayAdapter<String> adapter;
     private int flag = 0;
 
@@ -49,11 +49,11 @@ public class PersonReview extends AppCompatActivity {
 
         //get the user email
         Bundle bundle = getIntent().getExtras();
-        if(bundle.getString("userEmail") != null)
+        if (bundle.getString("userEmail") != null)
             userEmail = bundle.getString("userEmail");
         //get the user identity
         bundle = getIntent().getExtras();
-        if(bundle.getString("identity") != null)
+        if (bundle.getString("identity") != null)
             identity = bundle.getString("identity");
         bundle = getIntent().getExtras();
         if (bundle.getString("userMobilNumber") != null)
@@ -94,6 +94,7 @@ public class PersonReview extends AppCompatActivity {
                                 String streetFromDB = doc.getString("Street");//get all phone numbers
                                 String cityFromDB = doc.getString("City");
                                 stringArrayListApartments.add(streetFromDB + " " + cityFromDB);
+                                stringArrayListApartmentId.add(doc.getString("Apartment Id"));
                             }
                         }
                     }
@@ -101,6 +102,8 @@ public class PersonReview extends AppCompatActivity {
 
         showResultsPersonBtn = findViewById(R.id.showResultsPerson);
         showResultsApartmentBtn = findViewById(R.id.showResultsApartment);
+
+        //Person
         showResultsPersonBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,7 +118,7 @@ public class PersonReview extends AppCompatActivity {
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        if(identity.equals("tenantAndHomeOwner")) {
+                        if (identity.equals("tenantAndHomeOwner")) {
                             //Display click item position in toast
                             String otherUserPhoneNumber = adapter.getItem(position).toString();
 
@@ -126,8 +129,9 @@ public class PersonReview extends AppCompatActivity {
                             intent.putExtra("identity", identity);
                             intent.putExtra("userEmail", userEmail);
 
+
                             startActivity(intent);
-                        }else{
+                        } else {
                             //Display click item position in toast
                             String otherUserPhoneNumber = adapter.getItem(position).toString();
 
@@ -146,7 +150,7 @@ public class PersonReview extends AppCompatActivity {
             }
         });
 
-
+        //Apartment
         showResultsApartmentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -164,58 +168,58 @@ public class PersonReview extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                            if (identity.equals("tenantAndHomeOwner")) {
-                                //Display click item position in toast
+                        if (identity.equals("tenantAndHomeOwner")) {
+                            //Display click item position in toast
+                            String otherUserPhoneNumber = adapter.getItem(position).toString();
+
+                            //take the DATA number to PersonInfoActivity
+                            Intent intent = new Intent(PersonReview.this, ChooseIdentityForReview.class);
+                            intent.putExtra("review about", otherUserPhoneNumber);
+                            intent.putExtra("userMobileNumber", userMobileNumber);
+                            intent.putExtra("identity", identity);
+                            intent.putExtra("userEmail", userEmail);
+
+                            startActivity(intent);
+                        } else {
+                            //Display click item position in toast
+                            Intent intent = new Intent(PersonReview.this, WriteReview.class);
+                            if (flag == 0) {//the review was about person
                                 String otherUserPhoneNumber = adapter.getItem(position).toString();
-
-                                //take the DATA number to PersonInfoActivity
-                                Intent intent = new Intent(PersonReview.this, ChooseIdentityForReview.class);
                                 intent.putExtra("review about", otherUserPhoneNumber);
-                                intent.putExtra("userMobileNumber", userMobileNumber);
-                                intent.putExtra("identity", identity);
-                                intent.putExtra("userEmail", userEmail);
-
-                                startActivity(intent);
-                            } else {
-                                //Display click item position in toast
-                                Intent intent = new Intent(PersonReview.this, WriteReview.class);
-                                if (flag == 0) {//the review was about person
-                                    String otherUserPhoneNumber = adapter.getItem(position).toString();
-                                    intent.putExtra("review about", otherUserPhoneNumber);
-                                }
-                                //take the DATA number to PersonInfoActivity
-                                if (flag == 1) { //the review was about apartment
-                                    apartmentStreet = adapter.getItem(position).toString();
-                                    intent.putExtra("apartmentId", apartmentID);
-                                    db.collection("apartments")//go to apartments table to take the apartment id
-                                            .get()
-                                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<QuerySnapshot> task) {//אם הגישה לטבלה הצליחה
-                                                    if (task.isSuccessful()) {
-                                                        for (QueryDocumentSnapshot doc : task.getResult()) {//תביא את כל הרשומות
-                                                            String streetFromDB = doc.getString("Street");//get all phone numbers
-                                                            String cityFromDB = doc.getString("City");
-                                                            String streetAndCityFromDB = streetFromDB + " " + cityFromDB;
-                                                            if (streetAndCityFromDB.equals(apartmentStreet) ) {
-                                                                String apartmentIDFromDB = doc.getString("Apartment Id");
-                                                                apartmentID=apartmentIDFromDB;
-                                                                Intent intent = new Intent(PersonReview.this, WriteReview.class);
-                                                                intent.putExtra("apartmentId", apartmentID);
-                                                                intent.putExtra("userMobileNumber", userMobileNumber);
-                                                            }
-                                                        }
-
-                                                    }
-                                                }
-                                            });
-                                    intent.putExtra("review about", apartmentStreet);
-
-                                }
-                                intent.putExtra("userMobileNumber", userMobileNumber);
-                                intent.putExtra("identity", identity);
-                                startActivity(intent);
                             }
+                            //take the DATA number to PersonInfoActivity
+                            if (flag == 1) { //the review was about apartment
+                                apartmentStreet = adapter.getItem(position).toString();
+                                intent.putExtra("apartmentId", stringArrayListApartmentId.get(position));
+                                db.collection("apartments")//go to apartments table to take the apartment id
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {//אם הגישה לטבלה הצליחה
+                                                if (task.isSuccessful()) {
+                                                    for (QueryDocumentSnapshot doc : task.getResult()) {//תביא את כל הרשומות
+                                                        String streetFromDB = doc.getString("Street");//get all phone numbers
+                                                        String cityFromDB = doc.getString("City");
+                                                        String streetAndCityFromDB = streetFromDB + " " + cityFromDB;
+                                                        if (streetAndCityFromDB.equals(apartmentStreet)) {
+                                                            String apartmentIDFromDB = doc.getString("Apartment Id");
+                                                            apartmentID = apartmentIDFromDB;
+                                                            Intent intent = new Intent(PersonReview.this, WriteReview.class);
+                                                            intent.putExtra("apartmentId", apartmentID);
+                                                            intent.putExtra("userMobileNumber", userMobileNumber);
+                                                        }
+                                                    }
+
+                                                }
+                                            }
+                                        });
+                                intent.putExtra("review about", apartmentStreet);
+
+                            }
+                            intent.putExtra("userMobileNumber", userMobileNumber);
+                            intent.putExtra("identity", identity);
+                            startActivity(intent);
+                        }
 
                     }
 
@@ -223,8 +227,6 @@ public class PersonReview extends AppCompatActivity {
 
             }
         });
-
-
 
 
     }
