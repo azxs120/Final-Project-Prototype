@@ -183,11 +183,12 @@ public class RegisterActivity extends AppCompatActivity {
                 user.put("Mobile Number", txtMobile);
                 user.put("Password", txtPassword);
                 user.put("Identity", txtIdentity);
+                /*
                 if(!txtIdentity.equals("tenant")){
-                    user.put("Apartment Id", apartmentId);
+                    user.put("Apartment Id", String.valueOf(apartmentId));
                     apartmentId++;
                 }
-
+                */
                 db.collection("users")
                         .add(user)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

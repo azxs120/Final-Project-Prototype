@@ -46,7 +46,7 @@
             android:name=".WriteReview"
             android:exported="false" />
         <activity
-            android:name=".PersonReview"
+            android:name=".Review"
             android:exported="false" />
         <activity
             android:name=".DetailHistory"

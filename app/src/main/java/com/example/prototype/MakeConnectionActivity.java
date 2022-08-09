@@ -189,7 +189,7 @@ public class MakeConnectionActivity extends AppCompatActivity  {
                 connection.put("End Date", txtToDate);
                 connection.put("Notes", txtNote);
                 connection.put("Identity", identity);
-                connection.put("Apartment Id", apartmentId);
+                connection.put("Apartment Id", String.valueOf(apartmentId));
 
                 connection.put(identity + " Mobile Number", mobileNumber);//the user mobileNumber
 

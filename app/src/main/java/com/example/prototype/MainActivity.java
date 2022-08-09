@@ -10,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -105,11 +104,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //PersonReview
+        //Review
         reviewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentLoadNewActivity = new Intent(MainActivity.this, PersonReview.class);
+                Intent intentLoadNewActivity = new Intent(MainActivity.this, Review.class);
                 intentLoadNewActivity.putExtra("userEmail", userEmail);
                 intentLoadNewActivity.putExtra("identity", identity);
                 intentLoadNewActivity.putExtra("userMobilNumber", userMobilNumber);//take the mobile to PersonReviewActivity

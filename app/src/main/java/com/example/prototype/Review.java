@@ -23,13 +23,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PersonReview extends AppCompatActivity {
+public class Review extends AppCompatActivity {
     ListView listView;
     private FirebaseFirestore db;
     ArrayList<String> stringArrayList = new ArrayList<>();
@@ -110,7 +108,7 @@ public class PersonReview extends AppCompatActivity {
                 showResultsPersonBtn.setVisibility(View.INVISIBLE);
                 showResultsApartmentBtn.setVisibility(View.INVISIBLE);
                 //Initialize adapter
-                adapter = new ArrayAdapter<>(PersonReview.this
+                adapter = new ArrayAdapter<>(Review.this
                         , android.R.layout.simple_list_item_1, stringArrayList);
                 //Set adapter on list view
                 listView.setAdapter(adapter);
@@ -123,20 +121,18 @@ public class PersonReview extends AppCompatActivity {
                             String otherUserPhoneNumber = adapter.getItem(position).toString();
 
                             //take the DATA number to PersonInfoActivity
-                            Intent intent = new Intent(PersonReview.this, ChooseIdentityForReview.class);
+                            Intent intent = new Intent(Review.this, ChooseIdentityForReview.class);
                             intent.putExtra("review about", otherUserPhoneNumber);
                             intent.putExtra("userMobileNumber", userMobileNumber);
                             intent.putExtra("identity", identity);
                             intent.putExtra("userEmail", userEmail);
-
-
                             startActivity(intent);
                         } else {
                             //Display click item position in toast
                             String otherUserPhoneNumber = adapter.getItem(position).toString();
 
                             //take the DATA number to PersonInfoActivity
-                            Intent intent = new Intent(PersonReview.this, WriteReview.class);
+                            Intent intent = new Intent(Review.this, WriteReview.class);
                             intent.putExtra("review about", otherUserPhoneNumber);
                             intent.putExtra("userMobileNumber", userMobileNumber);
                             intent.putExtra("identity", identity);
@@ -158,7 +154,7 @@ public class PersonReview extends AppCompatActivity {
                 showResultsApartmentBtn.setVisibility(View.INVISIBLE);
                 flag = 1;
                 //Initialize adapter
-                adapter = new ArrayAdapter<>(PersonReview.this
+                adapter = new ArrayAdapter<>(Review.this
                         , android.R.layout.simple_list_item_1, stringArrayListApartments);
                 //Set adapter on list view
                 listView.setAdapter(adapter);
@@ -173,7 +169,7 @@ public class PersonReview extends AppCompatActivity {
                             String otherUserPhoneNumber = adapter.getItem(position).toString();
 
                             //take the DATA number to PersonInfoActivity
-                            Intent intent = new Intent(PersonReview.this, ChooseIdentityForReview.class);
+                            Intent intent = new Intent(Review.this, ChooseIdentityForReview.class);
                             intent.putExtra("review about", otherUserPhoneNumber);
                             intent.putExtra("userMobileNumber", userMobileNumber);
                             intent.putExtra("identity", identity);
@@ -182,7 +178,7 @@ public class PersonReview extends AppCompatActivity {
                             startActivity(intent);
                         } else {
                             //Display click item position in toast
-                            Intent intent = new Intent(PersonReview.this, WriteReview.class);
+                            Intent intent = new Intent(Review.this, WriteReview.class);
                             if (flag == 0) {//the review was about person
                                 String otherUserPhoneNumber = adapter.getItem(position).toString();
                                 intent.putExtra("review about", otherUserPhoneNumber);
@@ -204,7 +200,7 @@ public class PersonReview extends AppCompatActivity {
                                                         if (streetAndCityFromDB.equals(apartmentStreet)) {
                                                             String apartmentIDFromDB = doc.getString("Apartment Id");
                                                             apartmentID = apartmentIDFromDB;
-                                                            Intent intent = new Intent(PersonReview.this, WriteReview.class);
+                                                            Intent intent = new Intent(Review.this, WriteReview.class);
                                                             intent.putExtra("apartmentId", apartmentID);
                                                             intent.putExtra("userMobileNumber", userMobileNumber);
                                                         }

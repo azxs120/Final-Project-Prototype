@@ -66,34 +66,33 @@ public class WriteReview extends AppCompatActivity {
             public void onClick(View view) {
 
                 txtMessage = message.getText().toString().trim();
-                Map<String, Object> call = new HashMap<>();
+                Map<String, Object> opinion = new HashMap<>();
                 if(apartmentId != null)
-                    call.put("Apartment ID", apartmentId);
-                else
-                    call.put("Apartment ID", -1);
-                call.put("Body", txtMessage);
-                call.put("Date", txtCurrentDate);
+                    opinion.put("Apartment ID", apartmentId);
+
+                opinion.put("Body", txtMessage);
+                opinion.put("Date", txtCurrentDate);
 
                 //my identity
                 if (userIdentity.equals("tenant")) {
-                    call.put("tenant Mobile Number", userMobileNumber);
-                    call.put("Review About", reviewAbout);
+                    opinion.put("tenant Mobile Number", userMobileNumber);
+                    opinion.put("Review About", reviewAbout);
                 } else if (userIdentity.equals("homeOwner")) {
-                    call.put("homeOwner Mobile Number", userMobileNumber);
-                    call.put("Review About", reviewAbout);
+                    opinion.put("homeOwner Mobile Number", userMobileNumber);
+                    opinion.put("Review About", reviewAbout);
                 } else {//tenantAndHomeOwner
                     if (userIdentity.equals("tenant")) {
-                        call.put("tenant Mobile Number", userMobileNumber);
-                        call.put("Review About", reviewAbout);
+                        opinion.put("tenant Mobile Number", userMobileNumber);
+                        opinion.put("Review About", reviewAbout);
                     } else if (userIdentity.equals("homeOwner")) {
-                        call.put("homeOwner Mobile Number", userMobileNumber);
-                        call.put("Review About", reviewAbout);
+                        opinion.put("homeOwner Mobile Number", userMobileNumber);
+                        opinion.put("Review About", reviewAbout);
                     }
                 }
 
 
                 db.collection("opinion")
-                        .add(call)
+                        .add(opinion)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
