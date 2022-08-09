@@ -48,6 +48,11 @@ public class ChooseIdentityForReview extends AppCompatActivity {
         bundle = getIntent().getExtras();
         if (bundle.getString("identity") != null)
             userIdentity = bundle.getString("identity");
+        bundle = getIntent().getExtras();
+        if (bundle.getString("review About") != null)
+            otherNumber = bundle.getString("review About");
+
+
 
         getMyIdentity();
 
@@ -61,6 +66,7 @@ public class ChooseIdentityForReview extends AppCompatActivity {
                 intentLoadNewActivity.putExtra("userMobileNumber", userMobileNumber);//take the email to AddNewCall
                 intentLoadNewActivity.putExtra("otherUserPhoneNumber", otherUserPhoneNumber);//take the email to AddNewCall
                 intentLoadNewActivity.putExtra("identity", userIdentity);//take the email to AddNewCall
+                intentLoadNewActivity.putExtra("review about", otherNumber);//take the email to AddNewCall
 
                 startActivity(intentLoadNewActivity);
             }

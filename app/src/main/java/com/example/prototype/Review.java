@@ -126,6 +126,7 @@ public class Review extends AppCompatActivity {
                             intent.putExtra("userMobileNumber", userMobileNumber);
                             intent.putExtra("identity", identity);
                             intent.putExtra("userEmail", userEmail);
+                            intent.putExtra("review About", stringArrayList.get(position));
                             startActivity(intent);
                         } else {
                             //Display click item position in toast
@@ -173,6 +174,7 @@ public class Review extends AppCompatActivity {
                             intent.putExtra("review about", otherUserPhoneNumber);
                             intent.putExtra("userMobileNumber", userMobileNumber);
                             intent.putExtra("identity", identity);
+                            intent.putExtra("review About", stringArrayList.get(position));
                             intent.putExtra("userEmail", userEmail);
 
                             startActivity(intent);
