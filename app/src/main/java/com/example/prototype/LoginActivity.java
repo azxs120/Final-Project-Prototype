@@ -111,8 +111,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         String identity = doc.getString("Identity");
                                         String mobileNumber = doc.getString("Mobile Number");
 
+                                        //for testing
+                                        /*
                                         typedEmail = "drasyady@gmail.com";
                                         typedPassword = "123456";
+                                        */
 
                                         //the data(Email And password) match
                                         //במידה והסיסמא והמייל של הרשומה שווים למה שהמשתמש הכניס אז תאפשר לנו התחברות למשתמש ותשלח איתך את שם המשתמש
