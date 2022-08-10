@@ -38,9 +38,9 @@ import java.util.Map;
 public class DetailHistory extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private String callBody, callSubject, homeOwnerCallStatusDataMember, tenantCallStatusDataMember, startDateDataMember, endDteDataMember;
     private Spinner spinnerStatus;
-    private String userIdentity = null, docId, callId,showStatus;
+    private String userIdentity = null, docId, callId, showStatus;
     private Button updateStatusBtn;
-    EditText subject,  messageBody, startDate, endDate, homeOwnerCallStatus, tenantCallStatus;
+    EditText subject, messageBody, startDate, endDate, homeOwnerCallStatus, tenantCallStatus;
     TextView changeStatusText;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
@@ -143,7 +143,7 @@ public class DetailHistory extends AppCompatActivity implements AdapterView.OnIt
 
                                                 db.collection("calls").document(doc.getId()).
                                                         update("Tenant Call Status", newStatus);
-                                                if(newStatus.equals("closed")){
+                                                if (newStatus.equals("closed")) {
                                                     //get current date
                                                     Calendar calendar = Calendar.getInstance();
                                                     String txtCurrentDate = DateFormat.getDateInstance().format(calendar.getTime());
@@ -186,8 +186,6 @@ public class DetailHistory extends AppCompatActivity implements AdapterView.OnIt
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Toast.makeText(this, parent.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
-
-
     }
 
 
