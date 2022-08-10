@@ -53,7 +53,6 @@ public class ChooseIdentityForReview extends AppCompatActivity {
             otherNumber = bundle.getString("review About");
 
 
-
         getMyIdentity();
 
         moveToNewCall.setOnClickListener(new View.OnClickListener() {
